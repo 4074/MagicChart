@@ -30,17 +30,24 @@ class ViewController: UIViewController {
     
     @objc func refreshChart() {
         let dataSource = LineChartDataSource()
-        let label = ["1", "2", "3", "4", "5", "6"]
-        let sets = lineChart.createDataSet(label, groups: [[3, 5, 2, 3, 1, 9], [9, 10, 8, 7, 12, 12]]) { (set, index) in
-            if index == 0 {
-                set.pointShape = .circle
-            } else {
-                set.pointShape = .square
+        let label = ["06/16", "06/17", "06/18", "06/19", "06/20", "06/21", "06/22"]
+        let setOne = lineChart.createDataSet(label, value: [3, 5, 2, 3, 1, 9, 8]) { (set) in
+            set.lineDashPattern = []
+            set.pointShape = .circle
+            for i in 0..<label.count - 1 {
+                if i < label.count - 2 {
+                    set.lineDashPattern.append([])
+                } else {
+                    set.lineDashPattern.append([4, 4])
+                }
             }
+        }
+        let setTwo = lineChart.createDataSet(label, value: [9, 10, 8, 7, 12, 14, 4]) { (set) in
+            set.pointShape = .square
         }
         
         dataSource.label = label
-        dataSource.sets = sets
+        dataSource.sets = [setOne, setTwo]
         lineChart.dataSource = dataSource
     }
 

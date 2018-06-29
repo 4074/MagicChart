@@ -7,15 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB22CD5C20E5E12100F85FB1 /* ChartAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22CD5720E5E12000F85FB1 /* ChartAxis.swift */; };
+		FB22CD5D20E5E12100F85FB1 /* LineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22CD5820E5E12000F85FB1 /* LineChart.swift */; };
+		FB22CD5E20E5E12100F85FB1 /* ChartUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22CD5920E5E12100F85FB1 /* ChartUtils.swift */; };
+		FB22CD5F20E5E12100F85FB1 /* PointAnimationor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22CD5A20E5E12100F85FB1 /* PointAnimationor.swift */; };
+		FB22CD6020E5E12100F85FB1 /* ChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22CD5B20E5E12100F85FB1 /* ChartData.swift */; };
 		FB69AD3320073DF900383099 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB69AD3220073DF900383099 /* AppDelegate.swift */; };
 		FB69AD3520073DF900383099 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB69AD3420073DF900383099 /* ViewController.swift */; };
 		FB69AD3820073DF900383099 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB69AD3620073DF900383099 /* Main.storyboard */; };
 		FB69AD3A20073DF900383099 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB69AD3920073DF900383099 /* Assets.xcassets */; };
 		FB69AD3D20073DF900383099 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB69AD3B20073DF900383099 /* LaunchScreen.storyboard */; };
-		FBB6C64620073F820052E4BC /* LineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB6C64520073F820052E4BC /* LineChart.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FB22CD5720E5E12000F85FB1 /* ChartAxis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartAxis.swift; path = ../../MagicChart/ChartAxis.swift; sourceTree = "<group>"; };
+		FB22CD5820E5E12000F85FB1 /* LineChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LineChart.swift; path = ../../MagicChart/LineChart.swift; sourceTree = "<group>"; };
+		FB22CD5920E5E12100F85FB1 /* ChartUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartUtils.swift; path = ../../MagicChart/ChartUtils.swift; sourceTree = "<group>"; };
+		FB22CD5A20E5E12100F85FB1 /* PointAnimationor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PointAnimationor.swift; path = ../../MagicChart/PointAnimationor.swift; sourceTree = "<group>"; };
+		FB22CD5B20E5E12100F85FB1 /* ChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartData.swift; path = ../../MagicChart/ChartData.swift; sourceTree = "<group>"; };
 		FB69AD2F20073DF900383099 /* MagicChartDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MagicChartDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB69AD3220073DF900383099 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB69AD3420073DF900383099 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -23,7 +32,6 @@
 		FB69AD3920073DF900383099 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB69AD3C20073DF900383099 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FB69AD3E20073DF900383099 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FBB6C64520073F820052E4BC /* LineChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LineChart.swift; path = ../../MagicChart/LineChart.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,10 +45,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FB22CD5620E5E0F100F85FB1 /* MagicChart */ = {
+			isa = PBXGroup;
+			children = (
+				FB22CD5720E5E12000F85FB1 /* ChartAxis.swift */,
+				FB22CD5B20E5E12100F85FB1 /* ChartData.swift */,
+				FB22CD5920E5E12100F85FB1 /* ChartUtils.swift */,
+				FB22CD5820E5E12000F85FB1 /* LineChart.swift */,
+				FB22CD5A20E5E12100F85FB1 /* PointAnimationor.swift */,
+			);
+			path = MagicChart;
+			sourceTree = "<group>";
+		};
 		FB69AD2620073DF900383099 = {
 			isa = PBXGroup;
 			children = (
-				FBB6C64420073F400052E4BC /* MagicChart */,
+				FB22CD5620E5E0F100F85FB1 /* MagicChart */,
 				FB69AD3120073DF900383099 /* MagicChartDemo */,
 				FB69AD3020073DF900383099 /* Products */,
 			);
@@ -65,14 +85,6 @@
 				FB69AD3E20073DF900383099 /* Info.plist */,
 			);
 			path = MagicChartDemo;
-			sourceTree = "<group>";
-		};
-		FBB6C64420073F400052E4BC /* MagicChart */ = {
-			isa = PBXGroup;
-			children = (
-				FBB6C64520073F820052E4BC /* LineChart.swift */,
-			);
-			path = MagicChart;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -102,7 +114,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = wenfeng;
 				TargetAttributes = {
 					FB69AD2E20073DF900383099 = {
@@ -147,9 +159,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB22CD5F20E5E12100F85FB1 /* PointAnimationor.swift in Sources */,
+				FB22CD5E20E5E12100F85FB1 /* ChartUtils.swift in Sources */,
+				FB22CD5D20E5E12100F85FB1 /* LineChart.swift in Sources */,
 				FB69AD3520073DF900383099 /* ViewController.swift in Sources */,
+				FB22CD6020E5E12100F85FB1 /* ChartData.swift in Sources */,
+				FB22CD5C20E5E12100F85FB1 /* ChartAxis.swift in Sources */,
 				FB69AD3320073DF900383099 /* AppDelegate.swift in Sources */,
-				FBB6C64620073F820052E4BC /* LineChart.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,6 +205,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -196,6 +213,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -246,6 +264,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -253,6 +272,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -287,6 +307,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A7SERSCQNW;
 				INFOPLIST_FILE = MagicChartDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wenfeng.MagicChartDemo;
@@ -301,6 +322,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A7SERSCQNW;
 				INFOPLIST_FILE = MagicChartDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wenfeng.MagicChartDemo;
