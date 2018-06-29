@@ -66,7 +66,6 @@ class ChartUtils {
     }
 
     static func selectNumbers(min: Double, max: Double, count: Int) -> [Double] {
-        let max = ChartUtils.getNestNumber(source: max)
         var values = [Double]()
         
         if count == 0 {
@@ -155,6 +154,16 @@ class ChartUtils {
         }
         
         return (minimum, maximum)
+    }
+    
+    static func getMaxStringWidth(strings: [String], font: UIFont) -> CGFloat {
+        var width: CGFloat = 0
+        let constraintRect = CGSize(width: 999, height: 999)
+        for str in strings {
+            let boundingBox = str.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
+            width = max(width, ceil(boundingBox.width))
+        }
+        return width
     }
 }
 

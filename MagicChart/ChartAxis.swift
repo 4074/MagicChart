@@ -18,6 +18,7 @@ class ChartAxis: CALayer {
     var labels = [String]()
     var labelColor: UIColor = .black
     var labelLayer: CATextLayer?
+    var labelSpacing: CGFloat = 0
     
     func render() {
         drawLine()
@@ -88,7 +89,7 @@ class ChartXAxis: ChartAxis {
             let width: CGFloat = labelFont.pointSize * CGFloat(text.count)
             textLayer.frame = CGRect(
                 x: itemWidth * CGFloat(index) - width / 2,
-                y: 0,
+                y: labelSpacing,
                 width: width,
                 height: labelFont.pointSize
             )
@@ -121,7 +122,7 @@ class ChartYAxis: ChartAxis {
         let wrapLayer = CATextLayer()
         
         wrapLayer.frame = CGRect(
-            x: 0 - 8,
+            x: 0,
             y: 0,
             width: frame.width,
             height: frame.height
@@ -134,7 +135,7 @@ class ChartYAxis: ChartAxis {
             let textLayer = CATextLayer()
             let y = wrapLayer.frame.height - CGFloat(index) * (wrapLayer.frame.height / CGFloat(labels.count - 1)) - (labelFont.pointSize / 2)
             textLayer.frame = CGRect(
-                x: 0,
+                x: 0 - labelSpacing,
                 y: y,
                 width: frame.width,
                 height: labelFont.pointSize

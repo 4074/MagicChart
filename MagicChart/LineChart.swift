@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LineChart: UIView {
+class LineChart: AxisChart {
     
     var dataSource: LineChartDataSource = LineChartDataSource() {
         didSet {
@@ -20,70 +20,50 @@ class LineChart: UIView {
     var dataPointLayer: [(layer: CAShapeLayer, subs: [CAShapeLayer])?] = []
     var dataPoints: [[CGPoint]] = []
     
-    var rangeType: (minimum: MagicChartAxisRangeType, maximum: MagicChartAxisRangeType) = (.zero, .auto)
-    var range: (minimum: Double, maximum: Double)?
-    
-    var colors: [UIColor] = [.green, .blue, .orange, .red]
     var duration: TimeInterval = 1
-    
-    var origin: CGPoint = CGPoint(x: 0, y: 0)
-    var inset: UIEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-    var layerFrame: CGRect = .zero
-    
-    var axisLayer: (x: ChartXAxis?, y: ChartYAxis?) = (nil, nil)
-    var axisLineWidth: (x: CGFloat, y: CGFloat) = (0.2, 0.2)
-    var axisLineColor: (x: UIColor, y: UIColor) = (.lightGray, .lightGray)
-    
-    var axisLabelCount: (x: Int, y: Int) = (4, 4)
-    var axisLabelFont: (x: UIFont, y: UIFont) = (UIFont.systemFont(ofSize: 12), UIFont.systemFont(ofSize: 12))
-    var axisLabelColor: (x: UIColor, y: UIColor) = (.lightGray, .lightGray)
     
     var selectedIndex: Int? = nil
     var selectedLayer: CAShapeLayer?
     var selectedLineWidth: CGFloat = 1
     var selectedLineColor: UIColor = .purple
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches {
-            let location = t.location(in: self)
-            let index = ChartUtils.computeSelectedIndex(point: location, frame: layerFrame, inset: inset, count: dataSource.label.count)
-            if index != selectedIndex {
-                selectedIndex = index
-                drawSelected()
-            }
-            break
-        }
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches {
-            let location = t.location(in: self)
-            let index = ChartUtils.computeSelectedIndex(point: location, frame: layerFrame, inset: inset, count: dataSource.label.count)
-            if index != selectedIndex {
-                selectedIndex = index
-                drawSelected()
-            }
-            break
+    override func touchDidUpdate(location: CGPoint) {
+        let frameInset = UIEdgeInsets(top: inset.top, left: inset.left + axisSize.y.width, bottom: inset.bottom, right: inset.right)
+        let index = ChartUtils.computeSelectedIndex(point: location, frame: dataLayer!.frame, inset: frameInset, count: dataSource.label.count)
+        if index != selectedIndex {
+            selectedIndex = index
+            drawSelected()
         }
     }
     
     func render() {
-        origin = CGPoint(x: 0, y: self.frame.size.height - inset.top - inset.bottom)
         range = getYAxisRange()
-        layerFrame = CGRect(
+        
+        chartLayer = CALayer()
+        chartLayer!.frame = CGRect(
             x: inset.left,
             y: inset.top,
             width: self.frame.size.width - inset.left - inset.right,
             height: self.frame.size.height - inset.top - inset.bottom
         )
+        self.layer.addSublayer(chartLayer!)
+        
+        let xAxisHeight = getXAxisHeight()
+        let yAxisWidth = getYAxisWidth()
+        
+        axisSize = (
+            CGSize(width: chartLayer!.frame.width - yAxisWidth, height: xAxisHeight),
+            CGSize(width: yAxisWidth, height: chartLayer!.frame.height - xAxisHeight)
+        )
+        
+        dataLayer = CALayer()
+        dataLayer!.frame = CGRect(
+            x: axisSize.y.width,
+            y: 0,
+            width: chartLayer!.frame.width - axisSize.y.width,
+            height: chartLayer!.frame.height - axisSize.x.height
+        )
+        chartLayer?.addSublayer(dataLayer!)
         
         drawAxisLine()
         drawSetLine()
@@ -95,6 +75,7 @@ class LineChart: UIView {
         axisLayer = (nil, nil)
         
         selectedLayer?.removeFromSuperlayer()
+        selectedLayer = nil
         
         for group in dataSetLayer {
             group.line.removeFromSuperlayer()
@@ -119,7 +100,7 @@ class LineChart: UIView {
         
         for (index, set) in dataSource.sets.enumerated() {
             let setLayer = CAShapeLayer()
-            setLayer.frame = layerFrame
+            setLayer.frame = CGRect(origin: .zero, size: dataLayer!.frame.size)
             
             let lineLayer = CAShapeLayer()
             let color = (set.lineColor ?? colors[index % colors.count])
@@ -128,8 +109,8 @@ class LineChart: UIView {
             lineLayer.frame = setLayer.bounds
             for (i, k) in dataSource.label.enumerated() {
                 if let v = set.value[k] {
-                    let x = (Double(i) / Double(set.value.count - 1)) * Double(layerFrame.width)
-                    let y = (1 - (v / (range.maximum - range.minimum))) * Double(layerFrame.height)
+                    let x = (Double(i) / Double(set.value.count - 1)) * Double(setLayer.frame.width)
+                    let y = (1 - (v / (range.maximum - range.minimum))) * Double(setLayer.frame.height)
                     let point = CGPoint(x: x, y: y)
                     
                     points.append(point)
@@ -187,7 +168,7 @@ class LineChart: UIView {
                 dataPointLayer.append(nil)
             }
             
-            self.layer.addSublayer(setLayer)
+            dataLayer?.addSublayer(setLayer)
         }
         
         CATransaction.commit()
@@ -234,17 +215,18 @@ class LineChart: UIView {
     
     func drawAxisLine() {
         let xAxis = ChartXAxis()
-        xAxis.frame = CGRect(x: inset.left, y: layerFrame.height + inset.top, width: layerFrame.width, height: 30)
+        xAxis.frame = CGRect(x: axisSize.y.width, y: dataLayer!.frame.height, width: axisSize.x.width, height: axisSize.x.height)
         xAxis.labels = ChartUtils.selectStrings(source: dataSource.label, count: axisLabelCount.x, force: false)
         xAxis.lineWidth = axisLineWidth.x
         xAxis.lineColor = axisLineColor.x
         xAxis.labelFont = axisLabelFont.x
         xAxis.labelColor = axisLabelColor.x
+        xAxis.labelSpacing = axisLabelSpacing.x
         xAxis.render()
-        self.layer.addSublayer(xAxis)
+        chartLayer?.addSublayer(xAxis)
         
         let yAxis = ChartYAxis()
-        yAxis.frame = CGRect(x: 0, y: inset.top, width: inset.left, height: layerFrame.height)
+        yAxis.frame = CGRect(x: 0, y: 0, width: axisSize.y.width, height: axisSize.y.height)
         if let range = range {
             yAxis.labels = ChartUtils.selectNumbers(min: range.minimum, max: range.maximum, count: axisLabelCount.y).map { (v) -> String in
                 return self.getYAxisLabelTextFromValue(value: v)
@@ -254,8 +236,9 @@ class LineChart: UIView {
         yAxis.lineColor = axisLineColor.y
         yAxis.labelFont = axisLabelFont.y
         yAxis.labelColor = axisLabelColor.y
+        yAxis.labelSpacing = axisLabelSpacing.y
         yAxis.render()
-        self.layer.addSublayer(yAxis)
+        chartLayer?.addSublayer(yAxis)
         
         axisLayer = (xAxis, yAxis)
     }
@@ -277,21 +260,37 @@ class LineChart: UIView {
             
             path.lineWidth = selectedLineWidth
             path.move(to: CGPoint(x: 0, y: 0))
-            path.addLine(to: CGPoint(x: 0, y: layerFrame.height))
+            path.addLine(to: CGPoint(x: 0, y: dataLayer!.frame.height))
             
             layer.path = path.cgPath
             layer.strokeColor = selectedLineColor.cgColor
             
-            self.layer.addSublayer(layer)
+            dataLayer!.addSublayer(layer)
             selectedLayer = layer
         }
         
-        let x = layerFrame.width / CGFloat(dataSource.label.count - 1) * CGFloat(index)
-        selectedLayer?.frame = CGRect(x: x + layerFrame.minX, y: layerFrame.minY, width: selectedLineWidth, height: layerFrame.height)
+        let x = dataLayer!.frame.width / CGFloat(dataSource.label.count - 1) * CGFloat(index)
+        selectedLayer?.frame = CGRect(x: x, y: 0, width: selectedLineWidth, height: dataLayer!.frame.height)
     }
 }
 
 extension LineChart {
+    
+    func getXAxisHeight() -> CGFloat {
+        return axisLabelFont.x.pointSize + axisLabelSpacing.x
+    }
+    
+    func getYAxisWidth() -> CGFloat {
+        var width: CGFloat = 0
+        if let range = range {
+            let labels = ChartUtils.selectNumbers(min: range.minimum, max: range.maximum, count: axisLabelCount.y).map { (v) -> String in
+                return self.getYAxisLabelTextFromValue(value: v)
+            }
+            
+            width = ChartUtils.getMaxStringWidth(strings: labels, font: axisLabelFont.y)
+        }
+        return width + axisLabelSpacing.y
+    }
     
     func getYAxisRange() -> (minimum: Double, maximum: Double)? {
         var minimum: Double = Double.infinity
@@ -306,7 +305,7 @@ extension LineChart {
                 minimum = rangeCalculated.minimum
             }
             if rangeType.maximum == .auto {
-                maximum = rangeCalculated.maximum
+                maximum = ChartUtils.getNestNumber(source: rangeCalculated.maximum)
             }
         }
         
@@ -333,7 +332,6 @@ extension LineChart {
         layer.frame = frame
         
         for point in points {
-            
             switch shape {
             case .circle:
                 let circle = ChartUtils.createCircleShape(center: point, radius: radius, color: color)

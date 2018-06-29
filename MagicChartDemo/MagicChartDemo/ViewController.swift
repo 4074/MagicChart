@@ -44,6 +44,13 @@ class ViewController: UIViewController {
         }
         let setTwo = lineChart.createDataSet(label, value: [9, 10, 8, 7, 12, 14, 4]) { (set) in
             set.pointShape = .square
+            for i in 0..<label.count - 1 {
+                if i < label.count - 2 {
+                    set.lineDashPattern.append([])
+                } else {
+                    set.lineDashPattern.append([4, 4])
+                }
+            }
         }
         
         dataSource.label = label

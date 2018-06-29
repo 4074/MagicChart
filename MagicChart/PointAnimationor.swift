@@ -23,7 +23,7 @@ class PointAnimator {
         self.duration = duration
         self.points = points
         self.layers = layers
-        print(points)
+//        print(points)
         for layer in layers {
             layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             layer.opacity = 0
@@ -48,7 +48,7 @@ class PointAnimator {
     @objc
     func handleDisplayLink() {
         if let width = sourceLayer?.presentation()?.path?.boundingBoxOfPath.width {
-            print(width)
+//            print(width)
             displayLayerIfNeed(width: width)
         }
     }
