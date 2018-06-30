@@ -95,7 +95,7 @@ class ChartXAxis: ChartAxis {
             )
             textLayer.font = labelFont
             textLayer.fontSize = labelFont.pointSize
-            textLayer.foregroundColor = UIColor.lightGray.cgColor
+            textLayer.foregroundColor = labelColor.cgColor
             textLayer.string = text
             textLayer.alignmentMode = "center"
             textLayer.contentsScale = UIScreen.main.scale
@@ -142,7 +142,7 @@ class ChartYAxis: ChartAxis {
             )
             textLayer.font = labelFont
             textLayer.fontSize = labelFont.pointSize
-            textLayer.foregroundColor = UIColor.lightGray.cgColor
+            textLayer.foregroundColor = labelColor.cgColor
             textLayer.string = index == 0 ? "" : text
             textLayer.alignmentMode = "right"
             textLayer.contentsScale = UIScreen.main.scale

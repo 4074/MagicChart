@@ -16,8 +16,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.e
         
+        view.backgroundColor = UIColor(red: 52/255, green: 187/255, blue: 171/255, alpha: 1)
+        
         lineChart = LineChart()
         lineChart.frame = CGRect(x: 20, y: 80, width: view.frame.width - 40, height: 200)
+        lineChart.axisLineColor = (.white, .white)
+        lineChart.axisLabelColor = (.white, .white)
         view.addSubview(lineChart)
         refreshChart()
         

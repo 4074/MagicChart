@@ -23,7 +23,7 @@ class AxisChart: UIView {
     var axisSize: (x: CGSize, y: CGSize) = (.zero, .zero)
     
     var axisLayer: (x: ChartXAxis?, y: ChartYAxis?) = (nil, nil)
-    var axisLineWidth: (x: CGFloat, y: CGFloat) = (0.2, 0.2)
+    var axisLineWidth: (x: CGFloat, y: CGFloat) = (0.8, 0.8)
     var axisLineColor: (x: UIColor, y: UIColor) = (.lightGray, .lightGray)
     
     var axisLabelCount: (x: Int, y: Int) = (4, 4)
