@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB17746420F381A500F90DF3 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB17746320F381A500F90DF3 /* Formatters.swift */; };
 		FB22CD5C20E5E12100F85FB1 /* ChartAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22CD5720E5E12000F85FB1 /* ChartAxis.swift */; };
 		FB22CD5D20E5E12100F85FB1 /* LineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22CD5820E5E12000F85FB1 /* LineChart.swift */; };
 		FB22CD5E20E5E12100F85FB1 /* ChartUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22CD5920E5E12100F85FB1 /* ChartUtils.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FB17746320F381A500F90DF3 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Formatters.swift; path = ../../MagicChart/Formatters.swift; sourceTree = "<group>"; };
 		FB22CD5720E5E12000F85FB1 /* ChartAxis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartAxis.swift; path = ../../MagicChart/ChartAxis.swift; sourceTree = "<group>"; };
 		FB22CD5820E5E12000F85FB1 /* LineChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LineChart.swift; path = ../../MagicChart/LineChart.swift; sourceTree = "<group>"; };
 		FB22CD5920E5E12100F85FB1 /* ChartUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartUtils.swift; path = ../../MagicChart/ChartUtils.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 				FB22CD5820E5E12000F85FB1 /* LineChart.swift */,
 				FB22CD5A20E5E12100F85FB1 /* PointAnimationor.swift */,
 				FB22CD6120E60FA000F85FB1 /* AxisChart.swift */,
+				FB17746320F381A500F90DF3 /* Formatters.swift */,
 			);
 			path = MagicChart;
 			sourceTree = "<group>";
@@ -165,6 +168,7 @@
 				FB22CD5F20E5E12100F85FB1 /* PointAnimationor.swift in Sources */,
 				FB22CD5E20E5E12100F85FB1 /* ChartUtils.swift in Sources */,
 				FB22CD5D20E5E12100F85FB1 /* LineChart.swift in Sources */,
+				FB17746420F381A500F90DF3 /* Formatters.swift in Sources */,
 				FB69AD3520073DF900383099 /* ViewController.swift in Sources */,
 				FB22CD6020E5E12100F85FB1 /* ChartData.swift in Sources */,
 				FB22CD5C20E5E12100F85FB1 /* ChartAxis.swift in Sources */,

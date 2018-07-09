@@ -30,12 +30,15 @@ public class LineChart: AxisChart {
     var delegate: LineChartDelegate?
     
     override func touchDidUpdate(location: CGPoint) {
-        let frameInset = UIEdgeInsets(top: inset.top, left: inset.left + axisFrame.y.width, bottom: inset.bottom, right: inset.right)
-        let index = ChartUtils.computeSelectedIndex(point: location, frame: dataLayer!.frame, inset: frameInset, count: dataSource.label.count)
-        handleDidSelect(index: index)
+        if !rendering {
+            let frameInset = UIEdgeInsets(top: inset.top, left: inset.left + axisFrame.y.width, bottom: inset.bottom, right: inset.right)
+            let index = ChartUtils.computeSelectedIndex(point: location, frame: dataLayer!.frame, inset: frameInset, count: dataSource.label.count)
+            handleDidSelect(index: index)
+        }
     }
     
     func render() {
+        rendering = true
         range = getYAxisRange()
         
         chartLayer = CALayer()
@@ -183,9 +186,7 @@ public class LineChart: AxisChart {
                 layers: layers
             )
             animator.setCompletionBlock {
-                if let d = self.delegate {
-                    d.chartView(self, didDraw: true)
-                }
+                self.handleDidRender()
             }
             animator.start()
         }
@@ -241,7 +242,14 @@ public class LineChart: AxisChart {
     }
     
     func getYAxisLabelTextFromValue(value: Double) -> String {
-        return String(Int(value))
+        return axisConfig.y.formatter.string(from: NSNumber(value: value)) ?? ""
+    }
+    
+    func handleDidRender() {
+        rendering = false
+        if let d = self.delegate {
+            d.chartView(self, didDraw: true)
+        }
     }
     
     func setSelected(index: Int) {

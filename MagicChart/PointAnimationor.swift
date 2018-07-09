@@ -43,11 +43,13 @@ public class PointAnimator {
     }
     
     func stop(completion: Bool = true) {
-        self.completion = completion
-        link?.invalidate()
-        
-        if let d = completionBlock {
-            d()
+        if !self.completion {
+            self.completion = completion
+            link?.invalidate()
+            
+            if let d = completionBlock {
+                d()
+            }
         }
     }
     

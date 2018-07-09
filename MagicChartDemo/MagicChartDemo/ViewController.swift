@@ -26,9 +26,10 @@ class ViewController: UIViewController {
         
         lineChart.axisConfig.y.lineColor = .clear
         lineChart.axisConfig.y.labelColor = .white
-        lineChart.axisConfig.y.labelCount = 2
+        lineChart.axisConfig.y.labelCount = 1
         lineChart.axisConfig.y.labelPosition = .inside
         lineChart.axisConfig.y.labelAlignment = "left"
+        lineChart.axisConfig.y.formatter = MagicChartIntFormatter()
         
         lineChart.delegate = self
 
@@ -45,7 +46,7 @@ class ViewController: UIViewController {
     @objc func refreshChart() {
         let dataSource = LineChartDataSource()
         let label = ["06/16", "06/17", "06/18", "06/19", "06/20", "06/21", "06/22"]
-        let setOne = lineChart.createDataSet(label, value: [3, 5, 2, 3, 1, 9, 8]) { (set) in
+        let setOne = lineChart.createDataSet(label, value: [326, 517, 223, 397, 800, 993, 584]) { (set) in
             set.lineDashPattern = []
             set.pointShape = .circle
             set.lineColor = .white
@@ -57,7 +58,7 @@ class ViewController: UIViewController {
                 }
             }
         }
-        let setTwo = lineChart.createDataSet(label, value: [9, 10, 8, 7, 12, 14, 4]) { (set) in
+        let setTwo = lineChart.createDataSet(label, value: [210, 260, 820, 745, 722, 643, 456]) { (set) in
             set.pointShape = .square
             set.lineColor = UIColor.white.withAlphaComponent(0.4)
             for i in 0..<label.count - 1 {
@@ -79,7 +80,6 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
 }
 
 extension ViewController: LineChartDelegate {
@@ -93,8 +93,7 @@ extension ViewController: LineChartDelegate {
     
     func chartView(_ chartView: LineChart, styleSelectedLayer layer: CAShapeLayer) {
         let gradLayer = CAGradientLayer()
-        gradLayer.frame = layer.bounds // CGRect(x: 0, y: 0, width: layer.frame.width, height: layer.frame.height)
-        print(layer.bounds)
+        gradLayer.frame = layer.bounds
         gradLayer.colors = [UIColor.white.withAlphaComponent(0.1).cgColor, UIColor.white.withAlphaComponent(0.6).cgColor, UIColor.white.withAlphaComponent(0.1).cgColor]
         
         layer.strokeColor = UIColor.clear.cgColor

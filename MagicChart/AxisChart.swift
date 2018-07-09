@@ -12,6 +12,7 @@ public class AxisChart: UIView {
 
     let screenScale = UIScreen.main.scale
     var colors: [UIColor] = [.green, .blue, .orange, .red]
+    var rendering = false
     
     var rangeType: (minimum: MagicChartAxisRangeType, maximum: MagicChartAxisRangeType) = (.zero, .auto)
     var range: (minimum: Double, maximum: Double)?
@@ -70,6 +71,7 @@ public class AxisChartAxisConfig {
     var labelSpacing: CGFloat = 4
     var labelPosition: AxisChartLabelPosition = .outside
     var labelAlignment: CATextLayerAlignmentMode = "center"
+    var formatter: NumberFormatter = NumberFormatter()
 }
 
 public enum AxisChartLabelPosition {

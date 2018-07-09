@@ -66,7 +66,7 @@ class ChartXAxis: ChartAxis {
     override func drawLabel() {
         super.drawLabel()
         
-        let itemWidth = frame.width / CGFloat(labels.count - 1)
+        let itemWidth = frame.width / CGFloat(max(1, labels.count - 1))
         let wrapLayer = CATextLayer()
         
         wrapLayer.frame = CGRect(
@@ -128,7 +128,7 @@ class ChartYAxis: ChartAxis {
                 continue
             }
             let textLayer = CATextLayer()
-            let y = wrapLayer.frame.height - CGFloat(index) * (wrapLayer.frame.height / CGFloat(labels.count - 1)) - (config.labelFont.pointSize / 2)
+            let y = labels.count == 1 ? 0 : wrapLayer.frame.height - CGFloat(index) * (wrapLayer.frame.height / CGFloat(labels.count - 1)) - (config.labelFont.pointSize / 2)
             textLayer.frame = CGRect(
                 x: 0 - config.labelSpacing,
                 y: y,
@@ -138,8 +138,8 @@ class ChartYAxis: ChartAxis {
             textLayer.font = config.labelFont
             textLayer.fontSize = config.labelFont.pointSize
             textLayer.foregroundColor = config.labelColor.cgColor
-            textLayer.string = index == 0 ? "" : text
-            textLayer.alignmentMode = "right"
+            textLayer.string = text
+            textLayer.alignmentMode = config.labelAlignment as String
             textLayer.contentsScale = UIScreen.main.scale
             wrapLayer.addSublayer(textLayer)
         }
