@@ -8,8 +8,9 @@
 
 import UIKit
 
-class AxisChart: UIView {
+public class AxisChart: UIView {
 
+    let screenScale = UIScreen.main.scale
     var colors: [UIColor] = [.green, .blue, .orange, .red]
     
     var rangeType: (minimum: MagicChartAxisRangeType, maximum: MagicChartAxisRangeType) = (.zero, .auto)
@@ -20,25 +21,33 @@ class AxisChart: UIView {
     
     var inset: UIEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
     
-    var axisSize: (x: CGSize, y: CGSize) = (.zero, .zero)
+    var axisConfig: (x: AxisChartAxisConfig, y: AxisChartAxisConfig)!
+    var axisFrame: (x: CGRect, y: CGRect) = (.zero, .zero)
     
     var axisLayer: (x: ChartXAxis?, y: ChartYAxis?) = (nil, nil)
-    var axisLineWidth: (x: CGFloat, y: CGFloat) = (0.8, 0.8)
-    var axisLineColor: (x: UIColor, y: UIColor) = (.lightGray, .lightGray)
     
-    var axisLabelCount: (x: Int, y: Int) = (4, 4)
-    var axisLabelFont: (x: UIFont, y: UIFont) = (UIFont.systemFont(ofSize: 12), UIFont.systemFont(ofSize: 12))
-    var axisLabelColor: (x: UIColor, y: UIColor) = (.lightGray, .lightGray)
-    var axisLabelSpacing: (x: CGFloat, y: CGFloat) = (4, 8)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        let xConfig = AxisChartAxisConfig()
+        let yConfig = AxisChartAxisConfig()
+        yConfig.labelAlignment = "right"
+        
+        axisConfig = (xConfig, yConfig)
+    }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             touchDidUpdate(location: t.location(in: self))
             break
         }
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             touchDidUpdate(location: t.location(in: self))
             break
@@ -48,4 +57,27 @@ class AxisChart: UIView {
     func touchDidUpdate(location: CGPoint) {
         
     }
+}
+
+public class AxisChartAxisConfig {
+    var direction: AxisChartAxisDirection = .x
+    var lineWidth: CGFloat = 0.8
+    var lineColor: UIColor = .lightGray
+    
+    var labelCount: Int = 4
+    var labelFont: UIFont = UIFont.systemFont(ofSize: 12)
+    var labelColor: UIColor = .lightGray
+    var labelSpacing: CGFloat = 4
+    var labelPosition: AxisChartLabelPosition = .outside
+    var labelAlignment: CATextLayerAlignmentMode = "center"
+}
+
+public enum AxisChartLabelPosition {
+    case inside
+    case outside
+}
+
+public enum AxisChartAxisDirection {
+    case x
+    case y
 }

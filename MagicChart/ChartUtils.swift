@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChartUtils {
+public class ChartUtils {
     static func getNestNumber(source: Double) -> Double {
         let weight = pow(10, Double((String(Int(source)).count - 1)))
         var result = 2 * weight

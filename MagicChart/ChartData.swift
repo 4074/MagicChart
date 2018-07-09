@@ -8,29 +8,29 @@
 
 import UIKit
 
-enum MagicLineStyle {
+public enum MagicLineStyle {
     case line
     case curve
 }
 
-enum MagicChartAxisRangeType {
+public enum MagicChartAxisRangeType {
     case auto
     case zero
     case manual
 }
 
-enum MagicChartPointShape {
+public enum MagicChartPointShape {
     case circle
     case square
     case triangle
 }
 
-class LineChartDataSource {
+public class LineChartDataSource {
     var label = [String]()
     var sets = [LineChartDataSet]()
 }
 
-class LineChartDataSet {
+public class LineChartDataSet {
     var value = [String: Double]()
     
     var lineWidth: CGFloat = 1

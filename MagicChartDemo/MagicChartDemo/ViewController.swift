@@ -20,15 +20,25 @@ class ViewController: UIViewController {
         
         lineChart = LineChart()
         lineChart.frame = CGRect(x: 20, y: 80, width: view.frame.width - 40, height: 200)
-        lineChart.axisLineColor = (.white, .white)
-        lineChart.axisLabelColor = (.white, .white)
+        lineChart.axisConfig.x.lineColor = UIColor.white.withAlphaComponent(0.2)
+        lineChart.axisConfig.x.labelColor = .white
+        lineChart.axisConfig.x.labelCount = 4
+        
+        lineChart.axisConfig.y.lineColor = .clear
+        lineChart.axisConfig.y.labelColor = .white
+        lineChart.axisConfig.y.labelCount = 2
+        lineChart.axisConfig.y.labelPosition = .inside
+        lineChart.axisConfig.y.labelAlignment = "left"
+        
+        lineChart.delegate = self
+
         view.addSubview(lineChart)
         refreshChart()
         
-        let button = UIButton(frame: CGRect(x: 20, y: 300, width: 80, height: 32))
+        let button = UIButton(frame: CGRect(x: 20, y: 320, width: 80, height: 32))
         view.addSubview(button)
         button.setTitle("Refresh", for: .normal)
-        button.backgroundColor = .blue
+        button.backgroundColor = .clear
         button.addTarget(self, action: #selector(self.refreshChart), for: .touchUpInside)
     }
     
@@ -38,6 +48,7 @@ class ViewController: UIViewController {
         let setOne = lineChart.createDataSet(label, value: [3, 5, 2, 3, 1, 9, 8]) { (set) in
             set.lineDashPattern = []
             set.pointShape = .circle
+            set.lineColor = .white
             for i in 0..<label.count - 1 {
                 if i < label.count - 2 {
                     set.lineDashPattern.append([])
@@ -48,6 +59,7 @@ class ViewController: UIViewController {
         }
         let setTwo = lineChart.createDataSet(label, value: [9, 10, 8, 7, 12, 14, 4]) { (set) in
             set.pointShape = .square
+            set.lineColor = UIColor.white.withAlphaComponent(0.4)
             for i in 0..<label.count - 1 {
                 if i < label.count - 2 {
                     set.lineDashPattern.append([])
@@ -70,3 +82,22 @@ class ViewController: UIViewController {
 
 }
 
+extension ViewController: LineChartDelegate {
+    func chartView(_ chartView: LineChart, didDraw: Bool) {
+        chartView.setSelected(index: chartView.dataSource.label.count - 1)
+    }
+    
+    func chartView(_ chartView: LineChart, didSelect index: Int) {
+        print(index)
+    }
+    
+    func chartView(_ chartView: LineChart, styleSelectedLayer layer: CAShapeLayer) {
+        let gradLayer = CAGradientLayer()
+        gradLayer.frame = layer.bounds // CGRect(x: 0, y: 0, width: layer.frame.width, height: layer.frame.height)
+        print(layer.bounds)
+        gradLayer.colors = [UIColor.white.withAlphaComponent(0.1).cgColor, UIColor.white.withAlphaComponent(0.6).cgColor, UIColor.white.withAlphaComponent(0.1).cgColor]
+        
+        layer.strokeColor = UIColor.clear.cgColor
+        layer.addSublayer(gradLayer)
+    }
+}

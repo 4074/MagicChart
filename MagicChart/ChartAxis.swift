@@ -10,15 +10,10 @@ import UIKit
 
 class ChartAxis: CALayer {
     
-    var lineWidth: CGFloat = 1
-    var lineColor: UIColor = .black
+    var config: AxisChartAxisConfig = AxisChartAxisConfig()
     var lineLayer: CAShapeLayer?
-    
-    var labelFont: UIFont = UIFont.systemFont(ofSize: 12)
     var labels = [String]()
-    var labelColor: UIColor = .black
     var labelLayer: CATextLayer?
-    var labelSpacing: CGFloat = 0
     
     func render() {
         drawLine()
@@ -51,8 +46,8 @@ class ChartAxis: CALayer {
         path.addLine(to: end)
         
         layer.path = path.cgPath
-        layer.strokeColor = lineColor.cgColor
-        layer.lineWidth = lineWidth
+        layer.strokeColor = config.lineColor.cgColor
+        layer.lineWidth = config.lineWidth
         layer.contentsScale = UIScreen.main.scale
         
         return layer
@@ -78,7 +73,7 @@ class ChartXAxis: ChartAxis {
             x: 0,
             y: 0,
             width: frame.width,
-            height: labelFont.pointSize
+            height: config.labelFont.pointSize
         )
         
         for (index, text) in labels.enumerated() {
@@ -86,16 +81,16 @@ class ChartXAxis: ChartAxis {
                 continue
             }
             let textLayer = CATextLayer()
-            let width: CGFloat = labelFont.pointSize * CGFloat(text.count)
+            let width: CGFloat = config.labelFont.pointSize * CGFloat(text.count)
             textLayer.frame = CGRect(
                 x: itemWidth * CGFloat(index) - width / 2,
-                y: labelSpacing,
+                y: config.labelSpacing,
                 width: width,
-                height: labelFont.pointSize
+                height: config.labelFont.pointSize
             )
-            textLayer.font = labelFont
-            textLayer.fontSize = labelFont.pointSize
-            textLayer.foregroundColor = labelColor.cgColor
+            textLayer.font = config.labelFont
+            textLayer.fontSize = config.labelFont.pointSize
+            textLayer.foregroundColor = config.labelColor.cgColor
             textLayer.string = text
             textLayer.alignmentMode = "center"
             textLayer.contentsScale = UIScreen.main.scale
@@ -133,16 +128,16 @@ class ChartYAxis: ChartAxis {
                 continue
             }
             let textLayer = CATextLayer()
-            let y = wrapLayer.frame.height - CGFloat(index) * (wrapLayer.frame.height / CGFloat(labels.count - 1)) - (labelFont.pointSize / 2)
+            let y = wrapLayer.frame.height - CGFloat(index) * (wrapLayer.frame.height / CGFloat(labels.count - 1)) - (config.labelFont.pointSize / 2)
             textLayer.frame = CGRect(
-                x: 0 - labelSpacing,
+                x: 0 - config.labelSpacing,
                 y: y,
                 width: frame.width,
-                height: labelFont.pointSize
+                height: config.labelFont.pointSize
             )
-            textLayer.font = labelFont
-            textLayer.fontSize = labelFont.pointSize
-            textLayer.foregroundColor = labelColor.cgColor
+            textLayer.font = config.labelFont
+            textLayer.fontSize = config.labelFont.pointSize
+            textLayer.foregroundColor = config.labelColor.cgColor
             textLayer.string = index == 0 ? "" : text
             textLayer.alignmentMode = "right"
             textLayer.contentsScale = UIScreen.main.scale

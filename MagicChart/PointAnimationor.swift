@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PointAnimator {
+public class PointAnimator {
     
     var link: CADisplayLink?
     var sourceLayer: CAShapeLayer?
@@ -17,6 +17,8 @@ class PointAnimator {
     var duration: TimeInterval = 0
     var nextIndex: Int = 0
     var completion = false
+    
+    var completionBlock: (() -> Void)?
     
     init(source: CAShapeLayer, duration: TimeInterval, points: [CGPoint], layers: [CAShapeLayer]) {
         self.sourceLayer = source
@@ -43,6 +45,14 @@ class PointAnimator {
     func stop(completion: Bool = true) {
         self.completion = completion
         link?.invalidate()
+        
+        if let d = completionBlock {
+            d()
+        }
+    }
+    
+    func setCompletionBlock(_ block: (() -> Void)?) {
+        completionBlock = block
     }
     
     @objc
