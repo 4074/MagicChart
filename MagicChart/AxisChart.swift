@@ -13,6 +13,7 @@ public class AxisChart: UIView {
     let screenScale = UIScreen.main.scale
     var colors: [UIColor] = [.green, .blue, .orange, .red]
     var rendering = false
+    var animation = true
     
     var rangeType: (minimum: MagicChartAxisRangeType, maximum: MagicChartAxisRangeType) = (.zero, .auto)
     var range: (minimum: Double, maximum: Double)?

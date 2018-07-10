@@ -30,9 +30,9 @@ public class LineChart: AxisChart {
     var delegate: LineChartDelegate?
     
     override func touchDidUpdate(location: CGPoint) {
-        if !rendering {
-            let frameInset = UIEdgeInsets(top: inset.top, left: inset.left + axisFrame.y.width, bottom: inset.bottom, right: inset.right)
-            let index = ChartUtils.computeSelectedIndex(point: location, frame: dataLayer!.frame, inset: frameInset, count: dataSource.label.count)
+        if let dataLayer = self.dataLayer, !rendering {
+            let frameInset = UIEdgeInsets(top: inset.top, left: inset.left + self.frame.width - dataLayer.frame.width, bottom: inset.bottom, right: inset.right)
+            let index = ChartUtils.computeSelectedIndex(point: location, frame: dataLayer.frame, inset: frameInset, count: dataSource.label.count)
             handleDidSelect(index: index)
         }
     }
@@ -72,6 +72,10 @@ public class LineChart: AxisChart {
         
         drawAxisLine()
         drawSetLine()
+        
+        if !animation {
+            handleDidRender()
+        }
     }
     
     func reset() {
@@ -155,20 +159,42 @@ public class LineChart: AxisChart {
                 }
             }
 
+            let innerLayer = CAShapeLayer()
+            innerLayer.frame = setLayer.bounds
+            innerLayer.addSublayer(lineLayer)
             
-            setLayer.addSublayer(lineLayer)
-            
-            let maskLayer = createAnimationMask(layer: lineLayer)
-            lineLayer.mask = maskLayer
-            
+            setLayer.addSublayer(innerLayer)
             dataPoints.append(points)
-            dataSetLayer.append((setLayer, lineLayer, maskLayer))
+
+            if animation {
+                let maskLayer = createAnimationMask(layer: lineLayer)
+                lineLayer.mask = maskLayer
+                dataSetLayer.append((setLayer, lineLayer, maskLayer))
+            } else {
+                dataSetLayer.append((setLayer, lineLayer, nil))
+            }
             
             if let shape = set.pointShape {
                 let pointLayer = createPointLayer(setLayer.bounds, points: points, radius: set.pointRadius, shape: shape, color: color)
                 setLayer.addSublayer(pointLayer.layer)
                 dataPointLayer.append(pointLayer)
-                addAnimationToPoints(index: index)
+                
+                let m = CAShapeLayer()
+                let path = CGMutablePath()
+                path.addRect(innerLayer.bounds)
+                
+                let ps = createPointMaskPath(points: points, radius: set.pointRadius, shape: shape)
+                for p in ps {
+                    path.addPath(p)
+                }
+                
+                m.fillRule = kCAFillRuleEvenOdd
+                m.path = path
+                innerLayer.mask = m
+                
+                if animation {
+                    addAnimationToPoints(index: index)
+                }
             } else {
                 dataPointLayer.append(nil)
             }
@@ -297,6 +323,8 @@ public class LineChart: AxisChart {
         } else {
             selectedLayer?.frame = frame
         }
+        
+        
     }
 }
 
@@ -360,7 +388,7 @@ extension LineChart {
         for point in points {
             switch shape {
             case .circle:
-                let circle = ChartUtils.createCircleShape(center: point, radius: radius, color: color)
+                let circle = ChartUtils.createCircleShape(center: point, radius: radius, color: color, hole: radius - 1)
                 subs.append(circle)
                 layer.addSublayer(circle)
             case .square:
@@ -373,6 +401,25 @@ extension LineChart {
         }
         
         return (layer, subs)
+    }
+    
+    func createPointMaskPath(points: [CGPoint], radius: CGFloat, shape: MagicChartPointShape) -> [CGPath] {
+        var paths = [CGPath]()
+        
+        for point in points {
+            switch shape {
+            case .circle:
+                let path = UIBezierPath(arcCenter: point, radius: radius, startAngle: 0, endAngle: CGFloat(Double.pi * 2), clockwise: true)
+                paths.append(path.cgPath)
+            case .square:
+                let path = UIBezierPath(arcCenter: point, radius: radius, startAngle: 0, endAngle: CGFloat(Double.pi * 2), clockwise: true)
+                paths.append(path.cgPath)
+            default:
+                break
+            }
+        }
+        
+        return paths
     }
     
     func addAnimationToLayer(_ layer: CAShapeLayer, duration: CFTimeInterval) {

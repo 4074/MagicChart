@@ -31,13 +31,15 @@ public class ChartUtils {
         return index
     }
     
-    static func createCircleShape(center: CGPoint, radius: CGFloat, color: UIColor) -> CAShapeLayer {
+    static func createCircleShape(center: CGPoint, radius: CGFloat, color: UIColor, hole: CGFloat = 0) -> CAShapeLayer {
         let circle = CAShapeLayer()
         circle.frame = CGRect(origin: CGPoint(x: center.x - radius, y: center.y - radius), size: CGSize(width: radius, height: radius))
         let path = UIBezierPath(arcCenter: CGPoint(x: radius, y: radius), radius: radius, startAngle: 0, endAngle: CGFloat(Double.pi * 2), clockwise: true)
         
         circle.path = path.cgPath
-        circle.fillColor = color.cgColor
+        circle.strokeColor = color.cgColor
+        circle.fillColor = UIColor.clear.cgColor
+        circle.lineWidth = radius - hole
         return circle
     }
     
