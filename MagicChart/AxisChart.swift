@@ -38,7 +38,7 @@ public class AxisChart: UIView {
         axisConfig = (xConfig, yConfig)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -71,7 +71,7 @@ public class AxisChartAxisConfig {
     var labelColor: UIColor = .lightGray
     var labelSpacing: CGFloat = 4
     var labelPosition: AxisChartLabelPosition = .outside
-    var labelAlignment: CATextLayerAlignmentMode = "center"
+    var labelAlignment: String = "center"
     var formatter: NumberFormatter = NumberFormatter()
 }
 

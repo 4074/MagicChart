@@ -19,6 +19,7 @@
 		FB69AD3820073DF900383099 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB69AD3620073DF900383099 /* Main.storyboard */; };
 		FB69AD3A20073DF900383099 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB69AD3920073DF900383099 /* Assets.xcassets */; };
 		FB69AD3D20073DF900383099 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB69AD3B20073DF900383099 /* LaunchScreen.storyboard */; };
+		FBC83B3920F8B01300F02583 /* LineChartPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC83B3820F8B01300F02583 /* LineChartPoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		FB69AD3920073DF900383099 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB69AD3C20073DF900383099 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FB69AD3E20073DF900383099 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FBC83B3820F8B01300F02583 /* LineChartPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LineChartPoint.swift; path = ../../MagicChart/LineChartPoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				FB22CD5A20E5E12100F85FB1 /* PointAnimationor.swift */,
 				FB22CD6120E60FA000F85FB1 /* AxisChart.swift */,
 				FB17746320F381A500F90DF3 /* Formatters.swift */,
+				FBC83B3820F8B01300F02583 /* LineChartPoint.swift */,
 			);
 			path = MagicChart;
 			sourceTree = "<group>";
@@ -168,6 +171,7 @@
 				FB22CD5F20E5E12100F85FB1 /* PointAnimationor.swift in Sources */,
 				FB22CD5E20E5E12100F85FB1 /* ChartUtils.swift in Sources */,
 				FB22CD5D20E5E12100F85FB1 /* LineChart.swift in Sources */,
+				FBC83B3920F8B01300F02583 /* LineChartPoint.swift in Sources */,
 				FB17746420F381A500F90DF3 /* Formatters.swift in Sources */,
 				FB69AD3520073DF900383099 /* ViewController.swift in Sources */,
 				FB22CD6020E5E12100F85FB1 /* ChartData.swift in Sources */,

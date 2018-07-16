@@ -67,7 +67,7 @@ public class PointAnimator {
     
     func displayLayerIfNeed(width: CGFloat) {
         for index in nextIndex..<points.count {
-            if width >= points[index].x {
+            if width >= points[index].x - 24 {
                 displayLayer(layer: layers[index])
                 nextIndex = index + 1
                 
@@ -91,7 +91,7 @@ public class PointAnimator {
         
         let group = CAAnimationGroup()
         
-        group.animations = [opacityAnimation, transformAnimation]
+        group.animations = [opacityAnimation]
         
         group.duration = 0.4
         group.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)

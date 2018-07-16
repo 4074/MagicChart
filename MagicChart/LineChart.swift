@@ -17,8 +17,9 @@ public class LineChart: AxisChart {
         }
     }
     var dataSetLayer: [(set: CAShapeLayer, line: CAShapeLayer, mask: CAShapeLayer?)] = []
-    var dataPointLayer: [(layer: CAShapeLayer, subs: [CAShapeLayer])?] = []
+    var dataPointLayer: [(layer: CAShapeLayer, subs: [LineChartPoint])?] = []
     var dataPoints: [[CGPoint]] = []
+    private var dataPointsCache: [[CGPoint]] = []
     
     var duration: TimeInterval = 1
     
@@ -179,6 +180,7 @@ public class LineChart: AxisChart {
                 setLayer.addSublayer(pointLayer.layer)
                 dataPointLayer.append(pointLayer)
                 
+                // TODO: innerLayer mask with animation
                 let m = CAShapeLayer()
                 let path = CGMutablePath()
                 path.addRect(innerLayer.bounds)
@@ -205,17 +207,21 @@ public class LineChart: AxisChart {
     
     func addAnimationToPoints(index: Int) {
         if let mask = dataSetLayer[index].mask, let layers = dataPointLayer[index]?.subs {
-            let animator = PointAnimator(
-                source: mask,
-                duration: duration,
-                points: dataPoints[index],
-                layers: layers
-            )
-            animator.setCompletionBlock {
-                self.handleDidRender()
-            }
-            animator.start()
+            addAnimationToPoints(mask: mask, layers: layers, points: dataPoints[index])
         }
+    }
+    
+    func addAnimationToPoints(mask: CAShapeLayer, layers: [CAShapeLayer], points: [CGPoint]) {
+        let animator = PointAnimator(
+            source: mask,
+            duration: duration,
+            points: points,
+            layers: layers
+        )
+        animator.setCompletionBlock {
+            self.handleDidRender()
+        }
+        animator.start()
     }
     
     func createAnimationMask(layer: CAShapeLayer) -> CAShapeLayer {
@@ -324,7 +330,17 @@ public class LineChart: AxisChart {
             selectedLayer?.frame = frame
         }
         
-        
+        drawSelectedPoint(index: index)
+    }
+    
+    func drawSelectedPoint(index: Int) {
+        for group in dataPointLayer {
+            if let subs = group?.subs {
+                for (i, p) in subs.enumerated() {
+                    p.active = i == index
+                }
+            }
+        }
     }
 }
 
@@ -379,20 +395,20 @@ extension LineChart {
         return minimum <= maximum ? (minimum, maximum) : nil
     }
     
-    func createPointLayer(_ frame: CGRect, points: [CGPoint], radius: CGFloat, shape: MagicChartPointShape, color: UIColor) -> (layer: CAShapeLayer, subs: [CAShapeLayer]) {
+    func createPointLayer(_ frame: CGRect, points: [CGPoint], radius: CGFloat, shape: MagicChartPointShape, color: UIColor) -> (layer: CAShapeLayer, subs: [LineChartPoint]) {
         let layer = CAShapeLayer()
-        var subs: [CAShapeLayer] = []
+        var subs: [LineChartPoint] = []
         
         layer.frame = frame
         
         for point in points {
             switch shape {
             case .circle:
-                let circle = ChartUtils.createCircleShape(center: point, radius: radius, color: color, hole: radius - 1)
+                let circle = LineChartPoint(center: point, shape: .circle, color: color, radius: radius)
                 subs.append(circle)
                 layer.addSublayer(circle)
             case .square:
-                let square = ChartUtils.createSquareShape(center: point, radius: radius, color: color)
+                let square = LineChartPoint(center: point, shape: .square, color: color, radius: radius)
                 subs.append(square)
                 layer.addSublayer(square)
             default:

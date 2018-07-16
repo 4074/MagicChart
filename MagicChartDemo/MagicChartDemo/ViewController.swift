@@ -31,6 +31,7 @@ class ViewController: UIViewController {
         lineChart.axisConfig.y.labelAlignment = "left"
         lineChart.axisConfig.y.formatter = MagicChartIntFormatter()
         
+//        lineChart.animation = false
         lineChart.delegate = self
 
         view.addSubview(lineChart)
@@ -59,7 +60,7 @@ class ViewController: UIViewController {
             }
         }
         let setTwo = lineChart.createDataSet(label, value: [210, 260, 820, 745, 722, 643, 456]) { (set) in
-            set.pointShape = .square
+            set.pointShape = .circle
             set.lineColor = UIColor.white.withAlphaComponent(0.4)
             for i in 0..<label.count - 1 {
                 if i < label.count - 2 {

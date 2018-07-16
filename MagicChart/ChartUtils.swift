@@ -33,8 +33,9 @@ public class ChartUtils {
     
     static func createCircleShape(center: CGPoint, radius: CGFloat, color: UIColor, hole: CGFloat = 0) -> CAShapeLayer {
         let circle = CAShapeLayer()
+        let lineWidth = radius - hole
         circle.frame = CGRect(origin: CGPoint(x: center.x - radius, y: center.y - radius), size: CGSize(width: radius, height: radius))
-        let path = UIBezierPath(arcCenter: CGPoint(x: radius, y: radius), radius: radius, startAngle: 0, endAngle: CGFloat(Double.pi * 2), clockwise: true)
+        let path = UIBezierPath(arcCenter: CGPoint(x: radius, y: radius), radius: lineWidth/2 + hole, startAngle: 0, endAngle: CGFloat(Double.pi * 2), clockwise: true)
         
         circle.path = path.cgPath
         circle.strokeColor = color.cgColor
