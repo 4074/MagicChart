@@ -36,12 +36,17 @@ public class PointAnimator {
         link = CADisplayLink.init(target: self, selector: #selector(self.handleDisplayLink))
         link?.add(to: .current, forMode: .commonModes)
 
-        Timer.scheduledTimer(withTimeInterval: duration + 1, repeats: false) { (timer) in
-            self.stop()
-            timer.invalidate()
+        if #available(iOS 10.0, *) {
+            Timer.scheduledTimer(withTimeInterval: duration + 1, repeats: false) { (timer) in
+                self.stop()
+                timer.invalidate()
+            }
+        } else {
+            Timer.scheduledTimer(timeInterval: duration + 1, target: self, selector: #selector(self.stop), userInfo: nil, repeats: false)
         }
     }
     
+    @objc
     func stop(completion: Bool = true) {
         if !self.completion {
             self.completion = completion

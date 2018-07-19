@@ -24,12 +24,21 @@ class ViewController: UIViewController {
         lineChart.axisConfig.x.labelColor = .white
         lineChart.axisConfig.x.labelCount = 4
         
-        lineChart.axisConfig.y.lineColor = .clear
-        lineChart.axisConfig.y.labelColor = .white
-        lineChart.axisConfig.y.labelCount = 1
-        lineChart.axisConfig.y.labelPosition = .inside
-        lineChart.axisConfig.y.labelAlignment = "left"
-        lineChart.axisConfig.y.formatter = MagicChartIntFormatter()
+        lineChart.axisConfig.y.left.lineColor = .clear
+        lineChart.axisConfig.y.left.labelColor = .white
+        lineChart.axisConfig.y.left.labelCount = 1
+        lineChart.axisConfig.y.left.labelPosition = .inside
+        lineChart.axisConfig.y.left.labelAlignment = "left"
+        lineChart.axisConfig.y.left.labelSpacing = 0
+        lineChart.axisConfig.y.left.formatter = MagicChartIntFormatter()
+        
+        lineChart.axisConfig.y.right.lineColor = .clear
+        lineChart.axisConfig.y.right.labelColor = .white
+        lineChart.axisConfig.y.right.labelCount = 1
+        lineChart.axisConfig.y.right.labelPosition = .inside
+        lineChart.axisConfig.y.right.labelAlignment = "right"
+        lineChart.axisConfig.y.right.labelSpacing = 0
+        lineChart.axisConfig.y.right.formatter = MagicChartIntFormatter()
         
 //        lineChart.animation = false
         lineChart.delegate = self
@@ -61,7 +70,7 @@ class ViewController: UIViewController {
             shadow: 4,
             colors: (point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4))
         )
-        let setOne = lineChart.createDataSet(label, value: [326, 517, 223, 397, 800, 993, 584]) { (set) in
+        let setOne = lineChart.createDataSet(label, value: [32, 51, 22, 39, 80, 99, 58]) { (set) in
             set.lineDashPattern = []
             set.pointConfig = LineChartPointConfig(normal: pointConfig, active: pointConfigActive)
             set.lineColor = .white
@@ -76,6 +85,7 @@ class ViewController: UIViewController {
         let setTwo = lineChart.createDataSet(label, value: [210, 260, 820, 745, 722, 643, 456]) { (set) in
             set.pointConfig = LineChartPointConfig(normal: pointConfig, active: pointConfigActive)
             set.lineColor = UIColor.white.withAlphaComponent(0.4)
+            set.yAxisPosition = .right
             for i in 0..<label.count - 1 {
                 if i < label.count - 2 {
                     set.lineDashPattern.append([])

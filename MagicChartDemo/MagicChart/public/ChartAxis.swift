@@ -129,12 +129,22 @@ class ChartYAxis: ChartAxis {
             }
             let textLayer = CATextLayer()
             let y = labels.count == 1 ? 0 : wrapLayer.frame.height - CGFloat(index) * (wrapLayer.frame.height / CGFloat(labels.count - 1)) - (config.labelFont.pointSize / 2)
-            textLayer.frame = CGRect(
-                x: 0 - config.labelSpacing,
-                y: y,
-                width: frame.width,
-                height: config.labelFont.pointSize
-            )
+            if config.position == .left {
+                textLayer.frame = CGRect(
+                    x: config.labelSpacing,
+                    y: y,
+                    width: frame.width,
+                    height: config.labelFont.pointSize
+                )
+            } else {
+                textLayer.frame = CGRect(
+                    x: -frame.width - config.labelSpacing,
+                    y: y,
+                    width: frame.width,
+                    height: config.labelFont.pointSize
+                )
+            }
+            
             textLayer.font = config.labelFont
             textLayer.fontSize = config.labelFont.pointSize
             textLayer.foregroundColor = config.labelColor.cgColor

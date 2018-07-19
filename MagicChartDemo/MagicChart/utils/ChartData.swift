@@ -25,6 +25,13 @@ public enum MagicChartPointShape {
     case triangle
 }
 
+public enum AxisChartAxisPosition {
+    case top
+    case left
+    case right
+    case bottom
+}
+
 public class LineChartDataSource {
     var label = [String]()
     var sets = [LineChartDataSet]()
@@ -37,6 +44,10 @@ public class LineChartDataSet {
     var lineColor: UIColor?
     var lineDashPattern: [[Double]] = []
     var lineStyle: MagicLineStyle = .line
+    var xAxisPosition: AxisChartAxisPosition = .bottom
+    var yAxisPosition: AxisChartAxisPosition = .left
     
     var pointConfig: LineChartPointConfig? = nil
 }
+
+
