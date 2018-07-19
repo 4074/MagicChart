@@ -38,6 +38,5 @@ public class LineChartDataSet {
     var lineDashPattern: [[Double]] = []
     var lineStyle: MagicLineStyle = .line
     
-    var pointShape: MagicChartPointShape? = nil
-    var pointRadius: CGFloat = 4
+    var pointConfig: LineChartPointConfig? = nil
 }

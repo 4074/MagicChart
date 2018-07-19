@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class AxisChart: UIView {
+open class AxisChart: UIView {
 
     let screenScale = UIScreen.main.scale
     var colors: [UIColor] = [.green, .blue, .orange, .red]
@@ -42,14 +42,14 @@ public class AxisChart: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             touchDidUpdate(location: t.location(in: self))
             break
         }
     }
     
-    override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             touchDidUpdate(location: t.location(in: self))
             break

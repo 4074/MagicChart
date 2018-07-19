@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class LineChart: AxisChart {
+open class LineChart: AxisChart {
     
     var dataSource: LineChartDataSource = LineChartDataSource() {
         didSet {
@@ -17,7 +17,7 @@ public class LineChart: AxisChart {
         }
     }
     var dataSetLayer: [(set: CAShapeLayer, line: CAShapeLayer, mask: CAShapeLayer?)] = []
-    var dataPointLayer: [(layer: CAShapeLayer, subs: [LineChartPoint])?] = []
+    var dataPointLayer: [(layer: CAShapeLayer, subs: [LineChartCirclePoint])?] = []
     var dataPoints: [[CGPoint]] = []
     private var dataPointsCache: [[CGPoint]] = []
     
@@ -175,24 +175,24 @@ public class LineChart: AxisChart {
                 dataSetLayer.append((setLayer, lineLayer, nil))
             }
             
-            if let shape = set.pointShape {
-                let pointLayer = createPointLayer(setLayer.bounds, points: points, radius: set.pointRadius, shape: shape, color: color)
+            if let pointConfig = set.pointConfig {
+                let pointLayer = createPointLayer(frame: setLayer.bounds, points: points, config: pointConfig)
                 setLayer.addSublayer(pointLayer.layer)
                 dataPointLayer.append(pointLayer)
                 
                 // TODO: innerLayer mask with animation
-                let m = CAShapeLayer()
-                let path = CGMutablePath()
-                path.addRect(innerLayer.bounds)
-                
-                let ps = createPointMaskPath(points: points, radius: set.pointRadius, shape: shape)
-                for p in ps {
-                    path.addPath(p)
-                }
-                
-                m.fillRule = kCAFillRuleEvenOdd
-                m.path = path
-                innerLayer.mask = m
+//                let m = CAShapeLayer()
+//                let path = CGMutablePath()
+//                path.addRect(innerLayer.bounds)
+//
+//                let ps = createPointMaskPath(points: points, radius: set.pointRadius, shape: shape)
+//                for p in ps {
+//                    path.addPath(p)
+//                }
+//                
+//                m.fillRule = kCAFillRuleEvenOdd
+//                m.path = path
+//                innerLayer.mask = m
                 
                 if animation {
                     addAnimationToPoints(index: index)
@@ -395,25 +395,16 @@ extension LineChart {
         return minimum <= maximum ? (minimum, maximum) : nil
     }
     
-    func createPointLayer(_ frame: CGRect, points: [CGPoint], radius: CGFloat, shape: MagicChartPointShape, color: UIColor) -> (layer: CAShapeLayer, subs: [LineChartPoint]) {
+    func createPointLayer(frame: CGRect, points: [CGPoint], config: LineChartPointConfig) -> (layer: CAShapeLayer, subs: [LineChartCirclePoint]) {
         let layer = CAShapeLayer()
-        var subs: [LineChartPoint] = []
+        var subs: [LineChartCirclePoint] = []
         
         layer.frame = frame
         
         for point in points {
-            switch shape {
-            case .circle:
-                let circle = LineChartPoint(center: point, shape: .circle, color: color, radius: radius)
-                subs.append(circle)
-                layer.addSublayer(circle)
-            case .square:
-                let square = LineChartPoint(center: point, shape: .square, color: color, radius: radius)
-                subs.append(square)
-                layer.addSublayer(square)
-            default:
-                break
-            }
+            let pointLayer = LineChartCirclePoint(center: point, config: config)
+            subs.append(pointLayer)
+            layer.addSublayer(pointLayer)
         }
         
         return (layer, subs)

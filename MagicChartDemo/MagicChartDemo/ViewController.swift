@@ -47,9 +47,23 @@ class ViewController: UIViewController {
     @objc func refreshChart() {
         let dataSource = LineChartDataSource()
         let label = ["06/16", "06/17", "06/18", "06/19", "06/20", "06/21", "06/22"]
+        let pointConfig = LineChartPointConfigItem(
+            shape: .circle,
+            radius: 4,
+            hole: 0,
+            shadow: 0,
+            colors: (point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4))
+        )
+        let pointConfigActive = LineChartPointConfigItem(
+            shape: .circle,
+            radius: 4,
+            hole: 0,
+            shadow: 4,
+            colors: (point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4))
+        )
         let setOne = lineChart.createDataSet(label, value: [326, 517, 223, 397, 800, 993, 584]) { (set) in
             set.lineDashPattern = []
-            set.pointShape = .circle
+            set.pointConfig = LineChartPointConfig(normal: pointConfig, active: pointConfigActive)
             set.lineColor = .white
             for i in 0..<label.count - 1 {
                 if i < label.count - 2 {
@@ -60,7 +74,7 @@ class ViewController: UIViewController {
             }
         }
         let setTwo = lineChart.createDataSet(label, value: [210, 260, 820, 745, 722, 643, 456]) { (set) in
-            set.pointShape = .circle
+            set.pointConfig = LineChartPointConfig(normal: pointConfig, active: pointConfigActive)
             set.lineColor = UIColor.white.withAlphaComponent(0.4)
             for i in 0..<label.count - 1 {
                 if i < label.count - 2 {
