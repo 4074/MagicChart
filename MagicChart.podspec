@@ -6,11 +6,11 @@ Pod::Spec.new do |spec|
   spec.summary      = "Magic Chart in Swift"
   spec.source       = { :git => "https://github.com/4074/MagicChart.git" }
   spec.license      = { :type => "MIT", :file => "LICENSE" }
-  spec.platform     = :ios, '9.0'
+  spec.platform     = :ios, '8.0'
   spec.source_files = "MagicChart/*.swift"
 
   spec.requires_arc = true
 
-  spec.ios.deployment_target = '9.0'
+  spec.ios.deployment_target = '8.0'
   spec.ios.frameworks = ['UIKit', 'Foundation']
 end
