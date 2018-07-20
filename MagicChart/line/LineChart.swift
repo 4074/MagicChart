@@ -10,25 +10,25 @@ import UIKit
 
 open class LineChart: AxisChart {
     
-    var dataSource: LineChartDataSource = LineChartDataSource() {
+    public var dataSource: LineChartDataSource = LineChartDataSource() {
         didSet {
             self.reset()
             self.render()
         }
     }
-    var dataSetLayer: [(set: CAShapeLayer, line: CAShapeLayer, mask: CAShapeLayer?)] = []
-    var dataPointLayer: [(layer: CAShapeLayer, subs: [LineChartCirclePoint])?] = []
-    var dataPoints: [[CGPoint]] = []
+    public var dataSetLayer: [(set: CAShapeLayer, line: CAShapeLayer, mask: CAShapeLayer?)] = []
+    public var dataPointLayer: [(layer: CAShapeLayer, subs: [LineChartCirclePoint])?] = []
+    public var dataPoints: [[CGPoint]] = []
     private var dataPointsCache: [[CGPoint]] = []
     
-    var duration: TimeInterval = 1
+    public var duration: TimeInterval = 1
     
-    var selectedIndex: Int? = nil
-    var selectedLayer: CAShapeLayer?
-    var selectedLineWidth: CGFloat = 1
-    var selectedLineColor: UIColor = .purple
+    public var selectedIndex: Int? = nil
+    public var selectedLayer: CAShapeLayer?
+    public var selectedLineWidth: CGFloat = 1
+    public var selectedLineColor: UIColor = .purple
     
-    var delegate: LineChartDelegate?
+    public var delegate: LineChartDelegate?
     
     override func touchDidUpdate(location: CGPoint) {
         if let dataLayer = self.dataLayer, !rendering {
@@ -40,8 +40,8 @@ open class LineChart: AxisChart {
     
     func render() {
         rendering = true
-        axisConfig.y.left.range = getYAxisRange(config: axisConfig.y.left)
-        axisConfig.y.right.range = getYAxisRange(config: axisConfig.y.right)
+        axis.y.left.range = getYAxisRange(config: axis.y.left)
+        axis.y.right.range = getYAxisRange(config: axis.y.right)
         
         chartLayer = CALayer()
         chartLayer!.frame = CGRect(
@@ -53,12 +53,12 @@ open class LineChart: AxisChart {
         self.layer.addSublayer(chartLayer!)
         
         let xAxisHeight = getXAxisHeight()
-        let yLeftAxisWidth = getYAxisWidth(config: axisConfig.y.left)
-        let yRightAxisWidth = getYAxisWidth(config: axisConfig.y.right)
+        let yLeftAxisWidth = getYAxisWidth(config: axis.y.left)
+        let yRightAxisWidth = getYAxisWidth(config: axis.y.right)
         
-        let insetLeft = axisConfig.y.left.labelPosition == .outside ? yLeftAxisWidth : 0
-        let insetRight = axisConfig.y.right.labelPosition == .outside ? yRightAxisWidth : 0
-        let insetHeight = axisConfig.x.labelPosition == .outside ? xAxisHeight : 0
+        let insetLeft = axis.y.left.labelPosition == .outside ? yLeftAxisWidth : 0
+        let insetRight = axis.y.right.labelPosition == .outside ? yRightAxisWidth : 0
+        let insetHeight = axis.x.labelPosition == .outside ? xAxisHeight : 0
         
         dataLayer = CALayer()
         dataLayer!.frame = CGRect(
@@ -69,10 +69,10 @@ open class LineChart: AxisChart {
         )
         chartLayer?.addSublayer(dataLayer!)
         
-        axisConfig.x.frame = CGRect(x: insetLeft, y: dataLayer!.frame.height, width: dataLayer!.frame.width, height: xAxisHeight)
+        axis.x.frame = CGRect(x: insetLeft, y: dataLayer!.frame.height, width: dataLayer!.frame.width, height: xAxisHeight)
         
-        axisConfig.y.left.frame = CGRect(x: 0, y: 0, width: yLeftAxisWidth, height: dataLayer!.frame.height)
-        axisConfig.y.right.frame = CGRect(x: dataLayer!.frame.width + insetLeft, y: 0, width: yRightAxisWidth, height: dataLayer!.frame.height)
+        axis.y.left.frame = CGRect(x: 0, y: 0, width: yLeftAxisWidth, height: dataLayer!.frame.height)
+        axis.y.right.frame = CGRect(x: dataLayer!.frame.width + insetLeft, y: 0, width: yRightAxisWidth, height: dataLayer!.frame.height)
         
         drawAxisLine()
         drawSetLine()
@@ -83,10 +83,9 @@ open class LineChart: AxisChart {
     }
     
     func reset() {
-        axisLayer.x?.removeFromSuperlayer()
-        axisLayer.yLeft?.removeFromSuperlayer()
-        axisLayer.yRight?.removeFromSuperlayer()
-        axisLayer = (nil, nil, nil)
+        axis.x.layer?.removeFromSuperlayer()
+        axis.y.left.layer?.removeFromSuperlayer()
+        axis.y.right.layer?.removeFromSuperlayer()
         
         selectedIndex = nil
         selectedLayer?.removeFromSuperlayer()
@@ -111,13 +110,13 @@ open class LineChart: AxisChart {
         for (index, set) in dataSource.sets.enumerated() {
             var range: (minimum: Double, maximum: Double)!
             if set.yAxisPosition == .left {
-                if let r = axisConfig.y.left.range {
+                if let r = axis.y.left.range {
                     range = r
                 } else {
                     continue
                 }
             } else if set.yAxisPosition == .right {
-                if let r = axisConfig.y.right.range {
+                if let r = axis.y.right.range {
                     range = r
                 } else {
                     continue
@@ -268,36 +267,37 @@ open class LineChart: AxisChart {
     }
     
     func drawAxisLine() {
-        let xAxis = ChartXAxis()
-        xAxis.frame = axisConfig.x.frame
-        xAxis.labels = ChartUtils.selectStrings(source: dataSource.label, count: axisConfig.x.labelCount, force: false)
-        xAxis.config = axisConfig.x
+        let xAxis = ChartXAxisLayer()
+        xAxis.frame = axis.x.frame
+        xAxis.labels = ChartUtils.selectStrings(source: dataSource.label, count: axis.x.labelCount, force: false)
+        xAxis.config = axis.x
         xAxis.render()
         chartLayer?.addSublayer(xAxis)
+        axis.x.layer = xAxis
         
-        let yLeftAxis = ChartYAxis()
-        yLeftAxis.frame = axisConfig.y.left.frame
-        if let range = axisConfig.y.left.range {
-            yLeftAxis.labels = ChartUtils.selectNumbers(min: range.minimum, max: range.maximum, count: axisConfig.y.left.labelCount).map { (v) -> String in
-                return self.getYAxisLabelTextFromValue(value: v, config: axisConfig.y.left)
+        let yLeftAxis = ChartYAxisLayer()
+        yLeftAxis.frame = axis.y.left.frame
+        if let range = axis.y.left.range {
+            yLeftAxis.labels = ChartUtils.selectNumbers(min: range.minimum, max: range.maximum, count: axis.y.left.labelCount).map { (v) -> String in
+                return self.getYAxisLabelTextFromValue(value: v, config: axis.y.left)
             }
         }
-        yLeftAxis.config = axisConfig.y.left
+        yLeftAxis.config = axis.y.left
         yLeftAxis.render()
         chartLayer?.addSublayer(yLeftAxis)
+        axis.y.left.layer = yLeftAxis
         
-        let yRightAxis = ChartYAxis()
-        yRightAxis.frame = axisConfig.y.right.frame
-        if let range = axisConfig.y.right.range {
-            yRightAxis.labels = ChartUtils.selectNumbers(min: range.minimum, max: range.maximum, count: axisConfig.y.right.labelCount).map { (v) -> String in
-                return self.getYAxisLabelTextFromValue(value: v, config: axisConfig.y.right)
+        if let range = axis.y.right.range {
+            let yRightAxis = ChartYAxisLayer()
+            yRightAxis.frame = axis.y.right.frame
+            yRightAxis.labels = ChartUtils.selectNumbers(min: range.minimum, max: range.maximum, count: axis.y.right.labelCount).map { (v) -> String in
+                return self.getYAxisLabelTextFromValue(value: v, config: axis.y.right)
             }
+            yRightAxis.config = axis.y.right
+            yRightAxis.render()
+            chartLayer?.addSublayer(yRightAxis)
+            axis.y.right.layer = yRightAxis
         }
-        yRightAxis.config = axisConfig.y.right
-        yRightAxis.render()
-        chartLayer?.addSublayer(yRightAxis)
-        
-        axisLayer = (xAxis, yLeftAxis, yRightAxis)
     }
     
     func getYAxisLabelTextFromValue(value: Double, config: AxisChartAxisConfig) -> String {
@@ -374,7 +374,7 @@ open class LineChart: AxisChart {
 extension LineChart {
     
     func getXAxisHeight() -> CGFloat {
-        return axisConfig.x.labelFont.pointSize + axisConfig.x.labelSpacing
+        return axis.x.labelFont.pointSize + axis.x.labelSpacing
     }
     
     func getYAxisWidth(config: AxisChartAxisConfig) -> CGFloat {
@@ -402,6 +402,10 @@ extension LineChart {
                 return Array(set.value.values)
             }
             
+            if values.isEmpty {
+                return nil
+            }
+            
             let rangeCalculated = ChartUtils.getNumberRange(source: values)
             if rangeType.minimum == .auto {
                 minimum = rangeCalculated.minimum
@@ -415,7 +419,7 @@ extension LineChart {
             minimum = 0
         }
         
-        if let rangeManual = axisConfig.y.left.range {
+        if let rangeManual = axis.y.left.range {
             if rangeType.minimum == .manual {
                 minimum = rangeManual.minimum
             }
@@ -513,12 +517,12 @@ public protocol LineChartDelegate: class {
 }
 
 extension LineChartDelegate {
-    func chartView(_ chartView: LineChart, didDraw: Bool) {
+    public func chartView(_ chartView: LineChart, didDraw: Bool) {
     }
     
-    func chartView(_ chartView: LineChart, didSelect index: Int) {
+    public func chartView(_ chartView: LineChart, didSelect index: Int) {
     }
     
-    func chartView(_ chartView: LineChart, styleSelectedLayer layer: CAShapeLayer) {
+    public func chartView(_ chartView: LineChart, styleSelectedLayer layer: CAShapeLayer) {
     }
 }

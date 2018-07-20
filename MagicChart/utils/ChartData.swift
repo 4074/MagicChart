@@ -33,21 +33,21 @@ public enum AxisChartAxisPosition {
 }
 
 public class LineChartDataSource {
-    var label = [String]()
-    var sets = [LineChartDataSet]()
+    public var label = [String]()
+    public var sets = [LineChartDataSet]()
 }
 
 public class LineChartDataSet {
-    var value = [String: Double]()
+    public var value = [String: Double]()
     
-    var lineWidth: CGFloat = 1
-    var lineColor: UIColor?
-    var lineDashPattern: [[Double]] = []
-    var lineStyle: MagicLineStyle = .line
-    var xAxisPosition: AxisChartAxisPosition = .bottom
-    var yAxisPosition: AxisChartAxisPosition = .left
+    public var lineWidth: CGFloat = 1
+    public var lineColor: UIColor?
+    public var lineDashPattern: [[Double]] = []
+    public var lineStyle: MagicLineStyle = .line
+    public var xAxisPosition: AxisChartAxisPosition = .bottom
+    public var yAxisPosition: AxisChartAxisPosition = .left
     
-    var pointConfig: LineChartPointConfig? = nil
+    public var pointConfig: LineChartPointConfig? = nil
 }
 
 

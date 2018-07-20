@@ -1,5 +1,5 @@
 //
-//  ChartAxis.swift
+//  ChartAxisLayer.swift
 //  MagicChartDemo
 //
 //  Created by wen on 2018/6/29.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class ChartAxis: CALayer {
+public class ChartAxisLayer: CALayer {
     
     var config: AxisChartAxisConfig = AxisChartAxisConfig()
     var lineLayer: CAShapeLayer?
@@ -54,7 +54,7 @@ public class ChartAxis: CALayer {
     }
 }
 
-public class ChartXAxis: ChartAxis {
+public class ChartXAxisLayer: ChartAxisLayer {
     
     override func drawLine() {
         super.drawLine()
@@ -102,7 +102,7 @@ public class ChartXAxis: ChartAxis {
     }
 }
 
-public class ChartYAxis: ChartAxis {
+public class ChartYAxisLayer: ChartAxisLayer {
     
     override func drawLine() {
         super.drawLine()

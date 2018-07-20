@@ -13,7 +13,7 @@
 		FB59CC9721017A5C00B683B9 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB59CC9421017A5C00B683B9 /* Formatters.swift */; };
 		FB59CC9821017A5C00B683B9 /* ChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB59CC9521017A5C00B683B9 /* ChartData.swift */; };
 		FB59CC9921017A5C00B683B9 /* ChartUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB59CC9621017A5C00B683B9 /* ChartUtils.swift */; };
-		FB59CC9C21017A6800B683B9 /* ChartAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB59CC9A21017A6800B683B9 /* ChartAxis.swift */; };
+		FB59CC9C21017A6800B683B9 /* ChartAxisLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB59CC9A21017A6800B683B9 /* ChartAxisLayer.swift */; };
 		FB59CC9D21017A6800B683B9 /* PointAnimationor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB59CC9B21017A6800B683B9 /* PointAnimationor.swift */; };
 		FB59CC9F21017E2000B683B9 /* AxisChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB59CC9E21017E2000B683B9 /* AxisChart.swift */; };
 		FB69AD3320073DF900383099 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB69AD3220073DF900383099 /* AppDelegate.swift */; };
@@ -30,7 +30,7 @@
 		FB59CC9421017A5C00B683B9 /* Formatters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Formatters.swift; path = ../../MagicChart/utils/Formatters.swift; sourceTree = "<group>"; };
 		FB59CC9521017A5C00B683B9 /* ChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartData.swift; path = ../../MagicChart/utils/ChartData.swift; sourceTree = "<group>"; };
 		FB59CC9621017A5C00B683B9 /* ChartUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartUtils.swift; path = ../../MagicChart/utils/ChartUtils.swift; sourceTree = "<group>"; };
-		FB59CC9A21017A6800B683B9 /* ChartAxis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartAxis.swift; path = ../../MagicChart/public/ChartAxis.swift; sourceTree = "<group>"; };
+		FB59CC9A21017A6800B683B9 /* ChartAxisLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartAxisLayer.swift; path = ../../MagicChart/public/ChartAxisLayer.swift; sourceTree = "<group>"; };
 		FB59CC9B21017A6800B683B9 /* PointAnimationor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PointAnimationor.swift; path = ../../MagicChart/public/PointAnimationor.swift; sourceTree = "<group>"; };
 		FB59CC9E21017E2000B683B9 /* AxisChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AxisChart.swift; path = ../../MagicChart/public/AxisChart.swift; sourceTree = "<group>"; };
 		FB69AD2F20073DF900383099 /* MagicChartDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MagicChartDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,7 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				FB59CC9E21017E2000B683B9 /* AxisChart.swift */,
-				FB59CC9A21017A6800B683B9 /* ChartAxis.swift */,
+				FB59CC9A21017A6800B683B9 /* ChartAxisLayer.swift */,
 				FB59CC9B21017A6800B683B9 /* PointAnimationor.swift */,
 			);
 			name = public;
@@ -205,7 +205,7 @@
 				FB59CC9821017A5C00B683B9 /* ChartData.swift in Sources */,
 				FB59CC9721017A5C00B683B9 /* Formatters.swift in Sources */,
 				FB59CC9D21017A6800B683B9 /* PointAnimationor.swift in Sources */,
-				FB59CC9C21017A6800B683B9 /* ChartAxis.swift in Sources */,
+				FB59CC9C21017A6800B683B9 /* ChartAxisLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

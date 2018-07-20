@@ -11,18 +11,17 @@ import UIKit
 open class AxisChart: UIView {
 
     let screenScale = UIScreen.main.scale
-    var colors: [UIColor] = [.green, .blue, .orange, .red]
     var rendering = false
-    var animation = true
+    
+    public var colors: [UIColor] = [.green, .blue, .orange, .red]
+    public var animation = true
 
-    var chartLayer: CALayer?
-    var dataLayer: CALayer?
+    public var chartLayer: CALayer?
+    public var dataLayer: CALayer?
     
-    var inset: UIEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+    public var inset: UIEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
     
-    var axisConfig: AxisChartAxisConfigGroup!
-    
-    var axisLayer: (x: ChartXAxis?, yLeft: ChartYAxis?, yRight: ChartYAxis?) = (nil, nil, nil)
+    public var axis: AxisChartAxisConfigGroup!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,7 +36,7 @@ open class AxisChart: UIView {
         yRightConfig.position = .right
         yRightConfig.labelAlignment = "right"
         
-        axisConfig = AxisChartAxisConfigGroup(
+        axis = AxisChartAxisConfigGroup(
             x: xConfig,
             y: AxisChartAxisConfigGroupY(left: yLeftConfig, right: yRightConfig)
         )
@@ -67,32 +66,33 @@ open class AxisChart: UIView {
 }
 
 public struct AxisChartAxisConfigGroup {
-    var x: AxisChartAxisConfig
-    var y: AxisChartAxisConfigGroupY
+    public var x: AxisChartAxisConfig
+    public var y: AxisChartAxisConfigGroupY
 }
 
 public struct AxisChartAxisConfigGroupY {
-    var left: AxisChartAxisConfig
-    var right: AxisChartAxisConfig
+    public var left: AxisChartAxisConfig
+    public var right: AxisChartAxisConfig
 }
 
 public class AxisChartAxisConfig {
-    var direction: AxisChartAxisDirection = .x
-    var position: AxisChartAxisPosition = .bottom
-    var lineWidth: CGFloat = 0.8
-    var lineColor: UIColor = .lightGray
+    public var direction: AxisChartAxisDirection = .x
+    public var position: AxisChartAxisPosition = .bottom
+    public var lineWidth: CGFloat = 0.8
+    public var lineColor: UIColor = .lightGray
     
-    var labelCount: Int = 4
-    var labelFont: UIFont = UIFont.systemFont(ofSize: 12)
-    var labelColor: UIColor = .lightGray
-    var labelSpacing: CGFloat = 4
-    var labelPosition: AxisChartLabelPosition = .outside
-    var labelAlignment: String = "center"
-    var formatter: NumberFormatter = NumberFormatter()
+    public var labelCount: Int = 4
+    public var labelFont: UIFont = UIFont.systemFont(ofSize: 12)
+    public var labelColor: UIColor = .lightGray
+    public var labelSpacing: CGFloat = 4
+    public var labelPosition: AxisChartLabelPosition = .outside
+    public var labelAlignment: String = "center"
+    public var formatter: NumberFormatter = NumberFormatter()
     
     var rangeType: (minimum: MagicChartAxisRangeType, maximum: MagicChartAxisRangeType) = (.zero, .auto)
     var range: (minimum: Double, maximum: Double)?
     var frame: CGRect = .zero
+    var layer: ChartAxisLayer? = nil
 }
 
 public enum AxisChartLabelPosition {
