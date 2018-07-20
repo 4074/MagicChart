@@ -12,7 +12,7 @@ public class PointAnimator {
     
     var link: CADisplayLink?
     var sourceLayer: CAShapeLayer?
-    var points: [CGPoint] = []
+    var points: [CGPoint?] = []
     var layers: [CAShapeLayer] = []
     var duration: TimeInterval = 0
     var nextIndex: Int = 0
@@ -20,7 +20,7 @@ public class PointAnimator {
     
     var completionBlock: (() -> Void)?
     
-    init(source: CAShapeLayer, duration: TimeInterval, points: [CGPoint], layers: [CAShapeLayer]) {
+    init(source: CAShapeLayer, duration: TimeInterval, points: [CGPoint?], layers: [CAShapeLayer]) {
         self.sourceLayer = source
         self.duration = duration
         self.points = points
@@ -72,15 +72,19 @@ public class PointAnimator {
     
     func displayLayerIfNeed(width: CGFloat) {
         for index in nextIndex..<points.count {
-            if width >= points[index].x - 24 {
-                displayLayer(layer: layers[index])
-                nextIndex = index + 1
-                
-                if nextIndex >= points.count {
-                    stop()
+            if let point = points[index] {
+                if width >= point.x - 24 {
+                    if index < layers.count {
+                        displayLayer(layer: layers[index])
+                    }
+                    nextIndex = index + 1
+                    
+                    if nextIndex >= points.count {
+                        stop()
+                    }
+                    
+                    break
                 }
-                
-                break
             }
         }
     }
