@@ -79,6 +79,14 @@ open class LineChart: AxisChart {
         
         if !animation {
             handleDidRender()
+        } else {
+            if #available(iOS 10.0, *) {
+                Timer.scheduledTimer(withTimeInterval: duration + 0.1, repeats: false) { (timer) in
+                    self.handleDidRender()
+                }
+            } else {
+                Timer.scheduledTimer(timeInterval: duration + 0.1, target: self, selector: #selector(self.handleDidRender), userInfo: nil, repeats: false)
+            }
         }
     }
     
@@ -245,9 +253,6 @@ open class LineChart: AxisChart {
             points: points,
             layers: layers
         )
-        animator.setCompletionBlock {
-            self.handleDidRender()
-        }
         animator.start()
     }
     
@@ -326,7 +331,7 @@ open class LineChart: AxisChart {
         return config.formatter.string(from: NSNumber(value: value)) ?? ""
     }
     
-    func handleDidRender() {
+    @objc func handleDidRender() {
         rendering = false
         if let d = self.delegate {
             d.chartView(self, didDraw: true)
@@ -515,7 +520,7 @@ extension LineChart {
         return path.cgPath
     }
     
-    func createDataSet(_ label: [String], value: [Double?], style: ((_ :LineChartDataSet) -> Void)?) -> LineChartDataSet {
+    public func createDataSet(_ label: [String], value: [Double?], style: ((_ :LineChartDataSet) -> Void)?) -> LineChartDataSet {
         let set = LineChartDataSet()
         for (index, key) in label.enumerated() {
             if index < value.count, value[index] != nil {
@@ -532,7 +537,7 @@ extension LineChart {
         return set
     }
     
-    func createDataSets(_ label: [String], groups: [[Double?]], style: ((_ :LineChartDataSet, _: Int) -> Void)?) -> [LineChartDataSet] {
+    public func createDataSets(_ label: [String], groups: [[Double?]], style: ((_ :LineChartDataSet, _: Int) -> Void)?) -> [LineChartDataSet] {
         var sets = [LineChartDataSet]()
         
         for (index, group) in groups.enumerated() {
