@@ -7,7 +7,7 @@ Pod::Spec.new do |spec|
   spec.source       = { :git => "https://github.com/4074/MagicChart.git" }
   spec.license      = { :type => "MIT", :file => "LICENSE" }
   spec.platform     = :ios, '8.0'
-  spec.source_files = "MagicChart/*.swift"
+  spec.source_files = "MagicChart/**/*.swift"
 
   spec.requires_arc = true
 
