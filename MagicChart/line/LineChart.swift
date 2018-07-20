@@ -18,7 +18,7 @@ open class LineChart: AxisChart {
     }
     public var dataSetLayer: [(set: CAShapeLayer, line: CAShapeLayer, mask: CAShapeLayer?)] = []
     public var dataPointLayer: [(layer: CAShapeLayer, subs: [LineChartCirclePoint])?] = []
-    public var dataPoints: [[CGPoint]] = []
+    public var dataPoints: [[CGPoint?]] = []
     private var dataPointsCache: [[CGPoint]] = []
     
     public var duration: TimeInterval = 1
@@ -128,51 +128,63 @@ open class LineChart: AxisChart {
             
             let lineLayer = CAShapeLayer()
             let color = (set.lineColor ?? colors[index % colors.count])
-            var points = [CGPoint]()
+            var points = [CGPoint?]()
             
             lineLayer.frame = setLayer.bounds
+            
             for (i, k) in dataSource.label.enumerated() {
                 if let v = set.value[k] {
-                    let x = (Double(i) / Double(set.value.count - 1)) * Double(setLayer.frame.width)
+                    let x = (Double(i) / Double(dataSource.label.count - 1)) * Double(setLayer.frame.width)
                     let y = (1 - (v / (range.maximum - range.minimum))) * Double(setLayer.frame.height)
                     let point = CGPoint(x: x, y: y)
                     
                     points.append(point)
+                } else {
+                    points.append(nil)
                 }
             }
             
+            var lastPoint: CGPoint?
+            var lastIndex: Int = 0
             for (i, p) in points.enumerated() {
-                
-                if i == 0 {
-                } else {
-                    let path = UIBezierPath()
-                    path.lineCapStyle = .round
-                    path.lineJoinStyle = .round
-                    
-                    path.move(to: points[i - 1])
-                    
-                    
-                    if set.lineStyle == .curve {
-                        let controlPoints = computeControlPoint(points: points, index: i - 1)
-                        path.addCurve(to: p, controlPoint1: controlPoints.a, controlPoint2: controlPoints.b)
-                    } else {
-                        path.addLine(to: p)
-                    }
-                    
-                    let pathLayer = CAShapeLayer()
-                    pathLayer.path = path.cgPath
-                    pathLayer.strokeColor = color.cgColor
-                    pathLayer.lineWidth = set.lineWidth
-                    pathLayer.contentsScale = screenScale
-                    pathLayer.fillColor = UIColor.clear.cgColor
-                    
-                    if set.lineDashPattern.count > i - 1 && !set.lineDashPattern[i - 1].isEmpty {
-                        pathLayer.lineDashPattern = set.lineDashPattern[i - 1] as [NSNumber]
-                        pathLayer.contentsScale = screenScale
-                    }
-                    
-                    lineLayer.addSublayer(pathLayer)
+                guard let p = p else {
+                    continue
                 }
+                
+                if lastPoint == nil || (!set.continuous && lastIndex < i - 1) {
+                    lastPoint = p
+                    lastIndex = i
+                    continue
+                }
+                
+                let path = UIBezierPath()
+                path.lineCapStyle = .round
+                path.lineJoinStyle = .round
+                path.move(to: lastPoint!)
+                
+                if set.lineStyle == .curve {
+                    let controlPoints = computeControlPoint(points: points, index: lastIndex)
+                    path.addCurve(to: p, controlPoint1: controlPoints.a, controlPoint2: controlPoints.b)
+                } else {
+                    path.addLine(to: p)
+                }
+                
+                let pathLayer = CAShapeLayer()
+                pathLayer.path = path.cgPath
+                pathLayer.strokeColor = color.cgColor
+                pathLayer.lineWidth = set.lineWidth
+                pathLayer.contentsScale = screenScale
+                pathLayer.fillColor = UIColor.clear.cgColor
+                
+                if set.lineDashPattern.count > i - 1 && !set.lineDashPattern[i - 1].isEmpty {
+                    pathLayer.lineDashPattern = set.lineDashPattern[i - 1] as [NSNumber]
+                    pathLayer.contentsScale = screenScale
+                }
+                
+                lineLayer.addSublayer(pathLayer)
+                
+                lastPoint = p
+                lastIndex = i
             }
 
             let innerLayer = CAShapeLayer()
@@ -226,7 +238,7 @@ open class LineChart: AxisChart {
         }
     }
     
-    func addAnimationToPoints(mask: CAShapeLayer, layers: [CAShapeLayer], points: [CGPoint]) {
+    func addAnimationToPoints(mask: CAShapeLayer, layers: [CAShapeLayer], points: [CGPoint?]) {
         let animator = PointAnimator(
             source: mask,
             duration: duration,
@@ -248,15 +260,25 @@ open class LineChart: AxisChart {
         return maskLayer
     }
     
-    func computeControlPoint(points: [CGPoint], index: Int) -> (a: CGPoint, b: CGPoint) {
-        let last = points[max(0, index - 1)]
-        let next = points[min(points.count - 1, index + 1)]
-        let next2 = points[min(points.count - 1, index + 2)]
-        let current = points[index]
+    func computeControlPoint(points: [CGPoint?], index: Int) -> (a: CGPoint, b: CGPoint) {
+        var source = [CGPoint]()
+        var indexInSource: Int = index
+        for (i, p) in points.enumerated() {
+            if p != nil {
+                source.append(p!)
+            } else if i < index {
+                indexInSource -= 1
+            }
+        }
+        
+        let prev = source[max(0, indexInSource - 1)]
+        let next = source[min(source.count - 1, indexInSource + 1)]
+        let next2 = source[min(source.count - 1, indexInSource + 2)]
+        let current = source[indexInSource]
         
         let a = CGPoint(
-            x: current.x + (next.x - last.x) / 4,
-            y: current.y + (next.y - last.y) / 4
+            x: current.x + (next.x - prev.x) / 4,
+            y: current.y + (next.y - prev.y) / 4
         )
         let b = CGPoint(
             x: next.x - (next2.x - current.x) / 4,
@@ -316,6 +338,15 @@ open class LineChart: AxisChart {
     }
     
     func handleDidSelect(index: Int) {
+        var hasValue = false
+        for set in dataSource.sets {
+            if index < set.value.values.count {
+                hasValue = true
+                break
+            }
+        }
+        if !hasValue { return }
+        
         if index < dataSource.label.count && index != selectedIndex {
             selectedIndex = index
             if let d = delegate {
@@ -431,16 +462,20 @@ extension LineChart {
         return minimum <= maximum ? (minimum, maximum) : nil
     }
     
-    func createPointLayer(frame: CGRect, points: [CGPoint], config: LineChartPointConfig) -> (layer: CAShapeLayer, subs: [LineChartCirclePoint]) {
+    func createPointLayer(frame: CGRect, points: [CGPoint?], config: LineChartPointConfig) -> (layer: CAShapeLayer, subs: [LineChartCirclePoint]) {
         let layer = CAShapeLayer()
         var subs: [LineChartCirclePoint] = []
         
         layer.frame = frame
         
         for point in points {
-            let pointLayer = LineChartCirclePoint(center: point, config: config)
-            subs.append(pointLayer)
-            layer.addSublayer(pointLayer)
+            if let p = point {
+                let pointLayer = LineChartCirclePoint(center: p, config: config)
+                subs.append(pointLayer)
+                layer.addSublayer(pointLayer)
+            } else {
+                subs.append(LineChartCirclePoint(center: .zero, config: config))
+            }
         }
         
         return (layer, subs)
@@ -480,10 +515,14 @@ extension LineChart {
         return path.cgPath
     }
     
-    func createDataSet(_ label: [String], value: [Double], style: ((_ :LineChartDataSet) -> Void)?) -> LineChartDataSet {
+    func createDataSet(_ label: [String], value: [Double?], style: ((_ :LineChartDataSet) -> Void)?) -> LineChartDataSet {
         let set = LineChartDataSet()
         for (index, key) in label.enumerated() {
-            set.value[key] = value[index]
+            if index < value.count, value[index] != nil {
+                set.value[key] = value[index]!
+            } else {
+                continue
+            }
         }
         
         if let style = style {
@@ -493,7 +532,7 @@ extension LineChart {
         return set
     }
     
-    func createDataSets(_ label: [String], groups: [[Double]], style: ((_ :LineChartDataSet, _: Int) -> Void)?) -> [LineChartDataSet] {
+    func createDataSets(_ label: [String], groups: [[Double?]], style: ((_ :LineChartDataSet, _: Int) -> Void)?) -> [LineChartDataSet] {
         var sets = [LineChartDataSet]()
         
         for (index, group) in groups.enumerated() {

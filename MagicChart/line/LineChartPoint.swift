@@ -9,9 +9,9 @@
 import UIKit
 
 open class LineChartPoint: CAShapeLayer {
-    var config: LineChartPointConfig!
-    var configForState: LineChartPointConfigItem!
-    var active: Bool = false {
+    open var config: LineChartPointConfig!
+    open var configForState: LineChartPointConfigItem!
+    open var active: Bool = false {
         didSet {
             if oldValue != active {
                 toggleActive()
@@ -23,14 +23,40 @@ open class LineChartPoint: CAShapeLayer {
 }
 
 public struct LineChartPointConfig {
-    let normal: LineChartPointConfigItem
-    let active: LineChartPointConfigItem
+    public let normal: LineChartPointConfigItem
+    public let active: LineChartPointConfigItem
+    
+    public init(
+        normal: LineChartPointConfigItem,
+        active: LineChartPointConfigItem
+    ) {
+        self.normal = normal
+        self.active = active
+    }
 }
 
 public struct LineChartPointConfigItem {
-    let shape: MagicChartPointShape
-    let radius: CGFloat
-    let hole: CGFloat
-    let shadow: CGFloat
-    let colors: (point: UIColor, hole: UIColor, shadow: UIColor)
+    public let shape: MagicChartPointShape
+    public let radius: CGFloat
+    public let hole: CGFloat
+    public let shadow: CGFloat
+    public let colors: (point: UIColor, hole: UIColor, shadow: UIColor)
+    
+    public init(
+        shape: MagicChartPointShape,
+        radius: CGFloat,
+        hole: CGFloat,
+        shadow: CGFloat,
+        colors: (point: UIColor, hole: UIColor, shadow: UIColor)
+    ) {
+        self.shape = shape
+        self.radius = radius
+        self.hole = hole
+        self.shadow = shadow
+        self.colors = colors
+    }
 }
+
+
+
+

@@ -33,17 +33,20 @@ public enum AxisChartAxisPosition {
 }
 
 public class LineChartDataSource {
+    public init() {}
     public var label = [String]()
     public var sets = [LineChartDataSet]()
 }
 
 public class LineChartDataSet {
-    public var value = [String: Double]()
+    public init() {}
     
+    public var value = [String: Double]()
     public var lineWidth: CGFloat = 1
     public var lineColor: UIColor?
     public var lineDashPattern: [[Double]] = []
     public var lineStyle: MagicLineStyle = .line
+    public var continuous: Bool = true
     public var xAxisPosition: AxisChartAxisPosition = .bottom
     public var yAxisPosition: AxisChartAxisPosition = .left
     

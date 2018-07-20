@@ -70,28 +70,22 @@ class ViewController: UIViewController {
             shadow: 4,
             colors: (point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4))
         )
-        let setOne = lineChart.createDataSet(label, value: [32, 51, 22, 39, 80, 99, 58]) { (set) in
+        let setOne = lineChart.createDataSet(label, value: [32, 51, nil, 62, 80, 99]) { (set) in
             set.pointConfig = LineChartPointConfig(normal: pointConfig, active: pointConfigActive)
             set.lineColor = .white
-            for i in 0..<label.count - 1 {
-                if i < label.count - 2 {
+            set.lineStyle = .curve
+            for i in 0..<label.count - 2 {
+                if i < label.count - 3 {
                     set.lineDashPattern.append([])
                 } else {
                     set.lineDashPattern.append([4, 4])
                 }
             }
         }
-        let setTwo = lineChart.createDataSet(label, value: [210, 260, 820, 745, 722, 643, 456]) { (set) in
+        let setTwo = lineChart.createDataSet(label, value: [210, 260, 820, 745, 722, 643]) { (set) in
             set.pointConfig = LineChartPointConfig(normal: pointConfig, active: pointConfigActive)
             set.lineColor = UIColor.white.withAlphaComponent(0.4)
             set.yAxisPosition = .right
-            for i in 0..<label.count - 1 {
-                if i < label.count - 2 {
-                    set.lineDashPattern.append([])
-                } else {
-                    set.lineDashPattern.append([4, 4])
-                }
-            }
         }
         
         dataSource.label = label
@@ -108,7 +102,7 @@ class ViewController: UIViewController {
 
 extension ViewController: LineChartDelegate {
     func chartView(_ chartView: LineChart, didDraw: Bool) {
-        chartView.setSelected(index: chartView.dataSource.label.count - 1)
+        chartView.setSelected(index: chartView.dataSource.sets[0].value.values.count - 1)
     }
     
     func chartView(_ chartView: LineChart, didSelect index: Int) {
