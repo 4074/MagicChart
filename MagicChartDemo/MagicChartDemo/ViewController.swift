@@ -102,7 +102,7 @@ class ViewController: UIViewController {
 
 extension ViewController: LineChartDelegate {
     func chartView(_ chartView: LineChart, didDraw: Bool) {
-        chartView.setSelected(index: chartView.dataSource.sets[0].value.values.count - 1)
+        chartView.setSelected(index: chartView.dataSource.sets[1].value.values.count - 1)
     }
     
     func chartView(_ chartView: LineChart, didSelect index: Int) {
