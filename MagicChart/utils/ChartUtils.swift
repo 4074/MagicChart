@@ -163,6 +163,7 @@ public class ChartUtils {
         var width: CGFloat = 0
         let constraintRect = CGSize(width: 999, height: 999)
         for str in strings {
+            
             let boundingBox = str.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
             width = max(width, ceil(boundingBox.width))
         }

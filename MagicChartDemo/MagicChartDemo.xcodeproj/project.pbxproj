@@ -7,31 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FB17746420F381A500F90DF3 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB17746320F381A500F90DF3 /* Formatters.swift */; };
-		FB22CD5C20E5E12100F85FB1 /* ChartAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22CD5720E5E12000F85FB1 /* ChartAxis.swift */; };
-		FB22CD5D20E5E12100F85FB1 /* LineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22CD5820E5E12000F85FB1 /* LineChart.swift */; };
-		FB22CD5E20E5E12100F85FB1 /* ChartUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22CD5920E5E12100F85FB1 /* ChartUtils.swift */; };
-		FB22CD5F20E5E12100F85FB1 /* PointAnimationor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22CD5A20E5E12100F85FB1 /* PointAnimationor.swift */; };
-		FB22CD6020E5E12100F85FB1 /* ChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22CD5B20E5E12100F85FB1 /* ChartData.swift */; };
 		FB22CD6220E60FA000F85FB1 /* AxisChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22CD6120E60FA000F85FB1 /* AxisChart.swift */; };
-		FB59CC6B2100841600B683B9 /* LineChartPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB59CC6A2100841600B683B9 /* LineChartPoint.swift */; };
+		FB59CC9121017A4900B683B9 /* LineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB59CC8E21017A4900B683B9 /* LineChart.swift */; };
+		FB59CC9221017A4900B683B9 /* LineChartPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB59CC8F21017A4900B683B9 /* LineChartPoint.swift */; };
+		FB59CC9321017A4900B683B9 /* LineChartCirclePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB59CC9021017A4900B683B9 /* LineChartCirclePoint.swift */; };
+		FB59CC9721017A5C00B683B9 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB59CC9421017A5C00B683B9 /* Formatters.swift */; };
+		FB59CC9821017A5C00B683B9 /* ChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB59CC9521017A5C00B683B9 /* ChartData.swift */; };
+		FB59CC9921017A5C00B683B9 /* ChartUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB59CC9621017A5C00B683B9 /* ChartUtils.swift */; };
+		FB59CC9C21017A6800B683B9 /* ChartAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB59CC9A21017A6800B683B9 /* ChartAxis.swift */; };
+		FB59CC9D21017A6800B683B9 /* PointAnimationor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB59CC9B21017A6800B683B9 /* PointAnimationor.swift */; };
 		FB69AD3320073DF900383099 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB69AD3220073DF900383099 /* AppDelegate.swift */; };
 		FB69AD3520073DF900383099 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB69AD3420073DF900383099 /* ViewController.swift */; };
 		FB69AD3820073DF900383099 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB69AD3620073DF900383099 /* Main.storyboard */; };
 		FB69AD3A20073DF900383099 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB69AD3920073DF900383099 /* Assets.xcassets */; };
 		FB69AD3D20073DF900383099 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB69AD3B20073DF900383099 /* LaunchScreen.storyboard */; };
-		FBC83B3920F8B01300F02583 /* LineChartCirclePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC83B3820F8B01300F02583 /* LineChartCirclePoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		FB17746320F381A500F90DF3 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
-		FB22CD5720E5E12000F85FB1 /* ChartAxis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartAxis.swift; sourceTree = "<group>"; };
-		FB22CD5820E5E12000F85FB1 /* LineChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChart.swift; sourceTree = "<group>"; };
-		FB22CD5920E5E12100F85FB1 /* ChartUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartUtils.swift; sourceTree = "<group>"; };
-		FB22CD5A20E5E12100F85FB1 /* PointAnimationor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointAnimationor.swift; sourceTree = "<group>"; };
-		FB22CD5B20E5E12100F85FB1 /* ChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartData.swift; sourceTree = "<group>"; };
 		FB22CD6120E60FA000F85FB1 /* AxisChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AxisChart.swift; path = ../../MagicChart/AxisChart.swift; sourceTree = "<group>"; };
-		FB59CC6A2100841600B683B9 /* LineChartPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartPoint.swift; sourceTree = "<group>"; };
+		FB59CC8E21017A4900B683B9 /* LineChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LineChart.swift; path = ../../MagicChart/line/LineChart.swift; sourceTree = "<group>"; };
+		FB59CC8F21017A4900B683B9 /* LineChartPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LineChartPoint.swift; path = ../../MagicChart/line/LineChartPoint.swift; sourceTree = "<group>"; };
+		FB59CC9021017A4900B683B9 /* LineChartCirclePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LineChartCirclePoint.swift; path = ../../MagicChart/line/LineChartCirclePoint.swift; sourceTree = "<group>"; };
+		FB59CC9421017A5C00B683B9 /* Formatters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Formatters.swift; path = ../../MagicChart/utils/Formatters.swift; sourceTree = "<group>"; };
+		FB59CC9521017A5C00B683B9 /* ChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartData.swift; path = ../../MagicChart/utils/ChartData.swift; sourceTree = "<group>"; };
+		FB59CC9621017A5C00B683B9 /* ChartUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartUtils.swift; path = ../../MagicChart/utils/ChartUtils.swift; sourceTree = "<group>"; };
+		FB59CC9A21017A6800B683B9 /* ChartAxis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartAxis.swift; path = ../../MagicChart/public/ChartAxis.swift; sourceTree = "<group>"; };
+		FB59CC9B21017A6800B683B9 /* PointAnimationor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PointAnimationor.swift; path = ../../MagicChart/public/PointAnimationor.swift; sourceTree = "<group>"; };
 		FB69AD2F20073DF900383099 /* MagicChartDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MagicChartDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB69AD3220073DF900383099 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB69AD3420073DF900383099 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -39,7 +40,6 @@
 		FB69AD3920073DF900383099 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB69AD3C20073DF900383099 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FB69AD3E20073DF900383099 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FBC83B3820F8B01300F02583 /* LineChartCirclePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartCirclePoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,41 +56,41 @@
 		FB22CD5620E5E0F100F85FB1 /* MagicChart */ = {
 			isa = PBXGroup;
 			children = (
-				FB59CC6E2100B87500B683B9 /* utils */,
-				FB59CC6D2100B85900B683B9 /* public */,
-				FB59CC6C2100B83A00B683B9 /* line */,
+				FB59CC8D21017A3900B683B9 /* line */,
+				FB59CC8C21017A3100B683B9 /* utils */,
+				FB59CC8B21017A2700B683B9 /* public */,
 				FB22CD6120E60FA000F85FB1 /* AxisChart.swift */,
 			);
 			path = MagicChart;
 			sourceTree = "<group>";
 		};
-		FB59CC6C2100B83A00B683B9 /* line */ = {
+		FB59CC8B21017A2700B683B9 /* public */ = {
 			isa = PBXGroup;
 			children = (
-				FB22CD5820E5E12000F85FB1 /* LineChart.swift */,
-				FB59CC6A2100841600B683B9 /* LineChartPoint.swift */,
-				FBC83B3820F8B01300F02583 /* LineChartCirclePoint.swift */,
+				FB59CC9A21017A6800B683B9 /* ChartAxis.swift */,
+				FB59CC9B21017A6800B683B9 /* PointAnimationor.swift */,
 			);
-			path = line;
+			name = public;
 			sourceTree = "<group>";
 		};
-		FB59CC6D2100B85900B683B9 /* public */ = {
+		FB59CC8C21017A3100B683B9 /* utils */ = {
 			isa = PBXGroup;
 			children = (
-				FB22CD5720E5E12000F85FB1 /* ChartAxis.swift */,
-				FB22CD5A20E5E12100F85FB1 /* PointAnimationor.swift */,
+				FB59CC9521017A5C00B683B9 /* ChartData.swift */,
+				FB59CC9621017A5C00B683B9 /* ChartUtils.swift */,
+				FB59CC9421017A5C00B683B9 /* Formatters.swift */,
 			);
-			path = public;
+			name = utils;
 			sourceTree = "<group>";
 		};
-		FB59CC6E2100B87500B683B9 /* utils */ = {
+		FB59CC8D21017A3900B683B9 /* line */ = {
 			isa = PBXGroup;
 			children = (
-				FB17746320F381A500F90DF3 /* Formatters.swift */,
-				FB22CD5920E5E12100F85FB1 /* ChartUtils.swift */,
-				FB22CD5B20E5E12100F85FB1 /* ChartData.swift */,
+				FB59CC8E21017A4900B683B9 /* LineChart.swift */,
+				FB59CC9021017A4900B683B9 /* LineChartCirclePoint.swift */,
+				FB59CC8F21017A4900B683B9 /* LineChartPoint.swift */,
 			);
-			path = utils;
+			name = line;
 			sourceTree = "<group>";
 		};
 		FB69AD2620073DF900383099 = {
@@ -195,17 +195,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB22CD5F20E5E12100F85FB1 /* PointAnimationor.swift in Sources */,
-				FB59CC6B2100841600B683B9 /* LineChartPoint.swift in Sources */,
-				FB22CD5E20E5E12100F85FB1 /* ChartUtils.swift in Sources */,
-				FB22CD5D20E5E12100F85FB1 /* LineChart.swift in Sources */,
-				FBC83B3920F8B01300F02583 /* LineChartCirclePoint.swift in Sources */,
-				FB17746420F381A500F90DF3 /* Formatters.swift in Sources */,
+				FB59CC9121017A4900B683B9 /* LineChart.swift in Sources */,
+				FB59CC9321017A4900B683B9 /* LineChartCirclePoint.swift in Sources */,
 				FB69AD3520073DF900383099 /* ViewController.swift in Sources */,
-				FB22CD6020E5E12100F85FB1 /* ChartData.swift in Sources */,
-				FB22CD5C20E5E12100F85FB1 /* ChartAxis.swift in Sources */,
 				FB69AD3320073DF900383099 /* AppDelegate.swift in Sources */,
+				FB59CC9921017A5C00B683B9 /* ChartUtils.swift in Sources */,
+				FB59CC9221017A4900B683B9 /* LineChartPoint.swift in Sources */,
 				FB22CD6220E60FA000F85FB1 /* AxisChart.swift in Sources */,
+				FB59CC9821017A5C00B683B9 /* ChartData.swift in Sources */,
+				FB59CC9721017A5C00B683B9 /* Formatters.swift in Sources */,
+				FB59CC9D21017A6800B683B9 /* PointAnimationor.swift in Sources */,
+				FB59CC9C21017A6800B683B9 /* ChartAxis.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
