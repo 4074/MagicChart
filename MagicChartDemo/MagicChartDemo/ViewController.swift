@@ -20,25 +20,25 @@ class ViewController: UIViewController {
         
         lineChart = LineChart()
         lineChart.frame = CGRect(x: 20, y: 80, width: view.frame.width - 40, height: 200)
-        lineChart.axisConfig.x.lineColor = UIColor.white.withAlphaComponent(0.2)
-        lineChart.axisConfig.x.labelColor = .white
-        lineChart.axisConfig.x.labelCount = 4
+        lineChart.axis.x.lineColor = UIColor.white.withAlphaComponent(0.2)
+        lineChart.axis.x.labelColor = .white
+        lineChart.axis.x.labelCount = 4
         
-        lineChart.axisConfig.y.left.lineColor = .clear
-        lineChart.axisConfig.y.left.labelColor = .white
-        lineChart.axisConfig.y.left.labelCount = 1
-        lineChart.axisConfig.y.left.labelPosition = .inside
-        lineChart.axisConfig.y.left.labelAlignment = "left"
-        lineChart.axisConfig.y.left.labelSpacing = 0
-        lineChart.axisConfig.y.left.formatter = MagicChartIntFormatter()
+        lineChart.axis.y.left.lineColor = .clear
+        lineChart.axis.y.left.labelColor = .white
+        lineChart.axis.y.left.labelCount = 1
+        lineChart.axis.y.left.labelPosition = .inside
+        lineChart.axis.y.left.labelAlignment = "left"
+        lineChart.axis.y.left.labelSpacing = 0
+        lineChart.axis.y.left.formatter = MagicChartIntFormatter()
         
-        lineChart.axisConfig.y.right.lineColor = .clear
-        lineChart.axisConfig.y.right.labelColor = .white
-        lineChart.axisConfig.y.right.labelCount = 1
-        lineChart.axisConfig.y.right.labelPosition = .inside
-        lineChart.axisConfig.y.right.labelAlignment = "right"
-        lineChart.axisConfig.y.right.labelSpacing = 0
-        lineChart.axisConfig.y.right.formatter = MagicChartIntFormatter()
+        lineChart.axis.y.right.lineColor = .clear
+        lineChart.axis.y.right.labelColor = .white
+        lineChart.axis.y.right.labelCount = 1
+        lineChart.axis.y.right.labelPosition = .inside
+        lineChart.axis.y.right.labelAlignment = "right"
+        lineChart.axis.y.right.labelSpacing = 0
+        lineChart.axis.y.right.formatter = MagicChartIntFormatter()
         
 //        lineChart.animation = false
         lineChart.delegate = self
@@ -71,7 +71,6 @@ class ViewController: UIViewController {
             colors: (point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4))
         )
         let setOne = lineChart.createDataSet(label, value: [32, 51, 22, 39, 80, 99, 58]) { (set) in
-            set.lineDashPattern = []
             set.pointConfig = LineChartPointConfig(normal: pointConfig, active: pointConfigActive)
             set.lineColor = .white
             for i in 0..<label.count - 1 {
