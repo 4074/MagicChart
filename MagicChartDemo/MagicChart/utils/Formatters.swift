@@ -8,8 +8,8 @@
 
 import Foundation
 
-class MagicChartPercentageFormatter: NumberFormatter {
-    override func string(from number: NSNumber) -> String? {
+public class MagicChartPercentageFormatter: NumberFormatter {
+    override public func string(from number: NSNumber) -> String? {
         let value = round(Double(truncating: number) * 100)
         
         if value == 0 {
@@ -19,8 +19,8 @@ class MagicChartPercentageFormatter: NumberFormatter {
     }
 }
 
-class MagicChartIntFormatter: NumberFormatter {
-    override func string(from number: NSNumber) -> String? {
+public class MagicChartIntFormatter: NumberFormatter {
+    override public func string(from number: NSNumber) -> String? {
         let num = NSNumber(value: Int64(round(Double(truncating: number))))
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = NumberFormatter.Style.decimal

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChartAxis: CALayer {
+public class ChartAxis: CALayer {
     
     var config: AxisChartAxisConfig = AxisChartAxisConfig()
     var lineLayer: CAShapeLayer?
@@ -54,7 +54,7 @@ class ChartAxis: CALayer {
     }
 }
 
-class ChartXAxis: ChartAxis {
+public class ChartXAxis: ChartAxis {
     
     override func drawLine() {
         super.drawLine()
@@ -102,7 +102,7 @@ class ChartXAxis: ChartAxis {
     }
 }
 
-class ChartYAxis: ChartAxis {
+public class ChartYAxis: ChartAxis {
     
     override func drawLine() {
         super.drawLine()
