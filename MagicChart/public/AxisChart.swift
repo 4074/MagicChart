@@ -9,17 +9,18 @@
 import UIKit
 
 open class AxisChart: UIView {
-
+    
     let screenScale = UIScreen.main.scale
     var rendering = false
     
     public var colors: [UIColor] = [.green, .blue, .orange, .red]
     public var animation = true
-
+    
     public var chartLayer: CALayer?
     public var dataLayer: CALayer?
     
     public var inset: UIEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+    public var dataLayerInset: UIEdgeInsets = .zero
     
     public var axis: AxisChartAxisConfigGroup!
     
@@ -82,6 +83,7 @@ public class AxisChartAxisConfig {
     public var lineColor: UIColor = .lightGray
     
     public var labelCount: Int = 4
+    public var labelInset: UIEdgeInsets = .zero
     public var labelFont: UIFont = UIFont.systemFont(ofSize: 12)
     public var labelColor: UIColor = .lightGray
     public var labelSpacing: CGFloat = 4
