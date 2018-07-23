@@ -10,7 +10,7 @@ import UIKit
 
 public class ChartUtils {
     static func getNestNumber(source: Double, rate: Double = 0.8) -> Double {
-        let weight = pow(10, Double((String(Int(source)).count - 2)))
+        let weight = source < 1 ? 0.001 : pow(10, Double((String(Int(source)).count - 2)))
         var result = 2 * weight
         while result * rate < source {
             result += 2 * weight
@@ -18,11 +18,11 @@ public class ChartUtils {
         return result
     }
     
-    static func computeSelectedIndex(point: CGPoint, frame: CGRect, inset: UIEdgeInsets, count: Int) -> Int {
+    static func computeSelectedIndex(point: CGPoint, frame: CGRect, count: Int) -> Int {
         var index = count - 1
         let step = frame.width / CGFloat(count - 1)
         for i in 0..<count {
-            if point.x - inset.left <= (CGFloat(i) + 0.5) * step {
+            if point.x - frame.minX <= (CGFloat(i) + 0.5) * step {
                 index = i
                 break
             }
@@ -67,7 +67,7 @@ public class ChartUtils {
         
         return layer
     }
-
+    
     static func selectNumbers(min: Double, max: Double, count: Int) -> [Double] {
         var values = [Double]()
         
@@ -110,19 +110,15 @@ public class ChartUtils {
                     }
                 }
             } else {
-                if force {
+                if force || (source.count / count) > 4 {
                     indexList.append(0)
                     
-                    let step = Double(source.count + 1) / Double(count)
-                    var i:Double = 0
-                    while (indexList.count < count) {
+                    let step = Double(source.count + 1) / Double(count - 1)
+                    var i: Double = 1
+                    while (indexList.count < count - 1) {
                         let index = Int(floor(i * step))
                         indexList.append(index)
                         i += 1
-                        
-                        if indexList.count == count - 1 {
-                            indexList.append(count - 1)
-                        }
                     }
                     
                     indexList.append(source.count - 1)
@@ -163,7 +159,6 @@ public class ChartUtils {
         var width: CGFloat = 0
         let constraintRect = CGSize(width: 999, height: 999)
         for str in strings {
-            
             let boundingBox = str.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
             width = max(width, ceil(boundingBox.width))
         }

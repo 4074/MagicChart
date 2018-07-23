@@ -49,6 +49,7 @@ public class ChartAxisLayer: CALayer {
         layer.strokeColor = config.lineColor.cgColor
         layer.lineWidth = config.lineWidth
         layer.contentsScale = UIScreen.main.scale
+        layer.masksToBounds = true
         
         return layer
     }
@@ -66,15 +67,15 @@ public class ChartXAxisLayer: ChartAxisLayer {
     override func drawLabel() {
         super.drawLabel()
         
-        let itemWidth = frame.width / CGFloat(max(1, labels.count - 1))
         let wrapLayer = CATextLayer()
-        
         wrapLayer.frame = CGRect(
-            x: 0,
+            x: config.labelInset.left,
             y: 0,
-            width: frame.width,
+            width: frame.width - config.labelInset.left - config.labelInset.right,
             height: config.labelFont.pointSize
         )
+        
+        let itemWidth = wrapLayer.frame.width / CGFloat(max(1, labels.count - 1))
         
         for (index, text) in labels.enumerated() {
             if text.isEmpty {
@@ -86,7 +87,7 @@ public class ChartXAxisLayer: ChartAxisLayer {
                 x: itemWidth * CGFloat(index) - width / 2,
                 y: config.labelSpacing,
                 width: width,
-                height: config.labelFont.pointSize
+                height: config.labelFont.pointSize + 4
             )
             textLayer.font = config.labelFont
             textLayer.fontSize = config.labelFont.pointSize
@@ -134,7 +135,7 @@ public class ChartYAxisLayer: ChartAxisLayer {
                     x: config.labelSpacing,
                     y: y,
                     width: frame.width,
-                    height: config.labelFont.pointSize
+                    height: config.labelFont.pointSize + 4
                 )
             } else {
                 textLayer.frame = CGRect(

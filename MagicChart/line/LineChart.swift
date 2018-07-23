@@ -25,15 +25,14 @@ open class LineChart: AxisChart {
     
     public var selectedIndex: Int? = nil
     public var selectedLayer: CAShapeLayer?
-    public var selectedLineWidth: CGFloat = 1
+    public var selectedLineWidth: CGFloat = 0.8
     public var selectedLineColor: UIColor = .purple
     
     public var delegate: LineChartDelegate?
     
     override func touchDidUpdate(location: CGPoint) {
         if let dataLayer = self.dataLayer, !rendering {
-            let frameInset = UIEdgeInsets(top: inset.top, left: inset.left + self.frame.width - dataLayer.frame.width, bottom: inset.bottom, right: inset.right)
-            let index = ChartUtils.computeSelectedIndex(point: location, frame: dataLayer.frame, inset: frameInset, count: dataSource.label.count)
+            let index = ChartUtils.computeSelectedIndex(point: location, frame: dataLayer.frame, count: dataSource.label.count)
             handleDidSelect(index: index)
         }
     }
@@ -62,17 +61,17 @@ open class LineChart: AxisChart {
         
         dataLayer = CALayer()
         dataLayer!.frame = CGRect(
-            x: insetLeft,
+            x: insetLeft + dataLayerInset.left,
             y: 0,
-            width: chartLayer!.frame.width - insetLeft - insetRight,
+            width: chartLayer!.frame.width - insetLeft - insetRight - dataLayerInset.left - dataLayerInset.right,
             height: chartLayer!.frame.height - insetHeight
         )
         chartLayer?.addSublayer(dataLayer!)
         
-        axis.x.frame = CGRect(x: insetLeft, y: dataLayer!.frame.height, width: dataLayer!.frame.width, height: xAxisHeight)
+        axis.x.frame = CGRect(x: insetLeft, y: dataLayer!.frame.height, width: chartLayer!.frame.width - insetLeft - insetRight, height: xAxisHeight)
         
         axis.y.left.frame = CGRect(x: 0, y: 0, width: yLeftAxisWidth, height: dataLayer!.frame.height)
-        axis.y.right.frame = CGRect(x: dataLayer!.frame.width + insetLeft, y: 0, width: yRightAxisWidth, height: dataLayer!.frame.height)
+        axis.y.right.frame = CGRect(x: chartLayer!.frame.width - insetRight, y: 0, width: yRightAxisWidth, height: dataLayer!.frame.height)
         
         drawAxisLine()
         drawSetLine()
@@ -194,14 +193,14 @@ open class LineChart: AxisChart {
                 lastPoint = p
                 lastIndex = i
             }
-
+            
             let innerLayer = CAShapeLayer()
             innerLayer.frame = setLayer.bounds
             innerLayer.addSublayer(lineLayer)
             
             setLayer.addSublayer(innerLayer)
             dataPoints.append(points)
-
+            
             if animation {
                 let maskLayer = createAnimationMask(layer: lineLayer)
                 lineLayer.mask = maskLayer
@@ -216,18 +215,18 @@ open class LineChart: AxisChart {
                 dataPointLayer.append(pointLayer)
                 
                 // TODO: innerLayer mask with animation
-//                let m = CAShapeLayer()
-//                let path = CGMutablePath()
-//                path.addRect(innerLayer.bounds)
-//
-//                let ps = createPointMaskPath(points: points, radius: set.pointRadius, shape: shape)
-//                for p in ps {
-//                    path.addPath(p)
-//                }
-//                
-//                m.fillRule = kCAFillRuleEvenOdd
-//                m.path = path
-//                innerLayer.mask = m
+                //                let m = CAShapeLayer()
+                //                let path = CGMutablePath()
+                //                path.addRect(innerLayer.bounds)
+                //
+                //                let ps = createPointMaskPath(points: points, radius: set.pointRadius, shape: shape)
+                //                for p in ps {
+                //                    path.addPath(p)
+                //                }
+                //
+                //                m.fillRule = kCAFillRuleEvenOdd
+                //                m.path = path
+                //                innerLayer.mask = m
                 
                 if animation {
                     addAnimationToPoints(index: index)
@@ -295,6 +294,7 @@ open class LineChart: AxisChart {
     
     func drawAxisLine() {
         let xAxis = ChartXAxisLayer()
+        axis.x.labelInset = dataLayerInset
         xAxis.frame = axis.x.frame
         xAxis.labels = ChartUtils.selectStrings(source: dataSource.label, count: axis.x.labelCount, force: false)
         xAxis.config = axis.x
@@ -338,7 +338,7 @@ open class LineChart: AxisChart {
         }
     }
     
-    func setSelected(index: Int) {
+    public func setSelected(index: Int) {
         handleDidSelect(index: index)
     }
     
@@ -372,6 +372,7 @@ open class LineChart: AxisChart {
             let layer = CAShapeLayer()
             let path = UIBezierPath()
             
+            selectedLayer = layer
             layer.frame = frame
             path.lineCapStyle = .round
             path.lineJoinStyle = .round
@@ -382,15 +383,17 @@ open class LineChart: AxisChart {
             
             layer.path = path.cgPath
             layer.strokeColor = selectedLineColor.cgColor
+            layer.contentsScale = screenScale
+            layer.masksToBounds = true
             
             if let d = delegate {
                 d.chartView(self, styleSelectedLayer: layer)
             }
             
             dataLayer!.addSublayer(layer)
-            selectedLayer = layer
         } else {
             selectedLayer?.frame = frame
+            selectedLayer?.removeAllAnimations()
         }
         
         drawSelectedPoint(index: index)
@@ -434,8 +437,8 @@ extension LineChart {
         if rangeType.minimum == .auto || rangeType.maximum == .auto {
             let values = dataSource.sets.filter { (set) -> Bool in
                 return set.yAxisPosition == config.position
-            }.map { (set) -> [Double] in
-                return Array(set.value.values)
+                }.map { (set) -> [Double] in
+                    return Array(set.value.values)
             }
             
             if values.isEmpty {
