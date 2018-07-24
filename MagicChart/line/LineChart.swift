@@ -245,7 +245,7 @@ open class LineChart: AxisChart {
         }
     }
     
-    func addAnimationToPoints(mask: CAShapeLayer, layers: [CAShapeLayer], points: [CGPoint?]) {
+    func addAnimationToPoints(mask: CAShapeLayer, layers: [LineChartPoint], points: [CGPoint?]) {
         let animator = PointAnimator(
             source: mask,
             duration: duration,
@@ -366,9 +366,9 @@ open class LineChart: AxisChart {
             return
         }
         let x = dataLayer!.frame.width / CGFloat(dataSource.label.count - 1) * CGFloat(index)
-        let frame = CGRect(x: x, y: 0, width: selectedLineWidth, height: dataLayer!.frame.height)
         
         if selectedLayer == nil {
+            let frame = CGRect(x: x, y: 0, width: selectedLineWidth, height: dataLayer!.frame.height)
             let layer = CAShapeLayer()
             let path = UIBezierPath()
             
@@ -390,9 +390,9 @@ open class LineChart: AxisChart {
                 d.chartView(self, styleSelectedLayer: layer)
             }
             
-            dataLayer!.addSublayer(layer)
+            dataLayer?.insertSublayer(layer, at: 0)
         } else {
-            selectedLayer?.frame = frame
+            selectedLayer?.frame = CGRect(x: x, y: selectedLayer!.frame.minY, width: selectedLayer!.frame.width, height: selectedLayer!.frame.height)
             selectedLayer?.removeAllAnimations()
         }
         
