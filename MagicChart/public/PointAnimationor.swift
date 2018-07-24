@@ -13,37 +13,31 @@ public class PointAnimator {
     var link: CADisplayLink?
     var sourceLayer: CAShapeLayer?
     var points: [CGPoint?] = []
-    var layers: [CAShapeLayer] = []
+    var layers: [LineChartPoint] = []
     var duration: TimeInterval = 0
     var nextIndex: Int = 0
     var completion = false
     
     var completionBlock: (() -> Void)?
     
-    init(source: CAShapeLayer, duration: TimeInterval, points: [CGPoint?], layers: [CAShapeLayer]) {
+    init(source: CAShapeLayer, duration: TimeInterval, points: [CGPoint?], layers: [LineChartPoint]) {
         self.sourceLayer = source
         self.duration = duration
         self.points = points
         self.layers = layers
-//        print(points)
+        
         for layer in layers {
             layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-            layer.opacity = 0
+            // Find layers need excute display animation
+            if layer.configForState.radius > 0 {
+                layer.opacity = 0
+            }
         }
     }
     
     func start() {
         link = CADisplayLink.init(target: self, selector: #selector(self.handleDisplayLink))
         link?.add(to: .current, forMode: .commonModes)
-
-        if #available(iOS 10.0, *) {
-            Timer.scheduledTimer(withTimeInterval: duration + 1, repeats: false) { (timer) in
-                self.stop()
-                timer.invalidate()
-            }
-        } else {
-            Timer.scheduledTimer(timeInterval: duration + 1, target: self, selector: #selector(self.stop), userInfo: nil, repeats: false)
-        }
     }
     
     @objc
@@ -65,7 +59,6 @@ public class PointAnimator {
     @objc
     func handleDisplayLink() {
         if let width = sourceLayer?.presentation()?.path?.boundingBoxOfPath.width {
-//            print(width)
             displayLayerIfNeed(width: width)
         }
     }
@@ -75,7 +68,9 @@ public class PointAnimator {
             if let point = points[index] {
                 if width >= point.x - 24 {
                     if index < layers.count {
-                        displayLayer(layer: layers[index])
+                        if layers[index].configForState.radius > 0 {
+                            displayLayer(layer: layers[index])
+                        }
                     }
                     nextIndex = index + 1
                     
@@ -90,6 +85,7 @@ public class PointAnimator {
     }
     
     func displayLayer(layer: CAShapeLayer) {
+        if layer.opacity == 1 { return }
         let opacityAnimation = CABasicAnimation(keyPath: "opacity")
         opacityAnimation.fromValue = 0
         opacityAnimation.toValue = 1

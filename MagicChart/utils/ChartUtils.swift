@@ -102,15 +102,15 @@ public class ChartUtils {
             let index = Int(floor(Double(source.count - 1) / 2))
             indexList.append(index)
         } else {
-            if (source.count + 1) % count == 0 {
-                let step = (source.count + 1) / count
+            if (source.count - 1) % (count - 1) == 0 {
+                let step = (source.count - 1) / (count - 1)
                 for i in 0..<source.count {
                     if i % step == 0 {
                         indexList.append(i)
                     }
                 }
             } else {
-                if force || (source.count / count) > 4 {
+                if force || (Double(source.count) / Double(count)) > 3 {
                     indexList.append(0)
                     
                     let step = Double(source.count + 1) / Double(count - 1)

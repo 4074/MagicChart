@@ -92,7 +92,7 @@ public class LineChartCirclePoint: LineChartPoint {
             path.close()
         }
         shadowLayer.path = path.cgPath
-
+        
         let m = CAShapeLayer()
         let mpath = CGMutablePath()
         mpath.addRect(shadowLayer.bounds)
