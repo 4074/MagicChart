@@ -74,8 +74,9 @@ class ViewController: UIViewController {
             set.pointConfig = LineChartPointConfig(normal: pointConfig, active: pointConfigActive)
             set.lineColor = .white
             set.lineStyle = .curve
-            for i in 0..<label.count - 2 {
-                if i < label.count - 3 {
+            let count = 6
+            for i in 0..<count {
+                if i < count - 1 {
                     set.lineDashPattern.append([])
                 } else {
                     set.lineDashPattern.append([4, 4])

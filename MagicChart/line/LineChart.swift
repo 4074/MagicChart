@@ -16,6 +16,7 @@ open class LineChart: AxisChart {
             self.render()
         }
     }
+    
     public var dataSetLayer: [(set: CAShapeLayer, line: CAShapeLayer, mask: CAShapeLayer?)] = []
     public var dataPointLayer: [(layer: CAShapeLayer, subs: [LineChartCirclePoint])?] = []
     public var dataPoints: [[CGPoint?]] = []
@@ -108,6 +109,8 @@ open class LineChart: AxisChart {
             }
         }
         
+        dataPoints.removeAll()
+        dataPointsCache.removeAll()
         dataSetLayer.removeAll()
         dataPointLayer.removeAll()
     }
@@ -138,11 +141,13 @@ open class LineChart: AxisChart {
             var points = [CGPoint?]()
             
             lineLayer.frame = setLayer.bounds
+            let setWidth = Double(setLayer.frame.width)
+            let setHeight = Double(setLayer.frame.height)
             
             for (i, k) in dataSource.label.enumerated() {
                 if let v = set.value[k] {
-                    let x = (Double(i) / Double(dataSource.label.count - 1)) * Double(setLayer.frame.width)
-                    let y = (1 - (v / (range.maximum - range.minimum))) * Double(setLayer.frame.height)
+                    let x = dataSource.label.count == 1 ? setWidth/2 : (Double(i) / Double(dataSource.label.count - 1)) * setWidth
+                    let y = (1 - (v / (range.maximum - range.minimum))) * setHeight
                     let point = CGPoint(x: x, y: y)
                     
                     points.append(point)
@@ -183,8 +188,8 @@ open class LineChart: AxisChart {
                 pathLayer.contentsScale = screenScale
                 pathLayer.fillColor = UIColor.clear.cgColor
                 
-                if set.lineDashPattern.count > i - 1 && !set.lineDashPattern[i - 1].isEmpty {
-                    pathLayer.lineDashPattern = set.lineDashPattern[i - 1] as [NSNumber]
+                if set.lineDashPattern.count > i && !set.lineDashPattern[i].isEmpty {
+                    pathLayer.lineDashPattern = set.lineDashPattern[i] as [NSNumber]
                     pathLayer.contentsScale = screenScale
                 }
                 
@@ -365,7 +370,13 @@ open class LineChart: AxisChart {
         guard let index = selectedIndex else {
             return
         }
-        let x = dataLayer!.frame.width / CGFloat(dataSource.label.count - 1) * CGFloat(index)
+        var x: CGFloat = 0
+        for group in dataPoints {
+            if index < group.count, let p = group[index] {
+                x = p.x
+                break
+            }
+        }
         
         if selectedLayer == nil {
             let frame = CGRect(x: x, y: 0, width: selectedLineWidth, height: dataLayer!.frame.height)

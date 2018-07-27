@@ -83,8 +83,9 @@ public class ChartXAxisLayer: ChartAxisLayer {
             }
             let textLayer = CATextLayer()
             let width: CGFloat = config.labelFont.pointSize * CGFloat(text.count)
+            let centerX = labels.count == 1 ? wrapLayer.frame.width/2 : itemWidth * CGFloat(index)
             textLayer.frame = CGRect(
-                x: itemWidth * CGFloat(index) - width / 2,
+                x: centerX - width/2,
                 y: config.labelSpacing,
                 width: width,
                 height: config.labelFont.pointSize + 4
