@@ -31,11 +31,27 @@ open class LineChart: AxisChart {
     
     public var delegate: LineChartDelegate?
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanGesture(_:)))
+        self.addGestureRecognizer(panGesture)
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func touchDidUpdate(location: CGPoint) {
         if let dataLayer = self.dataLayer, !rendering {
             let index = ChartUtils.computeSelectedIndex(point: location, frame: dataLayer.frame, count: dataSource.label.count)
             handleDidSelect(index: index)
         }
+    }
+    
+    @objc
+    func handlePanGesture(_ sender: UIPanGestureRecognizer) {
+        touchDidUpdate(location: sender.location(in: self))
     }
     
     func render() {

@@ -49,7 +49,7 @@ open class AxisChart: UIView {
     
     override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
-            touchDidUpdate(location: t.location(in: self))
+//            touchDidUpdate(location: t.location(in: self))
             break
         }
     }
