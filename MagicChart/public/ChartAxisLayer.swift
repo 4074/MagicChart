@@ -82,10 +82,20 @@ public class ChartXAxisLayer: ChartAxisLayer {
                 continue
             }
             let textLayer = CATextLayer()
-            let width: CGFloat = config.labelFont.pointSize * CGFloat(text.count)
+            let width: CGFloat = ChartUtils.getStringWidth(string: text, font: config.labelFont)
             let centerX = labels.count == 1 ? wrapLayer.frame.width/2 : itemWidth * CGFloat(index)
+            var x = centerX - width/2
+            
+            if config.labelInset == .zero {
+                if index == 0 {
+                    x = centerX
+                } else if index == labels.count - 1 {
+                    x = centerX - width
+                }
+            }
+            
             textLayer.frame = CGRect(
-                x: centerX - width/2,
+                x: x,
                 y: config.labelSpacing,
                 width: width,
                 height: config.labelFont.pointSize + 4
@@ -109,7 +119,7 @@ public class ChartYAxisLayer: ChartAxisLayer {
     override func drawLine() {
         super.drawLine()
         
-        lineLayer = createLineLayer(origin: CGPoint(x: frame.width, y: 0), end: CGPoint(x: frame.width, y: frame.height))
+        lineLayer = createLineLayer(origin: CGPoint(x: 0, y: 0), end: CGPoint(x: 0, y: frame.height))
         self.addSublayer(lineLayer!)
     }
     
@@ -159,8 +169,3 @@ public class ChartYAxisLayer: ChartAxisLayer {
         labelLayer = wrapLayer
     }
 }
-
-
-
-
-
