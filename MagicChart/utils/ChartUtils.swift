@@ -157,12 +157,16 @@ public class ChartUtils {
     
     static func getMaxStringWidth(strings: [String], font: UIFont) -> CGFloat {
         var width: CGFloat = 0
-        let constraintRect = CGSize(width: 999, height: 999)
         for str in strings {
-            let boundingBox = str.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
-            width = max(width, ceil(boundingBox.width))
+            width = max(width, getStringWidth(string: str, font: font))
         }
         return width
+    }
+    
+    static func getStringWidth(string: String, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: 999, height: 999)
+        let boundingBox = string.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
+        return ceil(boundingBox.width)
     }
 }
 
