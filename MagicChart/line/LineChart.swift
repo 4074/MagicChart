@@ -157,7 +157,7 @@ open class LineChart: AxisChart {
             for (i, k) in dataSource.label.enumerated() {
                 if let v = set.value[k] {
                     let x = dataSource.label.count == 1 ? setWidth/2 : (Double(i) / Double(dataSource.label.count - 1)) * setWidth
-                    let y = (1 - (v / (range.maximum - range.minimum))) * setHeight
+                    let y = (1 - ((v - range.minimum) / (range.maximum - range.minimum))) * setHeight
                     let point = CGPoint(x: x, y: axisConfig.reverse ? setHeight - y : y)
                     
                     points.append(point)
