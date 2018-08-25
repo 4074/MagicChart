@@ -68,11 +68,11 @@ public class ChartUtils {
         return layer
     }
     
-    static func selectNumbers(min: Double, max: Double, count: Int) -> [Double] {
+    static func selectNumbers(min: Double, max: Double, count: Int, reverse: Bool = false) -> [Double] {
         var values = [Double]()
         
         if count <= 1 {
-            values = [max]
+            values = [reverse ? min : max]
         } else {
             let step = max / Double(count - 1)
             var num = min

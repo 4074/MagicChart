@@ -49,7 +49,7 @@ open class AxisChart: UIView {
     
     override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
-//            touchDidUpdate(location: t.location(in: self))
+            //            touchDidUpdate(location: t.location(in: self))
             break
         }
     }
@@ -91,8 +91,10 @@ public class AxisChartAxisConfig {
     public var labelAlignment: String = "center"
     public var formatter: NumberFormatter = NumberFormatter()
     
-    var rangeType: (minimum: MagicChartAxisRangeType, maximum: MagicChartAxisRangeType) = (.zero, .auto)
-    var range: (minimum: Double, maximum: Double)?
+    public var rangeType: (minimum: MagicChartAxisRangeType, maximum: MagicChartAxisRangeType) = (.zero, .auto)
+    public var range: (minimum: Double, maximum: Double)?
+    public var reverse: Bool = false
+    
     var frame: CGRect = .zero
     var layer: ChartAxisLayer? = nil
 }

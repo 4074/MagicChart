@@ -135,18 +135,12 @@ open class LineChart: AxisChart {
         
         for (index, set) in dataSource.sets.enumerated() {
             var range: (minimum: Double, maximum: Double)!
-            if set.yAxisPosition == .left {
-                if let r = axis.y.left.range {
-                    range = r
-                } else {
-                    continue
-                }
-            } else if set.yAxisPosition == .right {
-                if let r = axis.y.right.range {
-                    range = r
-                } else {
-                    continue
-                }
+            let axisConfig: AxisChartAxisConfig = set.yAxisPosition == .left ? axis.y.left : axis.y.right
+            
+            if let r = axisConfig.range {
+                range = r
+            } else {
+                continue
             }
             
             let setLayer = CAShapeLayer()
@@ -164,7 +158,7 @@ open class LineChart: AxisChart {
                 if let v = set.value[k] {
                     let x = dataSource.label.count == 1 ? setWidth/2 : (Double(i) / Double(dataSource.label.count - 1)) * setWidth
                     let y = (1 - (v / (range.maximum - range.minimum))) * setHeight
-                    let point = CGPoint(x: x, y: y)
+                    let point = CGPoint(x: x, y: axisConfig.reverse ? setHeight - y : y)
                     
                     points.append(point)
                 } else {
@@ -326,7 +320,7 @@ open class LineChart: AxisChart {
         let yLeftAxis = ChartYAxisLayer()
         yLeftAxis.frame = axis.y.left.frame
         if let range = axis.y.left.range {
-            yLeftAxis.labels = ChartUtils.selectNumbers(min: range.minimum, max: range.maximum, count: axis.y.left.labelCount).map { (v) -> String in
+            yLeftAxis.labels = ChartUtils.selectNumbers(min: range.minimum, max: range.maximum, count: axis.y.left.labelCount, reverse: axis.y.left.reverse).map { (v) -> String in
                 return self.getYAxisLabelTextFromValue(value: v, config: axis.y.left)
             }
         }

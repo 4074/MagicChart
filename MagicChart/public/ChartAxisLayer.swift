@@ -135,6 +135,8 @@ public class ChartYAxisLayer: ChartAxisLayer {
             height: frame.height
         )
         
+        let labels = config.reverse ? self.labels.reversed() : self.labels
+        
         for (index, text) in labels.enumerated() {
             if text.isEmpty {
                 continue
