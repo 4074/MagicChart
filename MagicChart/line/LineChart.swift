@@ -377,7 +377,7 @@ open class LineChart: AxisChart {
     }
     
     func drawSelected() {
-        guard let index = selectedIndex else {
+        guard let index = selectedIndex, index >= 0 else {
             return
         }
         var x: CGFloat = 0
