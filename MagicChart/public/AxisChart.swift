@@ -104,11 +104,21 @@ public class AxisChartAxisConfig {
 public struct AxisChartAxisRange {
     public var minimum: AxisChartAxisRangeItem
     public var maximum: AxisChartAxisRangeItem
+    
+    public init(minimum: AxisChartAxisRangeItem, maximum: AxisChartAxisRangeItem) {
+        self.minimum = minimum
+        self.maximum = maximum
+    }
 }
 
 public struct AxisChartAxisRangeItem {
     public var type: MagicChartAxisRangeType
     public var value: Double?
+    
+    public init(type: MagicChartAxisRangeType, value: Double?) {
+        self.type = type
+        self.value = value
+    }
 }
 
 public enum AxisChartLabelPosition {
