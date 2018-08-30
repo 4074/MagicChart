@@ -15,7 +15,6 @@ public enum MagicLineStyle {
 
 public enum MagicChartAxisRangeType {
     case auto
-    case zero
     case manual
 }
 
