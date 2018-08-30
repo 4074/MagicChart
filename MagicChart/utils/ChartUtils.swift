@@ -139,7 +139,7 @@ public class ChartUtils {
         return result
     }
     
-    static func getNumberRange(source: [[Double]]) -> (minimum: Double, maximum: Double) {
+    static func getNumberRange(source: [[Double]]) -> (minimum: Double?, maximum: Double?) {
         var minimum: Double = Double.infinity
         var maximum: Double = -Double.infinity
         
@@ -152,7 +152,7 @@ public class ChartUtils {
             }
         }
         
-        return (minimum, maximum)
+        return (minimum == Double.infinity ? nil : minimum, maximum == -Double.infinity ? nil : maximum)
     }
     
     static func getMaxStringWidth(strings: [String], font: UIFont) -> CGFloat {

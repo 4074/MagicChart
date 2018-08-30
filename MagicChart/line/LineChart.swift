@@ -56,8 +56,8 @@ open class LineChart: AxisChart {
     
     func render() {
         rendering = true
-        axis.y.left.range = getYAxisRange(config: axis.y.left)
-        axis.y.right.range = getYAxisRange(config: axis.y.right)
+        setYAxisRange(config: axis.y.left)
+        setYAxisRange(config: axis.y.right)
         
         chartLayer = CALayer()
         chartLayer!.frame = CGRect(
@@ -134,14 +134,7 @@ open class LineChart: AxisChart {
     func drawSetLine() {
         
         for (index, set) in dataSource.sets.enumerated() {
-            var range: (minimum: Double, maximum: Double)!
             let axisConfig: AxisChartAxisConfig = set.yAxisPosition == .left ? axis.y.left : axis.y.right
-            
-            if let r = axisConfig.range {
-                range = r
-            } else {
-                continue
-            }
             
             let setLayer = CAShapeLayer()
             setLayer.frame = CGRect(origin: .zero, size: dataLayer!.frame.size)
@@ -154,15 +147,17 @@ open class LineChart: AxisChart {
             let setWidth = Double(setLayer.frame.width)
             let setHeight = Double(setLayer.frame.height)
             
-            for (i, k) in dataSource.label.enumerated() {
-                if let v = set.value[k] {
-                    let x = dataSource.label.count == 1 ? setWidth/2 : (Double(i) / Double(dataSource.label.count - 1)) * setWidth
-                    let y = (1 - ((v - range.minimum) / (range.maximum - range.minimum))) * setHeight
-                    let point = CGPoint(x: x, y: axisConfig.reverse ? setHeight - y : y)
-                    
-                    points.append(point)
-                } else {
-                    points.append(nil)
+            if let minimum = axisConfig.range.minimum.value, let maximum = axisConfig.range.maximum.value {
+                for (i, k) in dataSource.label.enumerated() {
+                    if let v = set.value[k] {
+                        let x = dataSource.label.count == 1 ? setWidth/2 : (Double(i) / Double(dataSource.label.count - 1)) * setWidth
+                        let y = (1 - ((v - minimum) / (maximum - minimum))) * setHeight
+                        let point = CGPoint(x: x, y: axisConfig.reverse ? setHeight - y : y)
+                        
+                        points.append(point)
+                    } else {
+                        points.append(nil)
+                    }
                 }
             }
             
@@ -319,20 +314,21 @@ open class LineChart: AxisChart {
         
         let yLeftAxis = ChartYAxisLayer()
         yLeftAxis.frame = axis.y.left.frame
-        if let range = axis.y.left.range {
-            yLeftAxis.labels = ChartUtils.selectNumbers(min: range.minimum, max: range.maximum, count: axis.y.left.labelCount, reverse: axis.y.left.reverse).map { (v) -> String in
+        if let minimum = axis.y.left.range.minimum.value, let maximum = axis.y.left.range.maximum.value {
+            yLeftAxis.labels = ChartUtils.selectNumbers(min: minimum, max: maximum, count: axis.y.left.labelCount, reverse: axis.y.left.reverse).map { (v) -> String in
                 return self.getYAxisLabelTextFromValue(value: v, config: axis.y.left)
             }
         }
+        
         yLeftAxis.config = axis.y.left
         yLeftAxis.render()
         chartLayer?.addSublayer(yLeftAxis)
         axis.y.left.layer = yLeftAxis
         
-        if let range = axis.y.right.range {
+        if let minimum = axis.y.right.range.minimum.value, let maximum = axis.y.right.range.maximum.value {
             let yRightAxis = ChartYAxisLayer()
             yRightAxis.frame = axis.y.right.frame
-            yRightAxis.labels = ChartUtils.selectNumbers(min: range.minimum, max: range.maximum, count: axis.y.right.labelCount).map { (v) -> String in
+            yRightAxis.labels = ChartUtils.selectNumbers(min: minimum, max: maximum, count: axis.y.right.labelCount).map { (v) -> String in
                 return self.getYAxisLabelTextFromValue(value: v, config: axis.y.right)
             }
             yRightAxis.config = axis.y.right
@@ -439,8 +435,8 @@ extension LineChart {
     
     func getYAxisWidth(config: AxisChartAxisConfig) -> CGFloat {
         var width: CGFloat = 0
-        if let range = config.range {
-            let labels = ChartUtils.selectNumbers(min: range.minimum, max: range.maximum, count: config.labelCount).map { (v) -> String in
+        if let minimum = config.range.minimum.value, let maximum = config.range.maximum.value {
+            let labels = ChartUtils.selectNumbers(min: minimum, max: maximum, count: config.labelCount).map { (v) -> String in
                 return self.getYAxisLabelTextFromValue(value: v, config: config)
             }
             
@@ -449,46 +445,21 @@ extension LineChart {
         return width + config.labelSpacing
     }
     
-    func getYAxisRange(config: AxisChartAxisConfig) -> (minimum: Double, maximum: Double)? {
-        var minimum: Double = Double.infinity
-        var maximum: Double = -Double.infinity
+    func setYAxisRange(config: AxisChartAxisConfig) {
+        let values = dataSource.sets.filter { (set) -> Bool in
+            return set.yAxisPosition == config.position
+            }.map { (set) -> [Double] in
+                return Array(set.value.values)
+        }
+        let rangeCalculated = ChartUtils.getNumberRange(source: values)
         
-        let rangeType = config.rangeType
-        
-        if rangeType.minimum == .auto || rangeType.maximum == .auto {
-            let values = dataSource.sets.filter { (set) -> Bool in
-                return set.yAxisPosition == config.position
-                }.map { (set) -> [Double] in
-                    return Array(set.value.values)
-            }
-            
-            if values.isEmpty {
-                return nil
-            }
-            
-            let rangeCalculated = ChartUtils.getNumberRange(source: values)
-            if rangeType.minimum == .auto {
-                minimum = rangeCalculated.minimum
-            }
-            if rangeType.maximum == .auto {
-                maximum = ChartUtils.getNestNumber(source: rangeCalculated.maximum)
-            }
+        if config.range.minimum.type == .auto {
+            config.range.minimum.value = rangeCalculated.minimum
         }
         
-        if rangeType.minimum == .zero {
-            minimum = 0
+        if config.range.maximum.type == .auto, let max = rangeCalculated.maximum {
+            config.range.maximum.value = ChartUtils.getNestNumber(source: max)
         }
-        
-        if let rangeManual = axis.y.left.range {
-            if rangeType.minimum == .manual {
-                minimum = rangeManual.minimum
-            }
-            if rangeType.maximum == .manual {
-                maximum = rangeManual.maximum
-            }
-        }
-        
-        return minimum <= maximum ? (minimum, maximum) : nil
     }
     
     func createPointLayer(frame: CGRect, points: [CGPoint?], config: LineChartPointConfig) -> (layer: CAShapeLayer, subs: [LineChartCirclePoint]) {

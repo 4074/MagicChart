@@ -91,12 +91,24 @@ public class AxisChartAxisConfig {
     public var labelAlignment: String = "center"
     public var formatter: NumberFormatter = NumberFormatter()
     
-    public var rangeType: (minimum: MagicChartAxisRangeType, maximum: MagicChartAxisRangeType) = (.zero, .auto)
-    public var range: (minimum: Double, maximum: Double)?
+    public var range: AxisChartAxisRange = AxisChartAxisRange(
+        minimum: AxisChartAxisRangeItem(type: .manual, value: 0),
+        maximum: AxisChartAxisRangeItem(type: .auto, value: nil)
+    )
     public var reverse: Bool = false
     
     var frame: CGRect = .zero
     var layer: ChartAxisLayer? = nil
+}
+
+public struct AxisChartAxisRange {
+    public var minimum: AxisChartAxisRangeItem
+    public var maximum: AxisChartAxisRangeItem
+}
+
+public struct AxisChartAxisRangeItem {
+    public var type: MagicChartAxisRangeType
+    public var value: Double?
 }
 
 public enum AxisChartLabelPosition {
