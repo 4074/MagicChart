@@ -137,7 +137,7 @@ open class LineChart: AxisChart {
             let axisConfig: AxisChartAxisConfig = set.yAxisPosition == .left ? axis.y.left : axis.y.right
             
             let setLayer = CAShapeLayer()
-            setLayer.frame = CGRect(origin: .zero, size: dataLayer!.frame.size)
+            setLayer.frame = dataLayer!.bounds
             
             let lineLayer = CAShapeLayer()
             let color = (set.lineColor ?? colors[index % colors.count])
@@ -151,8 +151,14 @@ open class LineChart: AxisChart {
                 for (i, k) in dataSource.label.enumerated() {
                     if let v = set.value[k] {
                         let x = dataSource.label.count == 1 ? setWidth/2 : (Double(i) / Double(dataSource.label.count - 1)) * setWidth
-                        let y = (1 - ((v - minimum) / (maximum - minimum))) * setHeight
-                        let point = CGPoint(x: x, y: axisConfig.reverse ? setHeight - y : y)
+                        var y = (1 - ((v - minimum) / (maximum - minimum))) * setHeight
+                        y = axisConfig.reverse ? setHeight - y : y
+                        
+                        // TODO: fix line overflow with more clever mothod
+                        if y == 0 {
+                            y = Double(set.lineWidth) / 2
+                        }
+                        let point = CGPoint(x: x, y: y)
                         
                         points.append(point)
                     } else {
