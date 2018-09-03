@@ -22,6 +22,7 @@ public enum MagicChartPointShape {
     case circle
     case square
     case triangle
+    case diamond
 }
 
 public enum AxisChartAxisPosition {
@@ -49,7 +50,7 @@ public class LineChartDataSet {
     public var xAxisPosition: AxisChartAxisPosition = .bottom
     public var yAxisPosition: AxisChartAxisPosition = .left
     
-    public var pointConfig: LineChartPointConfig? = nil
+    public var point: LineChartPointConfig? = nil
 }
 
 

@@ -18,7 +18,7 @@ open class LineChart: AxisChart {
     }
     
     public var dataSetLayer: [(set: CAShapeLayer, line: CAShapeLayer, mask: CAShapeLayer?)] = []
-    public var dataPointLayer: [(layer: CAShapeLayer, subs: [LineChartCirclePoint])?] = []
+    public var dataPointLayer: [(layer: CAShapeLayer, subs: [LineChartPoint])?] = []
     public var dataPoints: [[CGPoint?]] = []
     private var dataPointsCache: [[CGPoint]] = []
     
@@ -225,8 +225,8 @@ open class LineChart: AxisChart {
                 dataSetLayer.append((setLayer, lineLayer, nil))
             }
             
-            if let pointConfig = set.pointConfig {
-                let pointLayer = createPointLayer(frame: setLayer.bounds, points: points, config: pointConfig)
+            if let point = set.point {
+                let pointLayer = createPointLayer(frame: setLayer.bounds, points: points, config: point)
                 setLayer.addSublayer(pointLayer.layer)
                 dataPointLayer.append(pointLayer)
                 
@@ -468,19 +468,34 @@ extension LineChart {
         }
     }
     
-    func createPointLayer(frame: CGRect, points: [CGPoint?], config: LineChartPointConfig) -> (layer: CAShapeLayer, subs: [LineChartCirclePoint]) {
+    func createPointLayer(frame: CGRect, points: [CGPoint?], config: LineChartPointConfig) -> (layer: CAShapeLayer, subs: [LineChartPoint]) {
         let layer = CAShapeLayer()
-        var subs: [LineChartCirclePoint] = []
+        var subs: [LineChartPoint] = []
         
         layer.frame = frame
         
         for point in points {
             if let p = point {
-                let pointLayer = LineChartCirclePoint(center: p, config: config)
-                subs.append(pointLayer)
-                layer.addSublayer(pointLayer)
+                switch config.shape {
+                case .circle:
+                    let pointLayer = LineChartCirclePoint(center: p, config: config)
+                    subs.append(pointLayer)
+                    layer.addSublayer(pointLayer)
+                case .square:
+                    let pointLayer = LineChartSquarePoint(center: p, config: config)
+                    subs.append(pointLayer)
+                    layer.addSublayer(pointLayer)
+                case .diamond:
+                    let pointLayer = LineChartDiamondPoint(center: p, config: config)
+                    subs.append(pointLayer)
+                    layer.addSublayer(pointLayer)
+                default:
+                    let pointLayer = LineChartBasePoint(center: p, config: config)
+                    subs.append(pointLayer)
+                    layer.addSublayer(pointLayer)
+                }
             } else {
-                subs.append(LineChartCirclePoint(center: .zero, config: config))
+                subs.append(LineChartBasePoint(center: .zero, config: config))
             }
         }
         

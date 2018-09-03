@@ -10,7 +10,6 @@ import UIKit
 
 open class LineChartPoint: CAShapeLayer {
     open var config: LineChartPointConfig!
-    open var configForState: LineChartPointConfigItem!
     open var active: Bool = false {
         didSet {
             if oldValue != active {
@@ -23,37 +22,32 @@ open class LineChartPoint: CAShapeLayer {
 }
 
 public struct LineChartPointConfig {
-    public let normal: LineChartPointConfigItem
-    public let active: LineChartPointConfigItem
+    public let shape: MagicChartPointShape
+    public let normal: (radius: LineChartPointRadius, colors: LineChartPointColor)
+    public let active: (radius: LineChartPointRadius, colors: LineChartPointColor)
+}
+
+public struct LineChartPointColor {
+    let point: UIColor
+    let hole: UIColor
+    let shadow: UIColor
     
-    public init(
-        normal: LineChartPointConfigItem,
-        active: LineChartPointConfigItem
-    ) {
-        self.normal = normal
-        self.active = active
+    public init(point: UIColor, hole: UIColor, shadow: UIColor) {
+        self.point = point
+        self.hole = hole
+        self.shadow = shadow
     }
 }
 
-public struct LineChartPointConfigItem {
-    public let shape: MagicChartPointShape
-    public let radius: CGFloat
-    public let hole: CGFloat
-    public let shadow: CGFloat
-    public let colors: (point: UIColor, hole: UIColor, shadow: UIColor)
+public struct LineChartPointRadius {
+    let point: CGFloat
+    let hole: CGFloat
+    let shadow: CGFloat
     
-    public init(
-        shape: MagicChartPointShape,
-        radius: CGFloat,
-        hole: CGFloat,
-        shadow: CGFloat,
-        colors: (point: UIColor, hole: UIColor, shadow: UIColor)
-    ) {
-        self.shape = shape
-        self.radius = radius
+    public init(point: CGFloat, hole: CGFloat, shadow: CGFloat) {
+        self.point = point
         self.hole = hole
         self.shadow = shadow
-        self.colors = colors
     }
 }
 

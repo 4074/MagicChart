@@ -29,7 +29,8 @@ public class PointAnimator {
         for layer in layers {
             layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             // Find layers need excute display animation
-            if layer.configForState.radius > 0 {
+            let configForState = layer.active ? layer.config.active : layer.config.normal
+            if configForState.radius.point > 0 {
                 layer.opacity = 0
             }
         }
@@ -68,7 +69,7 @@ public class PointAnimator {
             if let point = points[index] {
                 if width >= point.x - 24 {
                     if index < layers.count {
-                        if layers[index].configForState.radius > 0 {
+                        if (layers[index].active ? layers[index].config.active : layers[index].config.normal).radius.point > 0 {
                             displayLayer(layer: layers[index])
                         }
                     }
