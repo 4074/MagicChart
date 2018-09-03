@@ -56,24 +56,14 @@ class ViewController: UIViewController {
     @objc func refreshChart() {
         let dataSource = LineChartDataSource()
         let label = ["06/16", "06/17", "06/18", "06/19", "06/20", "06/21", "06/22"]
-        let pointConfig = LineChartPointConfigItem(
-            shape: .circle,
-            radius: 4,
-            hole: 0,
-            shadow: 0,
-            colors: (point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4))
-        )
-        let pointConfigActive = LineChartPointConfigItem(
-            shape: .circle,
-            radius: 4,
-            hole: 0,
-            shadow: 4,
-            colors: (point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4))
-        )
         let setOne = lineChart.createDataSet(label, value: [32, 51, nil, 62, 80, 99]) { (set) in
-            set.pointConfig = LineChartPointConfig(normal: pointConfig, active: pointConfigActive)
+            set.point = LineChartPointConfig(
+                shape: .circle,
+                normal: (LineChartPointRadius(point: 4, hole: 0, shadow: 0), LineChartPointColor(point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4))),
+                active: (LineChartPointRadius(point: 4, hole: 0, shadow: 4), LineChartPointColor(point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4)))
+            )
             set.lineColor = .white
-            set.lineStyle = .curve
+            set.lineStyle = .line
             let count = 6
             for i in 0..<count {
                 if i < count - 1 {
@@ -84,7 +74,11 @@ class ViewController: UIViewController {
             }
         }
         let setTwo = lineChart.createDataSet(label, value: [210, 260, 820, 745, 722, 643]) { (set) in
-            set.pointConfig = LineChartPointConfig(normal: pointConfig, active: pointConfigActive)
+            set.point = LineChartPointConfig(
+                shape: .diamond,
+                normal: (LineChartPointRadius(point: 4, hole: 0, shadow: 0), LineChartPointColor(point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4))),
+                active: (LineChartPointRadius(point: 4, hole: 0, shadow: 4), LineChartPointColor(point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4)))
+            )
             set.lineColor = UIColor.white.withAlphaComponent(0.4)
             set.yAxisPosition = .right
         }

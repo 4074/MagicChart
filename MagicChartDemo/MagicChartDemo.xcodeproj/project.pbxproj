@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB130E72213CE264006D3AB9 /* LineChartSquarePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB130E71213CE264006D3AB9 /* LineChartSquarePoint.swift */; };
+		FB16C8D8213D0C5800D14149 /* LineChartBasePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB16C8D7213D0C5800D14149 /* LineChartBasePoint.swift */; };
+		FB16C8DA213D0F0F00D14149 /* LineChartDiamondPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB16C8D9213D0F0F00D14149 /* LineChartDiamondPoint.swift */; };
 		FB59CC9121017A4900B683B9 /* LineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB59CC8E21017A4900B683B9 /* LineChart.swift */; };
 		FB59CC9221017A4900B683B9 /* LineChartPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB59CC8F21017A4900B683B9 /* LineChartPoint.swift */; };
 		FB59CC9321017A4900B683B9 /* LineChartCirclePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB59CC9021017A4900B683B9 /* LineChartCirclePoint.swift */; };
@@ -24,6 +27,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FB130E71213CE264006D3AB9 /* LineChartSquarePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartSquarePoint.swift; sourceTree = "<group>"; };
+		FB16C8D7213D0C5800D14149 /* LineChartBasePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartBasePoint.swift; sourceTree = "<group>"; };
+		FB16C8D9213D0F0F00D14149 /* LineChartDiamondPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartDiamondPoint.swift; sourceTree = "<group>"; };
 		FB59CC8E21017A4900B683B9 /* LineChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LineChart.swift; path = ../../MagicChart/line/LineChart.swift; sourceTree = "<group>"; };
 		FB59CC8F21017A4900B683B9 /* LineChartPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LineChartPoint.swift; path = ../../MagicChart/line/LineChartPoint.swift; sourceTree = "<group>"; };
 		FB59CC9021017A4900B683B9 /* LineChartCirclePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LineChartCirclePoint.swift; path = ../../MagicChart/line/LineChartCirclePoint.swift; sourceTree = "<group>"; };
@@ -87,8 +93,11 @@
 			isa = PBXGroup;
 			children = (
 				FB59CC8E21017A4900B683B9 /* LineChart.swift */,
-				FB59CC9021017A4900B683B9 /* LineChartCirclePoint.swift */,
 				FB59CC8F21017A4900B683B9 /* LineChartPoint.swift */,
+				FB16C8D7213D0C5800D14149 /* LineChartBasePoint.swift */,
+				FB59CC9021017A4900B683B9 /* LineChartCirclePoint.swift */,
+				FB130E71213CE264006D3AB9 /* LineChartSquarePoint.swift */,
+				FB16C8D9213D0F0F00D14149 /* LineChartDiamondPoint.swift */,
 			);
 			name = line;
 			sourceTree = "<group>";
@@ -197,7 +206,9 @@
 			files = (
 				FB59CC9F21017E2000B683B9 /* AxisChart.swift in Sources */,
 				FB59CC9121017A4900B683B9 /* LineChart.swift in Sources */,
+				FB16C8DA213D0F0F00D14149 /* LineChartDiamondPoint.swift in Sources */,
 				FB59CC9321017A4900B683B9 /* LineChartCirclePoint.swift in Sources */,
+				FB16C8D8213D0C5800D14149 /* LineChartBasePoint.swift in Sources */,
 				FB69AD3520073DF900383099 /* ViewController.swift in Sources */,
 				FB69AD3320073DF900383099 /* AppDelegate.swift in Sources */,
 				FB59CC9921017A5C00B683B9 /* ChartUtils.swift in Sources */,
@@ -205,6 +216,7 @@
 				FB59CC9821017A5C00B683B9 /* ChartData.swift in Sources */,
 				FB59CC9721017A5C00B683B9 /* Formatters.swift in Sources */,
 				FB59CC9D21017A6800B683B9 /* PointAnimationor.swift in Sources */,
+				FB130E72213CE264006D3AB9 /* LineChartSquarePoint.swift in Sources */,
 				FB59CC9C21017A6800B683B9 /* ChartAxisLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
