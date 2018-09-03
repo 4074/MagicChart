@@ -25,12 +25,22 @@ public struct LineChartPointConfig {
     public let shape: MagicChartPointShape
     public let normal: (radius: LineChartPointRadius, colors: LineChartPointColor)
     public let active: (radius: LineChartPointRadius, colors: LineChartPointColor)
+    
+    public init(
+        shape: MagicChartPointShape,
+        normal: (radius: LineChartPointRadius, colors: LineChartPointColor),
+        active: (radius: LineChartPointRadius, colors: LineChartPointColor)
+        ) {
+        self.shape = shape
+        self.normal = normal
+        self.active = active
+    }
 }
 
 public struct LineChartPointColor {
-    let point: UIColor
-    let hole: UIColor
-    let shadow: UIColor
+    public let point: UIColor
+    public let hole: UIColor
+    public let shadow: UIColor
     
     public init(point: UIColor, hole: UIColor, shadow: UIColor) {
         self.point = point
@@ -40,9 +50,9 @@ public struct LineChartPointColor {
 }
 
 public struct LineChartPointRadius {
-    let point: CGFloat
-    let hole: CGFloat
-    let shadow: CGFloat
+    public let point: CGFloat
+    public let hole: CGFloat
+    public let shadow: CGFloat
     
     public init(point: CGFloat, hole: CGFloat, shadow: CGFloat) {
         self.point = point

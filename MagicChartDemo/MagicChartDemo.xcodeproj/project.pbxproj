@@ -106,8 +106,9 @@
 				FBA8731E213D14F5002CC9B7 /* utils */,
 				FBA8731D213D14EC002CC9B7 /* line */,
 			);
-			path = MagicChart;
-			sourceTree = "<group>";
+			name = MagicChart;
+			path = ../../../../Users/wenfeng/Documents/develop/github/MagicChart/MagicChartDemo/MagicChart;
+			sourceTree = DEVELOPER_DIR;
 		};
 		FBA8731D213D14EC002CC9B7 /* line */ = {
 			isa = PBXGroup;
