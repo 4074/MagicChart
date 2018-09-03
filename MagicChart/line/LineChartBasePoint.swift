@@ -9,7 +9,7 @@
 import UIKit
 
 public class LineChartBasePoint: LineChartPoint {
-
+    
     public var center: CGPoint!
     public var configForState: (radius: LineChartPointRadius, colors: LineChartPointColor)!
     
@@ -60,7 +60,7 @@ public class LineChartBasePoint: LineChartPoint {
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     func drawPoint() {}
     func drawHole() {}
     func drawShadow() {}

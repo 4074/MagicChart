@@ -5,17 +5,6 @@
 //  Created by wen on 2018/9/3.
 //  Copyright © 2018年 wenfeng. All rights reserved.
 //
-
-import UIKit
-
-//
-//  LineChartCirclePoint.swift
-//  MagicChartDemo
-//
-//  Created by wen on 2018/7/13.
-//  Copyright © 2018年 wenfeng. All rights reserved.
-//
-
 import UIKit
 
 public class LineChartSquarePoint: LineChartBasePoint {
@@ -98,8 +87,7 @@ public class LineChartSquarePoint: LineChartBasePoint {
         path.addLine(to: CGPoint(x: orign.x + sr, y: orign.y + sr))
         path.addLine(to: CGPoint(x: orign.x, y: orign.y + sr))
         path.close()
-
+        
         holeLayer.path = path.cgPath
     }
 }
-
