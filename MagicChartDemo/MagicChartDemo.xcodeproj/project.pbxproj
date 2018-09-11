@@ -67,7 +67,8 @@
 				FB426DFB213D156500BFA430 /* PointAnimationor.swift */,
 			);
 			name = public;
-			sourceTree = "<group>";
+			path = ../MagicChart/public;
+			sourceTree = SOURCE_ROOT;
 		};
 		FB69AD2620073DF900383099 = {
 			isa = PBXGroup;
@@ -107,8 +108,8 @@
 				FBA8731D213D14EC002CC9B7 /* line */,
 			);
 			name = MagicChart;
-			path = ../../../../Users/wenfeng/Documents/develop/github/MagicChart/MagicChartDemo/MagicChart;
-			sourceTree = DEVELOPER_DIR;
+			path = ../MagicChart;
+			sourceTree = SOURCE_ROOT;
 		};
 		FBA8731D213D14EC002CC9B7 /* line */ = {
 			isa = PBXGroup;
@@ -121,7 +122,8 @@
 				FB426E03213D161A00BFA430 /* LineChartDiamondPoint.swift */,
 			);
 			name = line;
-			sourceTree = "<group>";
+			path = ../MagicChart/line;
+			sourceTree = SOURCE_ROOT;
 		};
 		FBA8731E213D14F5002CC9B7 /* utils */ = {
 			isa = PBXGroup;
@@ -131,7 +133,8 @@
 				FB426DF3213D155A00BFA430 /* Formatters.swift */,
 			);
 			name = utils;
-			sourceTree = "<group>";
+			path = ../MagicChart/utils;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 

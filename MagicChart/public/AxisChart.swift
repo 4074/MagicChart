@@ -41,29 +41,24 @@ open class AxisChart: UIView {
             x: xConfig,
             y: AxisChartAxisConfigGroupY(left: yLeftConfig, right: yRightConfig)
         )
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handleGesture(_:)))
+        self.addGestureRecognizer(panGesture)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleGesture(_:)))
+        self.addGestureRecognizer(tapGesture)
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches {
-            //            touchDidUpdate(location: t.location(in: self))
-            break
-        }
+    @objc
+    func handleGesture(_ sender: UIPanGestureRecognizer) {
+        touchDidUpdate(location: sender.location(in: self))
     }
     
-    override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches {
-            touchDidUpdate(location: t.location(in: self))
-            break
-        }
-    }
-    
-    func touchDidUpdate(location: CGPoint) {
-        
-    }
+    func touchDidUpdate(location: CGPoint) {}
 }
 
 public struct AxisChartAxisConfigGroup {
