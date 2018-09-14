@@ -56,7 +56,7 @@ class ViewController: UIViewController {
     @objc func refreshChart() {
         let dataSource = LineChartDataSource()
         let label = ["06/16", "06/17", "06/18", "06/19", "06/20", "06/21", "06/22"]
-        let setOne = lineChart.createDataSet(label, value: [32, 51, nil, 62, 80, 99]) { (set) in
+        let setOne = lineChart.createDataSet(label, value: [42, 81, nil, 62, 80, 99, 120]) { (set) in
             set.point = LineChartPointConfig(
                 shape: .circle,
                 normal: (LineChartPointRadius(point: 4, hole: 0, shadow: 0), LineChartPointColor(point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4))),
@@ -73,7 +73,7 @@ class ViewController: UIViewController {
                 }
             }
         }
-        let setTwo = lineChart.createDataSet(label, value: [210, 260, 820, 745, 722, 643]) { (set) in
+        let setTwo = lineChart.createDataSet(label, value: [210, 260, 820, 745, 722, 643, 601]) { (set) in
             set.point = LineChartPointConfig(
                 shape: .diamond,
                 normal: (LineChartPointRadius(point: 4, hole: 0, shadow: 0), LineChartPointColor(point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4))),
@@ -101,7 +101,7 @@ extension ViewController: LineChartDelegate {
     }
     
     func chartView(_ chartView: LineChart, didSelect index: Int) {
-        print(index)
+        print("Point \(index) selected")
     }
     
     func chartView(_ chartView: LineChart, styleSelectedLayer layer: CAShapeLayer) {
