@@ -32,7 +32,7 @@ Now, I just wrote line chart. Welcome any issues/ideas/prs.
 
 我现在只写了线形图。强烈欢迎各类贡献，包括但不限于 issues/ideas/prs
 
-## Install
+## Installation
 
 With cocoapods
 ```ruby
@@ -48,15 +48,15 @@ pod 'MagicChart' ~> '0.1'
 You can read and run the demo.
 
 ```swift
-    let lineChart = LineChart()
-    lineChart.frame = CGRect(x: 20, y: 80, width: view.frame.width - 40, height: 200)
+let lineChart = LineChart()
+lineChart.frame = CGRect(x: 20, y: 80, width: view.frame.width - 40, height: 200)
 
-    let dataSource = LineChartDataSource()
-    let label = ["06/16", "06/17", "06/18", "06/19", "06/20", "06/21", "06/22"]
-    let set = lineChart.createDataSet(label, value: [42, 81, nil, 62, 80, 99, 120]) { (set) in}
-    dataSource.label = label
-    dataSource.sets = [set]
-    lineChart.dataSource = dataSource
+let dataSource = LineChartDataSource()
+let label = ["06/16", "06/17", "06/18", "06/19", "06/20", "06/21", "06/22"]
+let set = lineChart.createDataSet(label, value: [42, 81, nil, 62, 80, 99, 120]) { (set) in}
+dataSource.label = label
+dataSource.sets = [set]
+lineChart.dataSource = dataSource
 ```
 
 # TODOs
@@ -66,3 +66,5 @@ You can read and run the demo.
 - Area Chart
 - LineArea Chart
 - Other Chart
+
+Again, welcome any issues/ideas/prs.
