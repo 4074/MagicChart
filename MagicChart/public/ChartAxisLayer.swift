@@ -155,7 +155,7 @@ public class ChartYAxisLayer: ChartAxisLayer {
                     x: -frame.width - config.labelSpacing,
                     y: y,
                     width: frame.width,
-                    height: config.labelFont.pointSize
+                    height: config.labelFont.pointSize + 4
                 )
             }
             

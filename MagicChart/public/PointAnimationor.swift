@@ -91,9 +91,9 @@ public class PointAnimator {
         opacityAnimation.fromValue = 0
         opacityAnimation.toValue = 1
         
-        let transformAnimation = CABasicAnimation(keyPath: "transform")
-        transformAnimation.fromValue = CATransform3DMakeAffineTransform(CGAffineTransform(scaleX: 2, y: 2))
-        transformAnimation.toValue = CATransform3DIdentity
+//        let transformAnimation = CABasicAnimation(keyPath: "transform")
+//        transformAnimation.fromValue = CATransform3DMakeAffineTransform(CGAffineTransform(scaleX: 2, y: 2))
+//        transformAnimation.toValue = CATransform3DIdentity
         
         let group = CAAnimationGroup()
         
