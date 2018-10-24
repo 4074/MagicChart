@@ -352,14 +352,14 @@ open class LineChart: AxisChart {
     }
     
     func handleDidSelect(index: Int) {
-        var hasValue = false
-        for set in dataSource.sets {
-            if index < set.value.values.count {
-                hasValue = true
-                break
-            }
-        }
-        if !hasValue { return }
+//        var hasValue = false
+//        for set in dataSource.sets {
+//            if index < set.value.values.count {
+//                hasValue = true
+//                break
+//            }
+//        }
+//        if !hasValue { return }
         
         if index < dataSource.label.count && index != selectedIndex {
             selectedIndex = index
@@ -374,11 +374,20 @@ open class LineChart: AxisChart {
         guard let index = selectedIndex, index >= 0 else {
             return
         }
+        
         var x: CGFloat = 0
+        var hasPoint = false
         for group in dataPoints {
             if index < group.count, let p = group[index] {
                 x = p.x
+                hasPoint = true
                 break
+            }
+        }
+        if !hasPoint {
+            if let xl = axis.x.layer {
+                let w = xl.frame.width
+                x = (CGFloat(index) / CGFloat(dataSource.label.count)) * w
             }
         }
         
