@@ -86,6 +86,10 @@ public class AxisChartAxisConfig {
     public var labelAlignment: String = "center"
     public var formatter: NumberFormatter = NumberFormatter()
     
+    public var gridVisible: Bool = false
+    public var gridWidth: CGFloat = 0.8
+    public var gridColor: UIColor = .lightGray
+    
     public var range: AxisChartAxisRange = AxisChartAxisRange(
         minimum: AxisChartAxisRangeItem(type: .manual, value: 0),
         maximum: AxisChartAxisRangeItem(type: .auto, value: nil)
