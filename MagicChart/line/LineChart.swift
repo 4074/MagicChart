@@ -75,7 +75,6 @@ open class LineChart: AxisChart {
             width: chartLayer!.frame.width - insetLeft - insetRight - dataLayerInset.left - dataLayerInset.right,
             height: chartLayer!.frame.height - insetHeight
         )
-        chartLayer?.addSublayer(dataLayer!)
         
         axis.x.frame = CGRect(x: insetLeft, y: dataLayer!.frame.height, width: chartLayer!.frame.width - insetLeft - insetRight, height: xAxisHeight)
         
@@ -83,6 +82,8 @@ open class LineChart: AxisChart {
         axis.y.right.frame = CGRect(x: chartLayer!.frame.width - insetRight, y: 0, width: yRightAxisWidth, height: dataLayer!.frame.height)
         
         drawAxisLine()
+        
+        chartLayer?.addSublayer(dataLayer!)
         drawSetLine()
         
         if !animation {
@@ -302,15 +303,13 @@ open class LineChart: AxisChart {
     
     func drawAxisLine() {
         let xAxis = ChartXAxisLayer()
+        xAxis.config = axis.x
         axis.x.labelInset = dataLayerInset
         xAxis.frame = axis.x.frame
         xAxis.labels = ChartUtils.selectStrings(source: dataSource.label, count: axis.x.labelCount, force: false)
-        xAxis.config = axis.x
-        xAxis.render()
-        chartLayer?.addSublayer(xAxis)
-        axis.x.layer = xAxis
         
         let yLeftAxis = ChartYAxisLayer()
+        yLeftAxis.config = axis.y.left
         yLeftAxis.frame = axis.y.left.frame
         if let minimum = axis.y.left.range.minimum.value, let maximum = axis.y.left.range.maximum.value {
             yLeftAxis.labels = ChartUtils.selectNumbers(min: minimum, max: maximum, count: axis.y.left.labelCount, reverse: axis.y.left.reverse).map { (v) -> String in
@@ -318,7 +317,11 @@ open class LineChart: AxisChart {
             }
         }
         
-        yLeftAxis.config = axis.y.left
+        xAxis.gridPositions = yLeftAxis.getPositions()
+        xAxis.render()
+        chartLayer?.addSublayer(xAxis)
+        axis.x.layer = xAxis
+        
         yLeftAxis.render()
         chartLayer?.addSublayer(yLeftAxis)
         axis.y.left.layer = yLeftAxis
@@ -352,14 +355,14 @@ open class LineChart: AxisChart {
     }
     
     func handleDidSelect(index: Int) {
-//        var hasValue = false
-//        for set in dataSource.sets {
-//            if index < set.value.values.count {
-//                hasValue = true
-//                break
-//            }
-//        }
-//        if !hasValue { return }
+        //        var hasValue = false
+        //        for set in dataSource.sets {
+        //            if index < set.value.values.count {
+        //                hasValue = true
+        //                break
+        //            }
+        //        }
+        //        if !hasValue { return }
         
         if index < dataSource.label.count && index != selectedIndex {
             selectedIndex = index
