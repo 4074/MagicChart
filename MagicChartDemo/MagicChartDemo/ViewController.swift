@@ -26,18 +26,18 @@ class ViewController: UIViewController {
         
         lineChart.axis.y.left.lineColor = .clear
         lineChart.axis.y.left.labelColor = .white
-        lineChart.axis.y.left.labelCount = 1
-        lineChart.axis.y.left.labelPosition = .inside
+        lineChart.axis.y.left.labelCount = 4
+        lineChart.axis.y.left.labelPosition = .outside
         lineChart.axis.y.left.labelAlignment = "left"
-        lineChart.axis.y.left.labelSpacing = 0
+        lineChart.axis.y.left.labelSpacing = 4
         lineChart.axis.y.left.formatter = MagicChartIntFormatter()
         
         lineChart.axis.y.right.lineColor = .clear
         lineChart.axis.y.right.labelColor = .white
-        lineChart.axis.y.right.labelCount = 1
-        lineChart.axis.y.right.labelPosition = .inside
+        lineChart.axis.y.right.labelCount = 4
+        lineChart.axis.y.right.labelPosition = .outside
         lineChart.axis.y.right.labelAlignment = "right"
-        lineChart.axis.y.right.labelSpacing = 0
+        lineChart.axis.y.right.labelSpacing = 4
         lineChart.axis.y.right.formatter = MagicChartIntFormatter()
         
 //        lineChart.animation = false
@@ -56,14 +56,15 @@ class ViewController: UIViewController {
     @objc func refreshChart() {
         let dataSource = LineChartDataSource()
         let label = ["06/16", "06/17", "06/18", "06/19", "06/20", "06/21", "06/22"]
-        let setOne = lineChart.createDataSet(label, value: [42, 81, nil, 62, 80, 99, 120]) { (set) in
+        let setOne = lineChart.createDataSet(label, value: [42, 81, 62, 62, 80, 99, 120]) { (set) in
             set.point = LineChartPointConfig(
                 shape: .circle,
-                normal: (LineChartPointRadius(point: 4, hole: 0, shadow: 0), LineChartPointColor(point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4))),
+                normal: (LineChartPointRadius(point: 0, hole: 0, shadow: 0), LineChartPointColor(point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4))),
                 active: (LineChartPointRadius(point: 4, hole: 0, shadow: 4), LineChartPointColor(point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4)))
             )
             set.lineColor = .white
             set.lineStyle = .line
+            set.yAxisPosition = .right
             let count = 6
             for i in 0..<count {
                 if i < count - 1 {
@@ -76,11 +77,11 @@ class ViewController: UIViewController {
         let setTwo = lineChart.createDataSet(label, value: [210, 260, 820, 745, 722, 643, 601]) { (set) in
             set.point = LineChartPointConfig(
                 shape: .diamond,
-                normal: (LineChartPointRadius(point: 4, hole: 0, shadow: 0), LineChartPointColor(point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4))),
+                normal: (LineChartPointRadius(point: 0, hole: 0, shadow: 0), LineChartPointColor(point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4))),
                 active: (LineChartPointRadius(point: 4, hole: 0, shadow: 4), LineChartPointColor(point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4)))
             )
             set.lineColor = UIColor.white.withAlphaComponent(0.4)
-            set.yAxisPosition = .right
+//            set.yAxisPosition = .right
         }
         
         dataSource.label = label
@@ -97,7 +98,7 @@ class ViewController: UIViewController {
 
 extension ViewController: LineChartDelegate {
     func chartView(_ chartView: LineChart, didDraw: Bool) {
-        chartView.setSelected(index: chartView.dataSource.sets[1].value.values.count - 1)
+//        chartView.setSelected(index: chartView.dataSource.sets[1].value.values.count - 1)
     }
     
     func chartView(_ chartView: LineChart, didSelect index: Int) {

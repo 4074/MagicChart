@@ -192,8 +192,9 @@ public class ChartYAxisLayer: ChartAxisLayer {
                     height: config.labelFont.pointSize + 4
                 )
             } else {
+                let x = config.labelPosition == .outside ? config.labelSpacing : 0
                 textLayer.frame = CGRect(
-                    x: -frame.width - config.labelSpacing,
+                    x: x,
                     y: y,
                     width: frame.width,
                     height: config.labelFont.pointSize + 4
