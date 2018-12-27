@@ -179,8 +179,14 @@ open class LineChart: AxisChart {
                 path.move(to: lastPoint!)
                 
                 if set.lineStyle == .curve {
-                    let controlPoints = computeControlPoint(points: points, index: lastIndex)
-                    path.addCurve(to: p, controlPoint1: controlPoints.a, controlPoint2: controlPoints.b)
+                    // Avoid draw line under axis line
+                    // Draw straight line between two min value
+                    if p.y == CGFloat(setHeight), i > 0, lastPoint?.y == p.y {
+                        path.addLine(to: p)
+                    } else {
+                        let controlPoints = computeControlPoint(points: points, index: lastIndex)
+                        path.addCurve(to: p, controlPoint1: controlPoints.a, controlPoint2: controlPoints.b)
+                    }
                 } else {
                     path.addLine(to: p)
                 }
@@ -266,7 +272,9 @@ open class LineChart: AxisChart {
     
     func createAnimationMask(layer: CAShapeLayer) -> CAShapeLayer {
         let maskLayer = CAShapeLayer()
-        maskLayer.path = UIBezierPath(rect: layer.bounds).cgPath
+        
+        // Larger than layer.height, display the line of zero value
+        maskLayer.path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: layer.bounds.width, height: layer.bounds.height + 10)).cgPath
         maskLayer.frame = layer.bounds
         addAnimationToLayer(maskLayer, duration: duration)
         

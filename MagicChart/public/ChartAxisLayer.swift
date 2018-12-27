@@ -59,7 +59,7 @@ public class ChartAxisLayer: CALayer {
         layer.strokeColor = (color ?? config.lineColor).cgColor
         layer.lineWidth = width ?? config.lineWidth
         layer.contentsScale = UIScreen.main.scale
-        layer.masksToBounds = true
+//        layer.masksToBounds = true
         
         return layer
     }
