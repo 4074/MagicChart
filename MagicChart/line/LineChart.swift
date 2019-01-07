@@ -39,7 +39,8 @@ open class LineChart: AxisChart {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func touchDidUpdate(location: CGPoint) {
+    override func touchDidUpdate(location: CGPoint, gesture: UIGestureRecognizer) {
+        handleGesture(gesture: gesture)
         if let dataLayer = self.dataLayer, !rendering {
             let index = ChartUtils.computeSelectedIndex(point: location, frame: dataLayer.frame, count: dataSource.label.count)
             handleDidSelect(index: index)
@@ -363,22 +364,15 @@ open class LineChart: AxisChart {
     }
     
     func handleDidSelect(index: Int) {
-        //        var hasValue = false
-        //        for set in dataSource.sets {
-        //            if index < set.value.values.count {
-        //                hasValue = true
-        //                break
-        //            }
-        //        }
-        //        if !hasValue { return }
-        
         if index < dataSource.label.count && index != selectedIndex {
             selectedIndex = index
-            if let d = delegate {
-                d.chartView(self, didSelect: index)
-            }
+            delegate?.chartView(self, didSelect: index)
             drawSelected()
         }
+    }
+    
+    func handleGesture(gesture: UIGestureRecognizer) {
+        delegate?.chartView(self, receiveGesture: gesture)
     }
     
     func drawSelected() {
@@ -585,16 +579,17 @@ public protocol LineChartDelegate: class {
     
     func chartView(_ chartView: LineChart, didSelect index: Int)
     
+    func chartView(_ chartView: LineChart, receiveGesture gesture: UIGestureRecognizer)
+    
     func chartView(_ chartView: LineChart, styleSelectedLayer layer: CAShapeLayer)
 }
 
 extension LineChartDelegate {
-    public func chartView(_ chartView: LineChart, didDraw: Bool) {
-    }
+    public func chartView(_ chartView: LineChart, didDraw: Bool) {}
     
-    public func chartView(_ chartView: LineChart, didSelect index: Int) {
-    }
+    public func chartView(_ chartView: LineChart, didSelect index: Int) {}
     
-    public func chartView(_ chartView: LineChart, styleSelectedLayer layer: CAShapeLayer) {
-    }
+    public func chartView(_ chartView: LineChart, receiveGesture gesture: UIGestureRecognizer) {}
+    
+    public func chartView(_ chartView: LineChart, styleSelectedLayer layer: CAShapeLayer) {}
 }
