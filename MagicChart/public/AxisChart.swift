@@ -24,7 +24,7 @@ open class AxisChart: UIView {
     
     public var axis: AxisChartAxisConfigGroup!
     
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         
         let xConfig = AxisChartAxisConfig()
