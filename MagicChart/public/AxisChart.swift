@@ -55,10 +55,10 @@ open class AxisChart: UIView {
     
     @objc
     func handleGesture(_ sender: UIPanGestureRecognizer) {
-        touchDidUpdate(location: sender.location(in: self))
+        touchDidUpdate(location: sender.location(in: self), gesture: sender)
     }
     
-    func touchDidUpdate(location: CGPoint) {}
+    func touchDidUpdate(location: CGPoint, gesture: UIGestureRecognizer) {}
 }
 
 public struct AxisChartAxisConfigGroup {
