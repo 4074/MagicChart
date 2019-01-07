@@ -31,7 +31,7 @@ open class LineChart: AxisChart {
     
     public var delegate: LineChartDelegate?
     
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
     }
     
