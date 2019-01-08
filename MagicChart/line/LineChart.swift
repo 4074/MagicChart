@@ -17,7 +17,7 @@ open class LineChart: AxisChart {
         }
     }
     
-    public var dataSetLayer: [(set: CAShapeLayer, line: CAShapeLayer, mask: CAShapeLayer?)] = []
+    public var dataSetLayer: [(set: CAShapeLayer, line: CAShapeLayer, area: CALayer?, mask: CAShapeLayer?)] = []
     public var dataPointLayer: [(layer: CAShapeLayer, subs: [LineChartPoint])?] = []
     public var dataPoints: [[CGPoint?]] = []
     private var dataPointsCache: [[CGPoint]] = []
@@ -110,7 +110,7 @@ open class LineChart: AxisChart {
         selectedLayer = nil
         
         for group in dataSetLayer {
-            group.line.removeFromSuperlayer()
+            group.set.removeFromSuperlayer()
         }
         
         for group in dataPointLayer {
@@ -141,6 +141,13 @@ open class LineChart: AxisChart {
             let setWidth = Double(setLayer.frame.width)
             let setHeight = Double(setLayer.frame.height)
             
+            let areaLayer: CAShapeLayer? = set.area == nil ? nil : CAShapeLayer()
+            let areaPath: UIBezierPath? = set.area == nil ? nil : UIBezierPath()
+//            var minX: CGFloat = 0
+//            var maxX: CGFloat = 0
+//            var minY: CGFloat = setLayer.bounds.height
+//            let maxY: CGFloat = setLayer.bounds.height
+            
             if let minimum = axisConfig.range.minimum.value, let maximum = axisConfig.range.maximum.value {
                 for (i, k) in dataSource.label.enumerated() {
                     if let v = set.value[k] {
@@ -154,6 +161,10 @@ open class LineChart: AxisChart {
                         }
                         let point = CGPoint(x: x, y: y)
                         
+//                        minX = min(minX, point.x)
+//                        maxX = max(maxX, point.x)
+//                        minY = min(minY, point.y)
+                        
                         points.append(point)
                     } else {
                         points.append(nil)
@@ -163,6 +174,7 @@ open class LineChart: AxisChart {
             
             var lastPoint: CGPoint?
             var lastIndex: Int = 0
+            
             for (i, p) in points.enumerated() {
                 guard let p = p else {
                     continue
@@ -171,6 +183,10 @@ open class LineChart: AxisChart {
                 if lastPoint == nil || (!set.continuous && lastIndex < i - 1) {
                     lastPoint = p
                     lastIndex = i
+                    
+                    areaPath?.move(to: CGPoint(x: p.x, y: setLayer.bounds.height))
+                    areaPath?.addLine(to: p)
+                    
                     continue
                 }
                 
@@ -187,9 +203,11 @@ open class LineChart: AxisChart {
                     } else {
                         let controlPoints = computeControlPoint(points: points, index: lastIndex)
                         path.addCurve(to: p, controlPoint1: controlPoints.a, controlPoint2: controlPoints.b)
+                        areaPath?.addCurve(to: p, controlPoint1: controlPoints.a, controlPoint2: controlPoints.b)
                     }
                 } else {
                     path.addLine(to: p)
+                    areaPath?.addLine(to: p)
                 }
                 
                 let pathLayer = CAShapeLayer()
@@ -212,17 +230,37 @@ open class LineChart: AxisChart {
             
             let innerLayer = CAShapeLayer()
             innerLayer.frame = setLayer.bounds
+            
+            // area layer
+            if let al = areaLayer, let ap = areaPath, let lp = lastPoint {
+                ap.addLine(to: CGPoint(x: lp.x, y: setLayer.bounds.height))
+                al.frame = setLayer.bounds // CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
+                al.path = ap.cgPath
+                al.contentsScale = screenScale
+                
+                if let gradient = set.area?.gradient {
+                    gradient.frame = setLayer.bounds
+                    // CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
+                    gradient.mask = al
+                    innerLayer.addSublayer(gradient)
+                } else if let c = set.area?.color {
+                    al.fillColor = c.cgColor
+                    innerLayer.addSublayer(al)
+                }
+            }
+            
+            // line layer
             innerLayer.addSublayer(lineLayer)
             
             setLayer.addSublayer(innerLayer)
             dataPoints.append(points)
             
             if animation {
-                let maskLayer = createAnimationMask(layer: lineLayer)
-                lineLayer.mask = maskLayer
-                dataSetLayer.append((setLayer, lineLayer, maskLayer))
+                let maskLayer = createAnimationMask(layer: innerLayer)
+                innerLayer.mask = maskLayer
+                dataSetLayer.append((setLayer, lineLayer, areaLayer, maskLayer))
             } else {
-                dataSetLayer.append((setLayer, lineLayer, nil))
+                dataSetLayer.append((setLayer, lineLayer, areaLayer, nil))
             }
             
             if let point = set.point {
