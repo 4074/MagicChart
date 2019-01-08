@@ -51,6 +51,18 @@ public class LineChartDataSet {
     public var yAxisPosition: AxisChartAxisPosition = .left
     
     public var point: LineChartPointConfig? = nil
+    public var area: LineChartAreaConfig? = nil
 }
 
-
+public struct LineChartAreaConfig {
+    public var color: UIColor?
+    public var gradient: CAGradientLayer?
+    
+    public init(
+        color: UIColor?,
+        gradient: CAGradientLayer?
+        ) {
+        self.color = color
+        self.gradient = gradient
+    }
+}

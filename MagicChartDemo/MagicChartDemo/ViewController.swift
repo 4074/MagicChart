@@ -63,8 +63,11 @@ class ViewController: UIViewController {
                 active: (LineChartPointRadius(point: 4, hole: 0, shadow: 4), LineChartPointColor(point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4)))
             )
             set.lineColor = .white
-            set.lineStyle = .line
+            set.lineStyle = .curve
             set.yAxisPosition = .right
+            let gradient = CAGradientLayer()
+            gradient.colors = [UIColor.red.withAlphaComponent(0.8).cgColor, UIColor.blue.withAlphaComponent(0.2).cgColor]
+            set.area = LineChartAreaConfig(color: nil, gradient: gradient)
             let count = 6
             for i in 0..<count {
                 if i < count - 1 {
