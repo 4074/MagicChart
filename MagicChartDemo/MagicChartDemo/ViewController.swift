@@ -56,7 +56,7 @@ class ViewController: UIViewController {
     @objc func refreshChart() {
         let dataSource = LineChartDataSource()
         let label = ["06/16", "06/17", "06/18", "06/19", "06/20", "06/21", "06/22"]
-        let setOne = lineChart.createDataSet(label, value: [42, 81, 62, 62, 80, 99, 120]) { (set) in
+        let setOne = lineChart.createDataSet(label, value: [42, 81, 62, 23233, 276, 6863, 120]) { (set) in
             set.point = LineChartPointConfig(
                 shape: .circle,
                 normal: (LineChartPointRadius(point: 0, hole: 0, shadow: 0), LineChartPointColor(point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4))),
@@ -84,6 +84,7 @@ class ViewController: UIViewController {
                 active: (LineChartPointRadius(point: 4, hole: 0, shadow: 4), LineChartPointColor(point: UIColor.white, hole: UIColor.clear, shadow: UIColor.white.withAlphaComponent(0.4)))
             )
             set.lineColor = UIColor.white.withAlphaComponent(0.4)
+            set.lineStyle = .curve
 //            set.yAxisPosition = .right
         }
         

@@ -77,7 +77,7 @@ public class ChartUtils {
             let step = max / Double(count - 1)
             var num = min
             for _ in 0..<count {
-                let n = ceil(num)
+                let n = num
                 if !values.contains(n) {
                     values.append(n)
                 }

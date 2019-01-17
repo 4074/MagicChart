@@ -202,8 +202,10 @@ open class LineChart: AxisChart {
                         path.addLine(to: p)
                     } else {
                         let controlPoints = computeControlPoint(points: points, index: lastIndex)
-                        path.addCurve(to: p, controlPoint1: controlPoints.a, controlPoint2: controlPoints.b)
-                        areaPath?.addCurve(to: p, controlPoint1: controlPoints.a, controlPoint2: controlPoints.b)
+                        let a = CGPoint(x: controlPoints.a.x, y: min(CGFloat(setHeight), controlPoints.a.y))
+                        let b = CGPoint(x: controlPoints.b.x, y: min(CGFloat(setHeight), controlPoints.b.y))
+                        path.addCurve(to: p, controlPoint1: a, controlPoint2: b)
+                        areaPath?.addCurve(to: p, controlPoint1: a, controlPoint2: b)
                     }
                 } else {
                     path.addLine(to: p)
