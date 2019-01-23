@@ -9,10 +9,10 @@
 import UIKit
 
 public class ChartUtils {
-    static func getNestNumber(source: Double, rate: Double = 0.8) -> Double {
+    static func getNestNumber(source: Double, count: Int = 4, rate: Double = 0.8) -> Double {
         let weight = source < 1 ? 0.001 : pow(10, Double((String(Int(source)).count - 2)))
         var result = 2 * weight
-        while result * rate < source {
+        while result * rate < source || Int(result / weight) % (count - 1) > 0 {
             result += 2 * weight
         }
         return result
