@@ -510,7 +510,7 @@ extension LineChart {
         }
         
         if config.range.maximum.type == .auto, let max = rangeCalculated.maximum {
-            config.range.maximum.value = ChartUtils.getNestNumber(source: max)
+            config.range.maximum.value = ChartUtils.getNestNumber(source: max, count: config.labelCount)
         }
     }
     
