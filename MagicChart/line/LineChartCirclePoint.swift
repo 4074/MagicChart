@@ -54,7 +54,7 @@ public class LineChartCirclePoint: LineChartBasePoint {
 
         if let p = holeLayer.path {
             mpath.addPath(p)
-            m.fillRule = kCAFillRuleEvenOdd
+            m.fillRule = CAShapeLayerFillRule.evenOdd
             m.path = mpath
             shadowLayer.mask = m
         }

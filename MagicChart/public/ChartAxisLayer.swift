@@ -134,7 +134,7 @@ public class ChartXAxisLayer: ChartAxisLayer {
             textLayer.fontSize = config.labelFont.pointSize
             textLayer.foregroundColor = config.labelColor.cgColor
             textLayer.string = text
-            textLayer.alignmentMode = "center"
+            textLayer.alignmentMode = CATextLayerAlignmentMode(rawValue: "center")
             textLayer.contentsScale = UIScreen.main.scale
             wrapLayer.addSublayer(textLayer)
         }
@@ -205,7 +205,7 @@ public class ChartYAxisLayer: ChartAxisLayer {
             textLayer.fontSize = config.labelFont.pointSize
             textLayer.foregroundColor = config.labelColor.cgColor
             textLayer.string = text
-            textLayer.alignmentMode = config.labelAlignment as String
+            textLayer.alignmentMode = CATextLayerAlignmentMode(rawValue: config.labelAlignment as String)
             textLayer.contentsScale = UIScreen.main.scale
             wrapLayer.addSublayer(textLayer)
         }

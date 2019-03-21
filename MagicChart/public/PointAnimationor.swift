@@ -38,7 +38,7 @@ public class PointAnimator {
     
     func start() {
         link = CADisplayLink.init(target: self, selector: #selector(self.handleDisplayLink))
-        link?.add(to: .current, forMode: .commonModes)
+        link?.add(to: .current, forMode: .common)
     }
     
     @objc
@@ -100,9 +100,9 @@ public class PointAnimator {
         group.animations = [opacityAnimation]
         
         group.duration = 0.4
-        group.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        group.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         group.isRemovedOnCompletion = false
-        group.fillMode = kCAFillModeForwards
+        group.fillMode = CAMediaTimingFillMode.forwards
         
         layer.add(group, forKey: "display")
     }
